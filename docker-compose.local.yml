@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  # Основное приложение PizzaNat Web для Timeweb Cloud Apps
+  # Основное приложение PizzaNat Web
   pizzanat-web:
     build:
       context: .
@@ -59,9 +59,61 @@ services:
       - VITE_BUILD_SOURCEMAP=false
       - VITE_BUILD_MINIFY=true
       - VITE_BUILD_CHUNKS=true
+    networks:
+      - pizzanat-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pizzanat.rule=Host(`pizzanat.ru`) || Host(`www.pizzanat.ru`)"
+      - "traefik.http.routers.pizzanat.entrypoints=web"
+      - "traefik.http.services.pizzanat.loadbalancer.server.port=3000"
+
+  # Reverse proxy для локального деплоя
+  traefik:
+    image: traefik:v3.0
+    container_name: pizzanat-traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "8080:8080"
+    command:
+      - --api.dashboard=true
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - pizzanat-network
+    profiles:
+      - traefik
+
+  # Мониторинг для локального деплоя
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.11.0
+    container_name: pizzanat-nginx-exporter
+    restart: unless-stopped
+    ports:
+      - "9113:9113"
+    command:
+      - -nginx.scrape-uri=http://pizzanat-web:3000/nginx_status
+    networks:
+      - pizzanat-network
+    depends_on:
+      - pizzanat-web
+    profiles:
+      - monitoring
+
+networks:
+  pizzanat-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
