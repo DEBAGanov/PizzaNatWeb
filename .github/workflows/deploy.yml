@@ -1,0 +1,93 @@
+name: Deploy to TimeWeb Cloud
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run linter
+      run: npm run lint
+      
+    - name: Run type check
+      run: npm run type-check
+      
+    - name: Build application
+      run: npm run build
+      env:
+        VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        VITE_YANDEX_METRIKA_ID: ${{ secrets.VITE_YANDEX_METRIKA_ID }}
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Login to Docker Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ secrets.DOCKER_REGISTRY }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ secrets.DOCKER_REGISTRY }}/pizzanat-web:latest
+          ${{ secrets.DOCKER_REGISTRY }}/pizzanat-web:${{ github.sha }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          VITE_API_URL=${{ secrets.VITE_API_URL }}
+          VITE_YANDEX_METRIKA_ID=${{ secrets.VITE_YANDEX_METRIKA_ID }}
+          
+    - name: Deploy to TimeWeb Cloud
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.TIMEWEB_HOST }}
+        username: ${{ secrets.TIMEWEB_USERNAME }}
+        key: ${{ secrets.TIMEWEB_SSH_KEY }}
+        script: |
+          docker pull ${{ secrets.DOCKER_REGISTRY }}/pizzanat-web:latest
+          docker stop pizzanat-web || true
+          docker rm pizzanat-web || true
+          docker run -d \
+            --name pizzanat-web \
+            --restart unless-stopped \
+            -p 80:3000 \
+            -e VITE_API_URL=${{ secrets.VITE_API_URL }} \
+            -e VITE_YANDEX_METRIKA_ID=${{ secrets.VITE_YANDEX_METRIKA_ID }} \
+            ${{ secrets.DOCKER_REGISTRY }}/pizzanat-web:latest
+          docker system prune -f
+          
+    - name: Health Check
+      run: |
+        sleep 30
+        curl -f http://${{ secrets.TIMEWEB_HOST }}/health || exit 1 

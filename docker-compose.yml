@@ -1,0 +1,137 @@
+version: "3.8"
+
+services:
+  # Основное приложение PizzaNat Web
+  pizzanat-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: pizzanat-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # Node Environment
+      - NODE_ENV=production
+
+      # API Configuration
+      - VITE_API_URL=https://api.pizzanat.ru/api/v1
+      - VITE_API_TIMEOUT=10000
+
+      # App Configuration
+      - VITE_APP_NAME=PizzaNat
+      - VITE_APP_VERSION=1.0.0
+      - VITE_APP_DESCRIPTION=Лучшая пицца в городе - заказывайте онлайн!
+
+      # Domain Configuration
+      - VITE_DOMAIN=pizzanat.ru
+      - VITE_WWW_DOMAIN=www.pizzanat.ru
+
+      # Security
+      - VITE_ENABLE_HTTPS=true
+      - VITE_SECURE_COOKIES=true
+
+      # Analytics
+      - VITE_YANDEX_METRIKA_ID=your_metrika_id_here
+      - VITE_GOOGLE_ANALYTICS_ID=your_ga_id_here
+
+      # Features
+      - VITE_ENABLE_PWA=true
+      - VITE_ENABLE_NOTIFICATIONS=true
+      - VITE_ENABLE_GEOLOCATION=true
+
+      # Payment
+      - VITE_YUKASSA_SHOP_ID=your_yukassa_shop_id
+      - VITE_PAYMENT_REDIRECT_URL=https://pizzanat.ru/payment/callback
+
+      # Social Media
+      - VITE_TELEGRAM_BOT_URL=https://t.me/pizzanat_bot
+      - VITE_VK_GROUP_URL=https://vk.com/pizzanat
+      - VITE_INSTAGRAM_URL=https://instagram.com/pizzanat
+
+      # Contact Info
+      - VITE_PHONE=+7(999)123-45-67
+      - VITE_EMAIL=info@pizzanat.ru
+      - VITE_ADDRESS=г. Москва, ул. Примерная, д. 123
+
+      # Build Optimization
+      - VITE_BUILD_SOURCEMAP=false
+      - VITE_BUILD_MINIFY=true
+      - VITE_BUILD_CHUNKS=true
+    networks:
+      - pizzanat-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pizzanat.rule=Host(`pizzanat.ru`) || Host(`www.pizzanat.ru`)"
+      - "traefik.http.routers.pizzanat.entrypoints=web"
+      - "traefik.http.services.pizzanat.loadbalancer.server.port=3000"
+
+  # Reverse proxy (опционально, для локального деплоя)
+  # Примечание: На Timeweb Cloud Apps SSL управляется платформой автоматически
+  traefik:
+    image: traefik:v3.0
+    container_name: pizzanat-traefik
+    restart: unless-stopped
+    ports:
+      - "8080:8080" # Только dashboard, не конфликтует с 80/443
+    command:
+      - --api.dashboard=true
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - pizzanat-network
+    profiles:
+      - traefik # Активируется только при запуске с профилем traefik
+
+  # Мониторинг и логирование (опционально)
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.11.0
+    container_name: pizzanat-nginx-exporter
+    restart: unless-stopped
+    ports:
+      - "9113:9113"
+    command:
+      - -nginx.scrape-uri=http://pizzanat-web:3000/nginx_status
+    networks:
+      - pizzanat-network
+    depends_on:
+      - pizzanat-web
+    profiles:
+      - monitoring
+
+  # Watchtower для автоматических обновлений
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: pizzanat-watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=300 # Проверка каждые 5 минут
+      - WATCHTOWER_INCLUDE_STOPPED=true
+      - WATCHTOWER_REVIVE_STOPPED=false
+    command: pizzanat-web
+    networks:
+      - pizzanat-network
+    profiles:
+      - autoupdate
+
+networks:
+  pizzanat-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
