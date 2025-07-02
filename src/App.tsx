@@ -7,7 +7,7 @@
 
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
-import { AppShell, Burger, Group, Text, Button, Container, Stack, Title, Center, Loader } from '@mantine/core'
+import { AppShell, Burger, Group, Button, Stack, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconPizza, IconShoppingCart, IconUser, IconHome, IconMenu2, IconLogout } from '@tabler/icons-react'
 import { useAuth } from './contexts/AuthContext'
@@ -22,7 +22,7 @@ import { AuthTestPage } from './pages/AuthTestPage'
 // Компонент с навигацией (внутри Router)
 function AppWithRouter() {
   const [opened, { toggle }] = useDisclosure()
-  const { user, isAuthenticated, isLoading, logout } = useAuth()
+  const { user, isAuthenticated, logout } = useAuth()
   const { loadCategories } = useProducts()
   const navigate = useNavigate()
   const location = useLocation()

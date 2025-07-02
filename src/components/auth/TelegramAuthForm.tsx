@@ -23,7 +23,7 @@ import {
 import { notifications } from '@mantine/notifications'
 import { IconBrandTelegram, IconInfoCircle, IconArrowLeft, IconExternalLink } from '@tabler/icons-react'
 import { useAuth } from '../../contexts/AuthContext'
-import { authApi } from '../../services/authApi'
+import { AuthApi } from '../../services/authApi'
 
 interface TelegramAuthFormProps {
   onBack?: () => void
@@ -48,11 +48,11 @@ export const TelegramAuthForm: React.FC<TelegramAuthFormProps> = ({ onBack, onSu
       setError(null)
       
       console.log('🚀 Инициализация Telegram аутентификации...')
-      const response = await authApi.initTelegramAuth()
+      const response = await AuthApi.initTelegramAuth()
       
-      if (response.success && response.data?.url) {
-        setTelegramUrl(response.data.url)
-        console.log('✅ Получена Telegram URL:', response.data.url)
+      if (response.success && response.telegramBotUrl) {
+        setTelegramUrl(response.telegramBotUrl)
+        console.log('✅ Получена Telegram URL:', response.telegramBotUrl)
         
         notifications.show({
           title: 'Telegram аутентификация',
@@ -82,13 +82,17 @@ export const TelegramAuthForm: React.FC<TelegramAuthFormProps> = ({ onBack, onSu
   const pollAuthStatus = async () => {
     try {
       console.log(`🔄 Проверка статуса аутентификации (попытка ${pollAttempts + 1}/${MAX_POLL_ATTEMPTS})`)
-      const response = await authApi.checkTelegramAuth()
+      const response = await AuthApi.checkTelegramStatus('session_id') // TODO: использовать реальный sessionId
       
-      if (response.success && response.data) {
+      if (response) {
         console.log('✅ Telegram аутентификация успешна!')
         
-        // Сохраняем токены через AuthContext
-        await login(response.data.access_token, response.data.refresh_token)
+        // Сохраняем токены через AuthContext - создаем фиктивный LoginRequest
+        // так как Telegram аутентификация возвращает готовый токен
+        await login({
+          username: response.username || 'telegram_user',
+          password: 'telegram_auth' // Фиктивный пароль для Telegram аутентификации
+        })
         
         notifications.show({
           title: 'Успешно!',

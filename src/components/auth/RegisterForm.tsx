@@ -25,7 +25,6 @@ import { useForm } from '@mantine/form'
 import { notifications } from '@mantine/notifications'
 import { IconUser, IconMail, IconPhone, IconInfoCircle, IconArrowLeft } from '@tabler/icons-react'
 import { useAuth } from '../../contexts/AuthContext'
-import { AuthApi } from '../../services/authApi'
 import type { RegisterRequest } from '../../types/auth'
 
 interface RegisterFormProps {

@@ -111,23 +111,17 @@ export function AuthTestPage() {
             <Tabs.Panel value="register" pt="md">
               <RegisterForm
                 onSwitchToLogin={() => setActiveTab('login')}
-                onSwitchToSms={() => setActiveTab('sms')}
-                onSwitchToTelegram={() => setActiveTab('telegram')}
               />
             </Tabs.Panel>
 
             <Tabs.Panel value="sms" pt="md">
               <SmsAuthForm
-                onSwitchToLogin={() => setActiveTab('login')}
                 onSwitchToTelegram={() => setActiveTab('telegram')}
               />
             </Tabs.Panel>
 
             <Tabs.Panel value="telegram" pt="md">
-              <TelegramAuthForm
-                onSwitchToLogin={() => setActiveTab('login')}
-                onSwitchToSms={() => setActiveTab('sms')}
-              />
+              <TelegramAuthForm />
             </Tabs.Panel>
           </Tabs>
         </Paper>

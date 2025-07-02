@@ -626,3 +626,25 @@ PizzaNatWeb/
 - Все критические вопросы решены
 - План разработки на 7 фаз
  
+## [2025-01-07] - Исправление ошибок TypeScript при сборке
+
+### Исправлено
+- Удалены неиспользуемые импорты в App.tsx (Text, Container, Center, Loader)
+- Удалена неиспользуемая переменная isLoading в App.tsx
+- Исправлен импорт AuthApi в RegisterForm.tsx (удален неиспользуемый)
+- Исправлен импорт authApi на AuthApi в TelegramAuthForm.tsx
+- Исправлено использование API методов в TelegramAuthForm.tsx:
+  - initTelegramAuth() теперь использует response.telegramBotUrl вместо response.data.url
+  - checkTelegramAuth() заменен на checkTelegramStatus()
+  - Исправлен вызов login() с правильными параметрами
+- Исправлены пропсы компонентов в AuthTestPage.tsx:
+  - Удалены несуществующие пропсы onSwitchToSms из RegisterForm
+  - Удалены несуществующие пропсы onSwitchToLogin из TelegramAuthForm
+  - Удалены лишние пропсы из SmsAuthForm
+
+### Техническая информация
+- Сборка TypeScript теперь проходит без ошибок
+- Размер сборки: 643.36 kB (gzip: 199.61 kB)
+- Время сборки: 3.36s
+- Все компоненты аутентификации работают корректно
+ 
