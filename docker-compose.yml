@@ -10,7 +10,7 @@ services:
     container_name: pizzanat-web
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3478:3478"
 
     # Ограничения ресурсов для сервера 1GB RAM
     deploy:
@@ -54,7 +54,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1",
+          "wget --no-verbose --tries=1 --spider http://localhost:3478/ || exit 1",
         ]
       interval: 60s # Увеличили интервал
       timeout: 5s # Уменьшили таймаут

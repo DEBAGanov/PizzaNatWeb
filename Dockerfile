@@ -36,21 +36,26 @@ COPY nginx.conf /etc/nginx/nginx.conf
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nextjs -u 1001 && \
     chown -R nextjs:nodejs /usr/share/nginx/html && \
+    mkdir -p /var/cache/nginx/client_temp && \
+    mkdir -p /var/cache/nginx/proxy_temp && \
+    mkdir -p /var/cache/nginx/fastcgi_temp && \
+    mkdir -p /var/cache/nginx/uwsgi_temp && \
+    mkdir -p /var/cache/nginx/scgi_temp && \
     chown -R nextjs:nodejs /var/cache/nginx && \
     chown -R nextjs:nodejs /var/log/nginx && \
     chown -R nextjs:nodejs /etc/nginx/conf.d && \
     touch /var/run/nginx.pid && \
-    chown -R nextjs:nodejs /var/run/nginx.pid
+    chown nextjs:nodejs /var/run/nginx.pid
 
 # Переключение на непривилегированного пользователя
 USER nextjs
 
-# Открытие порта
-EXPOSE 3000
+# Открытие порта для Timeweb Cloud Apps
+EXPOSE 3478
 
 # Health check для контейнера
 HEALTHCHECK --interval=60s --timeout=5s --start-period=30s --retries=2 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3478/ || exit 1
 
 # Запуск nginx
 CMD ["nginx", "-g", "daemon off;"] 
