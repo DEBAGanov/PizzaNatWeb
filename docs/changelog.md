@@ -12,6 +12,19 @@
 Формат основан на [Keep a Changelog](https://keepachangelog.com/ru/1.0.0/),
 и этот проект придерживается [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.3] - 2025-01-19 - Исправление ошибки сборки TypeScript в Docker
+
+### Исправлено
+- **Ошибка "tsc: not found"**: Изменена установка зависимостей с `--only=production` на полную установку
+- **TypeScript компилятор**: Теперь доступен в builder stage для сборки приложения
+- **Docker casing warning**: Исправлено `as` на `AS` в Dockerfile
+- **Target production**: Добавлен AS production для соответствия docker-compose.yml
+
+### Техническая реализация
+- **Multi-stage build**: Правильная установка dev-зависимостей в builder stage
+- **Оптимизация образа**: Production stage остается минимальным с nginx
+- **TypeScript сборка**: Успешная компиляция `tsc -b && vite build`
+
 ## [0.2.2] - 2025-01-19 - Исправление ошибки volumes на Timeweb Cloud Apps
 
 ### Исправлено

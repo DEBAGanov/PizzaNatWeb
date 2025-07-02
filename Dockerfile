@@ -1,5 +1,5 @@
 # Multi-stage build для оптимизации размера образа
-FROM node:18-alpine as builder
+FROM node:18-alpine AS builder
 
 # Установка рабочей директории
 WORKDIR /app
@@ -7,8 +7,8 @@ WORKDIR /app
 # Копирование файлов зависимостей
 COPY package*.json ./
 
-# Установка зависимостей
-RUN npm ci --only=production
+# Установка всех зависимостей (включая dev для сборки)
+RUN npm ci
 
 # Копирование исходного кода
 COPY . .
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM nginx:alpine
+FROM nginx:alpine AS production
 
 # Копирование собранного приложения
 COPY --from=builder /app/dist /usr/share/nginx/html
@@ -39,7 +39,7 @@ RUN chown -R nextjs:nodejs /var/run/nginx.pid
 # Переключение на непривилегированного пользователя
 USER nextjs
 
-# Открытие порта
+# Открытие порта (соответствует nginx.conf)
 EXPOSE 3000
 
 # Запуск nginx
