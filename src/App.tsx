@@ -22,18 +22,18 @@ import { AuthTestPage } from './pages/AuthTestPage'
 // Компонент с навигацией (внутри Router)
 function AppWithRouter() {
   const [opened, { toggle }] = useDisclosure()
-  const { user, isAuthenticated, logout } = useAuth()
+  const { user, logout } = useAuth()
   const { loadCategories } = useProducts()
   const navigate = useNavigate()
   const location = useLocation()
 
   // Загружаем данные при инициализации
   useEffect(() => {
-    if (isAuthenticated) {
+    if (user) {
       console.log('🔄 Пользователь аутентифицирован, загружаем данные...')
       loadCategories()
     }
-  }, [isAuthenticated, loadCategories])
+  }, [user, loadCategories])
 
   // Обработчик выхода
   const handleLogout = async () => {
@@ -89,7 +89,7 @@ function AppWithRouter() {
                       Корзина
                     </Button>
                     <Button variant="subtle" leftSection={<IconUser size={18} />}>
-                      {user?.firstName || user?.username || user?.email || user?.phone || 'Профиль'}
+                      {user?.fullName || user?.username || 'Профиль'}
                     </Button>
                     <Button 
                       variant="subtle" 

@@ -1,122 +1,147 @@
 /**
  * @file: AuthContext.tsx
- * @description: React контекст для управления аутентификацией
- * @dependencies: React, auth types, authApi
- * @created: 2024-12-19
+ * @description: Контекст аутентификации с интеграцией PizzaNat API
+ * @dependencies: AuthApi, типы аутентификации
+ * @created: 2025-01-07
+ * @updated: 2025-01-20
  */
 
-import { createContext, useContext, useReducer, useEffect } from 'react'
-import type { ReactNode } from 'react'
+import React, { createContext, useContext, useReducer, useEffect } from 'react'
 import { notifications } from '@mantine/notifications'
 import { AuthApi } from '../services/authApi'
 import type {
-  AuthState,
-  AuthContextType,
-  AuthTokens,
   User,
+  AuthTokens,
+  AuthState,
+  AuthAction,
   LoginRequest,
   RegisterRequest,
   SmsAuthRequest,
   SmsVerifyRequest,
+  SmsAuthResponse,
   TelegramAuthResponse,
-  SmsAuthResponse
+  TelegramStatusResponse
 } from '../types/auth'
 
-// Типы действий для reducer
-type AuthAction =
-  | { type: 'SET_LOADING'; payload: boolean }
-  | { type: 'SET_USER'; payload: { user: User; tokens: AuthTokens } }
-  | { type: 'LOGOUT' }
-
-// Начальное состояние
-const initialState: AuthState = {
-  user: null,
-  tokens: null,
-  isAuthenticated: false,
-  isLoading: true
+// Интерфейс контекста
+interface AuthContextType extends AuthState {
+  login: (request: LoginRequest) => Promise<void>
+  register: (request: RegisterRequest) => Promise<void>
+  sendSmsCode: (request: SmsAuthRequest) => Promise<SmsAuthResponse>
+  verifySmsCode: (request: SmsVerifyRequest) => Promise<void>
+  initTelegramAuth: (phoneNumber?: string) => Promise<TelegramAuthResponse>
+  checkTelegramStatus: (authToken: string) => Promise<TelegramStatusResponse | null>
+  logout: () => Promise<void>
+  refreshToken: () => Promise<void>
 }
 
-// Reducer для управления состоянием
+// Создание контекста
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+// Редьюсер для управления состоянием
 function authReducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case 'SET_LOADING':
-      return { ...state, isLoading: action.payload }
+      return { ...state, isLoading: action.payload, error: null }
     case 'SET_USER':
       return {
         ...state,
         user: action.payload.user,
         tokens: action.payload.tokens,
-        isAuthenticated: true,
-        isLoading: false
+        isLoading: false,
+        error: null
       }
+    case 'SET_ERROR':
+      return { ...state, error: action.payload, isLoading: false }
     case 'LOGOUT':
-      return {
-        ...state,
-        user: null,
-        tokens: null,
-        isAuthenticated: false,
-        isLoading: false
-      }
+      return { user: null, tokens: null, isLoading: false, error: null }
+    case 'CLEAR_ERROR':
+      return { ...state, error: null }
     default:
       return state
   }
 }
 
-// Создаем контекст
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+// Начальное состояние
+const initialState: AuthState = {
+  user: null,
+  tokens: null,
+  isLoading: true,
+  error: null
+}
 
-// Ключи для localStorage
+// Утилиты для работы с localStorage
 const STORAGE_KEYS = {
   USER: 'pizzanat_user',
   TOKENS: 'pizzanat_tokens'
-} as const
+}
+
+const saveToStorage = (user: User, tokens: AuthTokens) => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user))
+    localStorage.setItem(STORAGE_KEYS.TOKENS, JSON.stringify(tokens))
+  } catch (error) {
+    console.error('Ошибка сохранения в localStorage:', error)
+  }
+}
+
+const clearStorage = () => {
+  localStorage.removeItem(STORAGE_KEYS.USER)
+  localStorage.removeItem(STORAGE_KEYS.TOKENS)
+}
+
+const loadFromStorage = (): { user: User; tokens: AuthTokens } | null => {
+  try {
+    const userStr = localStorage.getItem(STORAGE_KEYS.USER)
+    const tokensStr = localStorage.getItem(STORAGE_KEYS.TOKENS)
+
+    if (userStr && tokensStr) {
+      const user = JSON.parse(userStr)
+      const tokens = JSON.parse(tokensStr)
+      return { user, tokens }
+    }
+  } catch (error) {
+    console.error('Ошибка загрузки из localStorage:', error)
+    clearStorage()
+  }
+
+  return null
+}
 
 // Провайдер контекста
 interface AuthProviderProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [state, dispatch] = useReducer(authReducer, initialState)
 
-  // Сохранение данных в localStorage
-  const saveToStorage = (user: User, tokens: AuthTokens) => {
-    localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user))
-    localStorage.setItem(STORAGE_KEYS.TOKENS, JSON.stringify(tokens))
-  }
-
-  // Удаление данных из localStorage
-  const clearStorage = () => {
-    localStorage.removeItem(STORAGE_KEYS.USER)
-    localStorage.removeItem(STORAGE_KEYS.TOKENS)
-  }
-
-  // Загрузка данных из localStorage при инициализации
+  // Загрузка сохраненных данных при инициализации
   useEffect(() => {
-    const loadStoredAuth = () => {
+    const loadStoredAuth = async () => {
       try {
-        const storedUser = localStorage.getItem(STORAGE_KEYS.USER)
-        const storedTokens = localStorage.getItem(STORAGE_KEYS.TOKENS)
-
-        if (storedUser && storedTokens) {
-          const user = JSON.parse(storedUser)
-          const tokens = JSON.parse(storedTokens)
-          
-          // Проверяем срок действия токена (если есть expires_in)
-          if (tokens.expires_in) {
-            const now = Date.now()
-            const tokenExpiry = tokens.expires_in * 1000 // переводим в миллисекунды
-            
-            if (now < tokenExpiry) {
-              dispatch({ type: 'SET_USER', payload: { user, tokens } })
-            } else {
-              // Токен истек, очищаем данные
-              clearStorage()
-              dispatch({ type: 'SET_LOADING', payload: false })
+        const stored = loadFromStorage()
+        if (stored) {
+          // Проверяем валидность токена через получение профиля
+          try {
+            const profile = await AuthApi.getProfile()
+            // Обновляем пользователя из профиля
+            const updatedUser: User = {
+              id: profile.id,
+              username: profile.username,
+              fullName: profile.fullName,
+              phoneNumber: profile.phoneNumber,
+              telegramId: profile.telegramId,
+              role: profile.role,
+              createdAt: profile.createdAt
             }
-          } else {
-            // Если нет информации о сроке действия, просто восстанавливаем сессию
-            dispatch({ type: 'SET_USER', payload: { user, tokens } })
+
+            dispatch({ type: 'SET_USER', payload: { user: updatedUser, tokens: stored.tokens } })
+            console.log('✅ Автоматический вход выполнен')
+          } catch (error) {
+            console.log('❌ Токен недействителен, требуется повторная авторизация')
+            clearStorage()
+            dispatch({ type: 'SET_LOADING', payload: false })
           }
         } else {
           dispatch({ type: 'SET_LOADING', payload: false })
@@ -136,29 +161,40 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       dispatch({ type: 'SET_LOADING', payload: true })
       const response = await AuthApi.login(request)
-      
+
+      console.log('🔍 Полный ответ логина:', response)
+
+      // Проверяем структуру ответа
+      if (!response.user || !response.token) {
+        console.error('❌ Неполная структура ответа при логине:', response)
+        throw new Error('Неполные данные от сервера')
+      }
+
       // Преобразуем ответ API в нужный формат
       const user: User = {
-        userId: response.userId,
-        username: response.username,
-        email: response.email,
-        firstName: response.firstName,
-        lastName: response.lastName
+        id: response.user!.id,
+        username: response.user!.username,
+        fullName: response.user!.fullName,
+        phoneNumber: response.user!.phoneNumber,
+        telegramId: response.user!.telegramId,
+        role: response.user!.role
       }
-      
+
       const tokens: AuthTokens = {
         access_token: response.token
       }
-      
+
       saveToStorage(user, tokens)
       dispatch({ type: 'SET_USER', payload: { user, tokens } })
-      
+
       notifications.show({
         title: 'Успешно!',
         message: 'Вы успешно вошли в систему',
         color: 'green'
       })
     } catch (error: any) {
+      console.error('❌ Ошибка логина:', error)
+      dispatch({ type: 'SET_ERROR', payload: error.message || 'Ошибка входа' })
       notifications.show({
         title: 'Ошибка входа',
         message: error.message || 'Неверное имя пользователя или пароль',
@@ -174,29 +210,40 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       dispatch({ type: 'SET_LOADING', payload: true })
       const response = await AuthApi.register(request)
-      
+
+      console.log('🔍 Полный ответ регистрации:', response)
+
+      // Проверяем структуру ответа
+      if (!response.user || !response.token) {
+        console.error('❌ Неполная структура ответа при регистрации:', response)
+        throw new Error('Неполные данные от сервера')
+      }
+
       // Преобразуем ответ API в нужный формат
       const user: User = {
-        userId: response.userId,
-        username: response.username,
-        email: response.email,
-        firstName: response.firstName,
-        lastName: response.lastName
+        id: response.user!.id,
+        username: response.user!.username,
+        fullName: response.user!.fullName,
+        phoneNumber: response.user!.phoneNumber,
+        telegramId: response.user!.telegramId,
+        role: response.user!.role
       }
-      
+
       const tokens: AuthTokens = {
         access_token: response.token
       }
-      
+
       saveToStorage(user, tokens)
       dispatch({ type: 'SET_USER', payload: { user, tokens } })
-      
+
       notifications.show({
         title: 'Добро пожаловать!',
         message: 'Регистрация прошла успешно',
         color: 'green'
       })
     } catch (error: any) {
+      console.error('❌ Ошибка регистрации:', error)
+      dispatch({ type: 'SET_ERROR', payload: error.message || 'Ошибка регистрации' })
       notifications.show({
         title: 'Ошибка регистрации',
         message: error.message || 'Не удалось создать аккаунт',
@@ -214,7 +261,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const response = await AuthApi.sendSmsCode(request)
       notifications.show({
         title: 'SMS отправлено',
-        message: `Код отправлен на ${response.maskedPhoneNumber}`,
+        message: `Код отправлен на ${response.maskedPhoneNumber || request.phoneNumber}`,
         color: 'blue'
       })
       return response
@@ -232,29 +279,55 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       dispatch({ type: 'SET_LOADING', payload: true })
       const response = await AuthApi.verifySmsCode(request)
-      
-      // Преобразуем ответ API в нужный формат
-      const user: User = {
-        userId: response.userId,
-        username: response.username,
-        email: response.email,
-        firstName: response.firstName,
-        lastName: response.lastName
+
+      console.log('🔍 Полный ответ SMS верификации:', response)
+
+      // Проверяем структуру ответа и адаптируем под разные варианты
+      let user: User
+      let tokens: AuthTokens
+
+      if (response.user && response.token) {
+        // Стандартный формат AuthResponse
+        user = {
+          id: response.user!.id,
+          username: response.user!.username,
+          fullName: response.user!.fullName,
+          phoneNumber: response.user!.phoneNumber,
+          telegramId: response.user!.telegramId,
+          role: response.user!.role
+        }
+        tokens = {
+          access_token: response.token
+        }
+      } else if (response.token && !response.user) {
+        // Если есть только токен, создаем пользователя из номера телефона
+        user = {
+          id: Date.now(), // временный ID
+          username: request.phoneNumber,
+          phoneNumber: request.phoneNumber,
+          role: 'USER'
+        }
+        tokens = {
+          access_token: response.token
+        }
+        console.log('⚠️ Создан временный пользователь из номера телефона')
+      } else {
+        // Если структура неожиданная, логируем и выбрасываем ошибку
+        console.error('❌ Неожиданная структура ответа API:', response)
+        throw new Error('Неожиданная структура ответа от сервера')
       }
-      
-      const tokens: AuthTokens = {
-        access_token: response.token
-      }
-      
+
       saveToStorage(user, tokens)
       dispatch({ type: 'SET_USER', payload: { user, tokens } })
-      
+
       notifications.show({
         title: 'Успешно!',
         message: 'Вы успешно вошли в систему',
         color: 'green'
       })
     } catch (error: any) {
+      console.error('❌ Ошибка SMS верификации:', error)
+      dispatch({ type: 'SET_ERROR', payload: error.message || 'Ошибка подтверждения' })
       notifications.show({
         title: 'Ошибка подтверждения',
         message: error.message || 'Неверный код подтверждения',
@@ -267,9 +340,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   // Telegram аутентификация
-  const initTelegramAuth = async (): Promise<TelegramAuthResponse> => {
+  const initTelegramAuth = async (phoneNumber?: string): Promise<TelegramAuthResponse> => {
     try {
-      return await AuthApi.initTelegramAuth()
+      return await AuthApi.initTelegramAuth(phoneNumber)
     } catch (error: any) {
       notifications.show({
         title: 'Ошибка Telegram',
@@ -280,34 +353,104 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  const checkTelegramStatus = async (sessionId: string) => {
+  const checkTelegramStatus = async (authToken: string) => {
     try {
-      const response = await AuthApi.checkTelegramStatus(sessionId)
-      if (response) {
-        // Преобразуем ответ API в нужный формат
-        const user: User = {
-          userId: response.userId,
-          username: response.username,
-          email: response.email,
-          firstName: response.firstName,
-          lastName: response.lastName
+      const response = await AuthApi.checkTelegramStatus(authToken)
+      console.log('🔍 Ответ checkTelegramStatus в AuthContext:', response)
+
+      // Поддерживаем оба статуса: COMPLETED и CONFIRMED
+      if (response && (response.status === 'COMPLETED' || response.status === 'CONFIRMED')) {
+        console.log('🎉 Telegram авторизация успешна! Обрабатываем ответ...')
+
+        // Извлекаем токен и данные пользователя из разных возможных мест
+        let token = response.token || response.authData?.token
+        let userData = response.user || response.authData?.user
+
+        console.log('🔍 Извлеченные данные:', { token: !!token, userData: !!userData })
+        console.log('🔍 Полная структура authData:', response.authData)
+
+        // Проверяем наличие токена
+        if (!token) {
+          console.error('❌ Отсутствует токен в ответе Telegram API:', response)
+          console.error('❌ Проверяемые поля:', {
+            'response.token': response.token,
+            'response.authData?.token': response.authData?.token,
+            'response.authData': response.authData
+          })
+          throw new Error('Сервер не вернул токен авторизации')
         }
-        
-        const tokens: AuthTokens = {
-          access_token: response.token
+
+        // Если есть пользователь в ответе, используем его
+        if (userData) {
+          const user: User = {
+            id: userData.id,
+            username: userData.phoneNumber || `user_${userData.id}`,
+            fullName: undefined,
+            phoneNumber: userData.phoneNumber,
+            telegramId: userData.telegramId,
+            role: userData.role
+          }
+
+          const tokens: AuthTokens = {
+            access_token: token
+          }
+
+          console.log('👤 Создан пользователь из Telegram ответа:', user)
+          console.log('🔑 Токены:', tokens)
+
+          saveToStorage(user, tokens)
+          dispatch({ type: 'SET_USER', payload: { user, tokens } })
+
+          notifications.show({
+            title: 'Успешно!',
+            message: 'Вы успешно вошли через Telegram',
+            color: 'green'
+          })
+        } else {
+          // Если нет данных пользователя, пытаемся получить профиль по токену
+          console.log('⚠️ Нет данных пользователя в ответе, получаем профиль...')
+
+          try {
+            // Временно сохраняем токен для запроса профиля
+            const tempTokens: AuthTokens = {
+              access_token: token
+            }
+
+            // Устанавливаем токен в localStorage для API запроса
+            localStorage.setItem('pizzanat_tokens', JSON.stringify(tempTokens))
+
+            // Получаем профиль пользователя
+            const profile = await AuthApi.getProfile()
+
+            const user: User = {
+              id: profile.id,
+              username: profile.username,
+              fullName: profile.fullName,
+              phoneNumber: profile.phoneNumber,
+              telegramId: profile.telegramId,
+              role: profile.role,
+              createdAt: profile.createdAt
+            }
+
+            console.log('👤 Создан пользователь из профиля:', user)
+
+            saveToStorage(user, tempTokens)
+            dispatch({ type: 'SET_USER', payload: { user, tokens: tempTokens } })
+
+            notifications.show({
+              title: 'Успешно!',
+              message: 'Вы успешно вошли через Telegram',
+              color: 'green'
+            })
+          } catch (profileError) {
+            console.error('❌ Ошибка получения профиля:', profileError)
+            throw new Error('Не удалось получить данные пользователя')
+          }
         }
-        
-        saveToStorage(user, tokens)
-        dispatch({ type: 'SET_USER', payload: { user, tokens } })
-        
-        notifications.show({
-          title: 'Успешно!',
-          message: 'Вы успешно вошли через Telegram',
-          color: 'green'
-        })
       }
       return response
     } catch (error: any) {
+      console.error('❌ Ошибка в checkTelegramStatus:', error)
       notifications.show({
         title: 'Ошибка Telegram',
         message: error.message || 'Ошибка проверки статуса Telegram',
@@ -339,31 +482,31 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // Обновление токена
   const refreshToken = async () => {
     try {
-      const storedTokens = localStorage.getItem(STORAGE_KEYS.TOKENS)
-      if (!storedTokens) return
+      if (!state.tokens?.refresh_token) {
+        throw new Error('Нет refresh токена')
+      }
 
-      const tokens = JSON.parse(storedTokens)
-      const response = await AuthApi.refreshToken(tokens.refresh_token)
-      
-      // Преобразуем ответ API в нужный формат
+      const response = await AuthApi.refreshToken(state.tokens.refresh_token)
+
+      const tokens: AuthTokens = {
+        access_token: response.token,
+        refresh_token: state.tokens.refresh_token
+      }
+
       const user: User = {
-        userId: response.userId,
-        username: response.username,
-        email: response.email,
-        firstName: response.firstName,
-        lastName: response.lastName
+        id: response.user!.id,
+        username: response.user!.username,
+        fullName: response.user!.fullName,
+        phoneNumber: response.user!.phoneNumber,
+        telegramId: response.user!.telegramId,
+        role: response.user!.role
       }
-      
-      const newTokens: AuthTokens = {
-        access_token: response.token
-      }
-      
-      saveToStorage(user, newTokens)
-      dispatch({ type: 'SET_USER', payload: { user, tokens: newTokens } })
+
+      saveToStorage(user, tokens)
+      dispatch({ type: 'SET_USER', payload: { user, tokens } })
     } catch (error) {
       console.error('Ошибка обновления токена:', error)
-      clearStorage()
-      dispatch({ type: 'LOGOUT' })
+      await logout()
     }
   }
 
@@ -389,10 +532,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 // Хук для использования контекста
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext)
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider')
+  if (!context) {
+    throw new Error('useAuth должен использоваться внутри AuthProvider')
   }
   return context
 }
 
-export default AuthContext 
+export default AuthContext

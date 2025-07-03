@@ -52,13 +52,13 @@ export function HomePage() {
           <Stack gap="md">
             <Group justify="space-between">
               <Title order={2} c="orange.7">
-                Добро пожаловать, {user?.firstName || 'в PizzaNat'}! 🍕
+                Добро пожаловать, {user?.fullName || 'в PizzaNat'}! 🍕
               </Title>
               <Badge color="green" variant="light">Аутентифицирован</Badge>
             </Group>
             <Text c="dimmed">
               Система аутентификации работает корректно! 
-              Пользователь: {user?.email || user?.phone || user?.telegram_id}
+              Пользователь: {user?.username || user?.phoneNumber || user?.telegramId}
             </Text>
             <Button 
               color="orange" 

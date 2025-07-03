@@ -140,11 +140,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
       
       // Подготавливаем данные для отправки
       const registerData: RegisterRequest = {
-        username: values.username.trim(),
-        email: values.email.trim().toLowerCase(),
-        phone: normalizePhoneNumber(values.phone),
-        password: values.password,
-        firstName: values.username.trim()
+        username: values.email.trim().toLowerCase(),
+        fullName: values.username.trim(),
+        phoneNumber: normalizePhoneNumber(values.phone),
+        password: values.password
       }
       
       console.log('📤 Отправляем данные регистрации:', {

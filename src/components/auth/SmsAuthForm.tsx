@@ -33,6 +33,7 @@ export function SmsAuthForm({ onSwitchToLogin, onSwitchToTelegram }: SmsAuthForm
   const { sendSmsCode, verifySmsCode, isLoading } = useAuth()
   const [step, setStep] = useState<'phone' | 'code'>('phone')
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [requestId, setRequestId] = useState<string | undefined>(undefined)
   const [countdown, setCountdown] = useState(0)
   const [smsCode, setSmsCode] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -74,8 +75,12 @@ export function SmsAuthForm({ onSwitchToLogin, onSwitchToTelegram }: SmsAuthForm
         ? '+' + normalizedPhone
         : '+7' + normalizedPhone
 
-      await sendSmsCode({ phoneNumber: formattedPhone })
+      const response = await sendSmsCode({ phoneNumber: formattedPhone })
       setPhoneNumber(formattedPhone)
+      // requestId может отсутствовать в реальном API
+      if (response.requestId) {
+        setRequestId(response.requestId)
+      }
       setStep('code')
       setCountdown(60) // 60 секунд до повторной отправки
     } catch (error) {
@@ -92,7 +97,8 @@ export function SmsAuthForm({ onSwitchToLogin, onSwitchToTelegram }: SmsAuthForm
       setIsSubmitting(true)
       await verifySmsCode({
         phoneNumber: phoneNumber,
-        code: smsCode
+        code: smsCode,
+        requestId: requestId // может быть undefined
       })
     } catch (error) {
       console.error('Ошибка подтверждения кода:', error)
@@ -105,7 +111,10 @@ export function SmsAuthForm({ onSwitchToLogin, onSwitchToTelegram }: SmsAuthForm
   const handleResendSms = async () => {
     try {
       setIsSubmitting(true)
-      await sendSmsCode({ phoneNumber: phoneNumber })
+      const response = await sendSmsCode({ phoneNumber: phoneNumber })
+      if (response.requestId) {
+        setRequestId(response.requestId)
+      }
       setCountdown(60)
       setSmsCode('')
     } catch (error) {

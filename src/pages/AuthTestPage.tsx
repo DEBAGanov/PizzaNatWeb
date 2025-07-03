@@ -27,11 +27,11 @@ import { TelegramAuthForm } from '../components/auth/TelegramAuthForm'
 import { useAuth } from '../contexts/AuthContext'
 
 export function AuthTestPage() {
-  const { user, isAuthenticated, isLoading, logout } = useAuth()
+  const { user, isLoading, logout } = useAuth()
   const [activeTab, setActiveTab] = useState<string>('login')
 
   // Если пользователь авторизован, показываем информацию о нем
-  if (isAuthenticated && user) {
+  if (user) {
     return (
       <Container size="md" py="xl">
         <Paper p="xl" shadow="md" radius="md">
