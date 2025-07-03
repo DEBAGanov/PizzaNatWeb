@@ -35,6 +35,8 @@ interface RegisterFormProps {
 
 interface FormValues {
   username: string
+  firstName: string
+  lastName: string
   email: string
   phone: string
   password: string
@@ -42,10 +44,10 @@ interface FormValues {
   agreeToTerms: boolean
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({ 
-  onBack, 
-  onSuccess, 
-  onSwitchToLogin 
+export const RegisterForm: React.FC<RegisterFormProps> = ({
+  onBack,
+  onSuccess,
+  onSwitchToLogin
 }) => {
   const { register } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
@@ -54,6 +56,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   const form = useForm<FormValues>({
     initialValues: {
       username: '',
+      firstName: '',
+      lastName: '',
       email: '',
       phone: '',
       password: '',
@@ -62,9 +66,21 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     },
     validate: {
       username: (value) => {
+        if (!value?.trim()) return 'Имя пользователя обязательно'
+        if (value.trim().length < 2) return 'Имя пользователя должно содержать минимум 2 символа'
+        if (value.trim().length > 50) return 'Имя пользователя не должно превышать 50 символов'
+        return null
+      },
+      firstName: (value) => {
         if (!value?.trim()) return 'Имя обязательно'
         if (value.trim().length < 2) return 'Имя должно содержать минимум 2 символа'
         if (value.trim().length > 50) return 'Имя не должно превышать 50 символов'
+        return null
+      },
+      lastName: (value) => {
+        if (!value?.trim()) return 'Фамилия обязательна'
+        if (value.trim().length < 2) return 'Фамилия должна содержать минимум 2 символа'
+        if (value.trim().length > 50) return 'Фамилия не должна превышать 50 символов'
         return null
       },
       email: (value) => {
@@ -85,16 +101,16 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         if (!value) return 'Пароль обязателен'
         if (value.length < 6) return 'Пароль должен содержать минимум 6 символов'
         if (value.length > 100) return 'Пароль не должен превышать 100 символов'
-        
+
         // Проверка на сложность пароля
         const hasUpperCase = /[A-Z]/.test(value)
         const hasLowerCase = /[a-z]/.test(value)
         const hasNumbers = /\d/.test(value)
-        
+
         if (!hasUpperCase || !hasLowerCase || !hasNumbers) {
           return 'Пароль должен содержать заглавные и строчные буквы, цифры'
         }
-        
+
         return null
       },
       confirmPassword: (value, values) => {
@@ -112,22 +128,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   // Нормализация номера телефона
   const normalizePhoneNumber = (phone: string): string => {
     const cleaned = phone.replace(/\D/g, '')
-    
+
     // Если номер начинается с 8, заменяем на 7
     if (cleaned.startsWith('8')) {
       return '7' + cleaned.slice(1)
     }
-    
+
     // Если номер начинается с 9 (без кода страны), добавляем 7
     if (cleaned.startsWith('9') && cleaned.length === 10) {
       return '7' + cleaned
     }
-    
+
     // Если номер начинается с 7, оставляем как есть
     if (cleaned.startsWith('7')) {
       return cleaned
     }
-    
+
     return cleaned
   }
 
@@ -135,43 +151,49 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   const handleRegister = async (values: FormValues) => {
     try {
       setIsLoading(true)
-      
+
       console.log('🚀 Начинаем регистрацию пользователя...')
-      
+
       // Подготавливаем данные для отправки
       const registerData: RegisterRequest = {
-        username: values.email.trim().toLowerCase(),
-        fullName: values.username.trim(),
-        phoneNumber: normalizePhoneNumber(values.phone),
+        username: values.username.trim(),
+        email: values.email.trim().toLowerCase(),
+        firstName: values.firstName.trim(),
+        lastName: values.lastName.trim(),
+        phone: normalizePhoneNumber(values.phone),
         password: values.password
       }
-      
+
       console.log('📤 Отправляем данные регистрации:', {
-        ...registerData,
+        username: registerData.username,
+        email: registerData.email,
+        firstName: registerData.firstName,
+        lastName: registerData.lastName,
+        phone: registerData.phone,
         password: '[СКРЫТО]'
       })
-      
+
       // Отправляем запрос на регистрацию через AuthContext
       await register(registerData)
-      
+
       console.log('✅ Регистрация успешна!')
-      
+
       notifications.show({
         title: 'Добро пожаловать!',
         message: 'Регистрация завершена, вы автоматически вошли в систему',
         color: 'green'
       })
-      
+
       onSuccess?.()
     } catch (error) {
       console.error('❌ Ошибка регистрации:', error)
-      
+
       let errorMessage = 'Произошла ошибка при регистрации'
-      
+
       if (error instanceof Error) {
         errorMessage = error.message
       }
-      
+
       // Обработка специфичных ошибок
       if (errorMessage.includes('email')) {
         form.setFieldError('email', 'Email уже используется')
@@ -192,7 +214,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   // Форматирование номера телефона для отображения
   const formatPhoneDisplay = (value: string) => {
     const cleaned = value.replace(/\D/g, '')
-    
+
     if (cleaned.length === 0) return ''
     if (cleaned.length <= 1) return `+${cleaned}`
     if (cleaned.length <= 4) return `+${cleaned.slice(0, 1)} (${cleaned.slice(1)}`
@@ -219,13 +241,31 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         {/* Форма регистрации */}
         <form onSubmit={form.onSubmit(handleRegister)}>
           <Stack gap="md">
+            {/* Имя пользователя */}
+            <TextInput
+              label="Имя пользователя"
+              placeholder="Введите имя пользователя"
+              leftSection={<IconUser size={16} />}
+              required
+              {...form.getInputProps('username')}
+            />
+
             {/* Имя */}
             <TextInput
               label="Имя"
               placeholder="Введите ваше имя"
               leftSection={<IconUser size={16} />}
               required
-              {...form.getInputProps('username')}
+              {...form.getInputProps('firstName')}
+            />
+
+            {/* Фамилия */}
+            <TextInput
+              label="Фамилия"
+              placeholder="Введите вашу фамилию"
+              leftSection={<IconUser size={16} />}
+              required
+              {...form.getInputProps('lastName')}
             />
 
             {/* Email */}

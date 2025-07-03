@@ -164,20 +164,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       console.log('🔍 Полный ответ логина:', response)
 
-      // Проверяем структуру ответа
-      if (!response.user || !response.token) {
-        console.error('❌ Неполная структура ответа при логине:', response)
-        throw new Error('Неполные данные от сервера')
+      // Проверяем наличие токена и обязательных полей
+      if (!response.token) {
+        console.error('❌ Отсутствует токен в ответе при логине:', response)
+        throw new Error('Сервер не вернул токен авторизации')
       }
 
-      // Преобразуем ответ API в нужный формат
+      if (!response.username) {
+        console.error('❌ Отсутствует username в ответе при логине:', response)
+        throw new Error('Сервер не вернул имя пользователя')
+      }
+
+      // Backend возвращает плоскую структуру, адаптируем под наш формат
       const user: User = {
-        id: response.user!.id,
-        username: response.user!.username,
-        fullName: response.user!.fullName,
-        phoneNumber: response.user!.phoneNumber,
-        telegramId: response.user!.telegramId,
-        role: response.user!.role
+        id: response.userId || response.id || Date.now(),
+        username: response.username,
+        fullName: response.firstName && response.lastName
+          ? `${response.firstName} ${response.lastName}`
+          : response.fullName,
+        phoneNumber: response.phone || response.phoneNumber,
+        telegramId: response.telegramId,
+        role: response.role || 'USER'
       }
 
       const tokens: AuthTokens = {
@@ -213,20 +220,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       console.log('🔍 Полный ответ регистрации:', response)
 
-      // Проверяем структуру ответа
-      if (!response.user || !response.token) {
-        console.error('❌ Неполная структура ответа при регистрации:', response)
-        throw new Error('Неполные данные от сервера')
+      // Проверяем наличие токена и обязательных полей
+      if (!response.token) {
+        console.error('❌ Отсутствует токен в ответе при регистрации:', response)
+        throw new Error('Сервер не вернул токен авторизации')
       }
 
-      // Преобразуем ответ API в нужный формат
+      if (!response.username) {
+        console.error('❌ Отсутствует username в ответе при регистрации:', response)
+        throw new Error('Сервер не вернул имя пользователя')
+      }
+
+      // Backend возвращает плоскую структуру, адаптируем под наш формат
       const user: User = {
-        id: response.user!.id,
-        username: response.user!.username,
-        fullName: response.user!.fullName,
-        phoneNumber: response.user!.phoneNumber,
-        telegramId: response.user!.telegramId,
-        role: response.user!.role
+        id: response.userId || response.id || Date.now(),
+        username: response.username,
+        fullName: response.firstName && response.lastName
+          ? `${response.firstName} ${response.lastName}`
+          : response.fullName,
+        phoneNumber: response.phone || response.phoneNumber,
+        telegramId: response.telegramId,
+        role: response.role || 'USER'
       }
 
       const tokens: AuthTokens = {
@@ -362,37 +376,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (response && (response.status === 'COMPLETED' || response.status === 'CONFIRMED')) {
         console.log('🎉 Telegram авторизация успешна! Обрабатываем ответ...')
 
-        // Извлекаем токен и данные пользователя из разных возможных мест
-        let token = response.token || response.authData?.token
-        let userData = response.user || response.authData?.user
-
-        console.log('🔍 Извлеченные данные:', { token: !!token, userData: !!userData })
-        console.log('🔍 Полная структура authData:', response.authData)
-
         // Проверяем наличие токена
-        if (!token) {
+        if (!response.token) {
           console.error('❌ Отсутствует токен в ответе Telegram API:', response)
-          console.error('❌ Проверяемые поля:', {
-            'response.token': response.token,
-            'response.authData?.token': response.authData?.token,
-            'response.authData': response.authData
-          })
           throw new Error('Сервер не вернул токен авторизации')
         }
 
         // Если есть пользователь в ответе, используем его
-        if (userData) {
+        if (response.user) {
+          const responseUser = response.user
           const user: User = {
-            id: userData.id,
-            username: userData.phoneNumber || `user_${userData.id}`,
+            id: responseUser.id,
+            username: responseUser.phoneNumber || `user_${responseUser.id}`,
             fullName: undefined,
-            phoneNumber: userData.phoneNumber,
-            telegramId: userData.telegramId,
-            role: userData.role
+            phoneNumber: responseUser.phoneNumber,
+            telegramId: responseUser.telegramId,
+            role: responseUser.role
           }
 
           const tokens: AuthTokens = {
-            access_token: token
+            access_token: response.token
           }
 
           console.log('👤 Создан пользователь из Telegram ответа:', user)
@@ -413,7 +416,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           try {
             // Временно сохраняем токен для запроса профиля
             const tempTokens: AuthTokens = {
-              access_token: token
+              access_token: response.token
             }
 
             // Устанавливаем токен в localStorage для API запроса

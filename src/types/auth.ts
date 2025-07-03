@@ -23,10 +23,21 @@ export interface AuthTokens {
   refresh_token?: string
 }
 
-// Реальный ответ API при логине/регистрации (согласно документации)
+// Реальный ответ API при логине/регистрации (согласно тестовому сценарию backend)
 export interface AuthResponse {
-  token: string        // Backend возвращает просто token
-  user?: {             // user может отсутствовать в некоторых ответах
+  token: string        // Backend возвращает токен
+  userId?: number      // ID пользователя (в регистрации)
+  id?: number          // ID пользователя (альтернативное поле)
+  username?: string    // Имя пользователя
+  email?: string       // Email пользователя
+  firstName?: string   // Имя
+  lastName?: string    // Фамилия
+  phone?: string       // Номер телефона
+  fullName?: string    // Полное имя (альтернативное поле)
+  phoneNumber?: string // Номер телефона (альтернативное поле)
+  telegramId?: number  // Telegram ID
+  role?: 'USER' | 'ADMIN' // Роль пользователя
+  user?: {             // user может присутствовать в некоторых ответах
     id: number
     username: string
     fullName?: string
@@ -43,10 +54,12 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
-  username: string      // email пользователя
+  username: string      // имя пользователя
+  email: string         // email пользователя
   password: string
-  fullName: string      // полное имя
-  phoneNumber: string   // номер телефона
+  firstName: string     // имя
+  lastName: string      // фамилия
+  phone: string         // номер телефона
 }
 
 // SMS Authentication
@@ -84,24 +97,13 @@ export interface TelegramInitRequest {
 
 // Telegram Status Response
 export interface TelegramStatusResponse {
-  success?: boolean
   status: 'PENDING' | 'COMPLETED' | 'CONFIRMED' | 'EXPIRED'
-  message?: string
-  token?: string            // JWT токен при успешной авторизации (может быть на верхнем уровне)
-  user?: {                  // Данные пользователя (могут быть на верхнем уровне)
+  token?: string            // JWT токен при успешной авторизации
+  user?: {
     id: number
     phoneNumber: string
     telegramId: number
     role: 'USER' | 'ADMIN'
-  }
-  authData?: {              // Или данные могут быть внутри authData
-    token?: string
-    user?: {
-      id: number
-      phoneNumber: string
-      telegramId: number
-      role: 'USER' | 'ADMIN'
-    }
   }
 }
 

@@ -33,8 +33,10 @@ export class AuthApi {
   static async register(request: RegisterRequest): Promise<AuthResponse> {
     console.log('📝 Попытка регистрации:', {
       username: request.username,
-      fullName: request.fullName,
-      phoneNumber: request.phoneNumber
+      email: request.email,
+      firstName: request.firstName,
+      lastName: request.lastName,
+      phone: request.phone
     })
     const response = await apiClient.post(API_ENDPOINTS.AUTH.REGISTER, request)
     console.log('✅ Успешная регистрация:', response.data)
