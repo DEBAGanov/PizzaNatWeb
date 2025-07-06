@@ -28,7 +28,7 @@ import { AppStoreLinks } from '../components/AppStoreLinks'
 
 export function HomePage() {
   const navigate = useNavigate()
-  const { user } = useAuth()
+  const { } = useAuth()
   const { 
     state: { 
       products, 
@@ -47,26 +47,25 @@ export function HomePage() {
   return (
     <Container size="lg">
       <Stack gap="lg">
-        {/* Приветственный блок с информацией о пользователе */}
+        {/* Блок с установкой приложения */}
         <Card shadow="sm" padding="lg" radius="md" withBorder>
           <Stack gap="md">
             <Group justify="space-between">
               <Title order={2} c="orange.7">
-                Добро пожаловать, {user?.fullName || 'в PizzaNat'}! 🍕
+                Скачайте мобильное приложение PizzaNat
               </Title>
-              <Badge color="green" variant="light">Аутентифицирован</Badge>
+              <Badge color="blue" variant="light">Рекомендуем</Badge>
             </Group>
             <Text c="dimmed">
-              Система аутентификации работает корректно! 
-              Пользователь: {user?.username || user?.phoneNumber || user?.telegramId}
+              Получите лучший опыт заказа пиццы с нашим мобильным приложением. 
+              Быстрое оформление заказов, эксклюзивные акции и удобное отслеживание доставки.
             </Text>
-            <Button 
-              color="orange" 
-              size="md"
-              onClick={() => navigate('/menu')}
-            >
-              Перейти к меню
-            </Button>
+            <Center>
+              <AppStoreLinks 
+                googlePlayUrl="#google-play-placeholder"
+                ruStoreUrl="#rustore-placeholder"
+              />
+            </Center>
           </Stack>
         </Card>
 
@@ -173,11 +172,7 @@ export function HomePage() {
           </Center>
         )}
 
-        {/* Ссылки на мобильные приложения */}
-        <AppStoreLinks 
-          googlePlayUrl="#google-play-placeholder"
-          ruStoreUrl="#rustore-placeholder"
-        />
+
 
         {/* Статус разработки - обновлен */}
         <Card shadow="sm" padding="lg" radius="md" withBorder bg="green.0">

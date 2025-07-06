@@ -173,6 +173,37 @@ export class AuthApi {
       console.log('📋 Полный ответ статуса Telegram:', response)
       console.log('📋 Данные ответа:', response.data)
       console.log('📋 Статус:', response.data?.status)
+      
+      // Детальное логирование всех полей ответа
+      if (response.data) {
+        console.log('🔍 Все поля ответа:', Object.keys(response.data))
+        console.log('🔍 Детальный анализ полей:', {
+          status: response.data.status,
+          token: response.data.token,
+          accessToken: response.data.accessToken,
+          access_token: response.data.access_token,
+          authToken: response.data.authToken,
+          jwt: response.data.jwt,
+          user: response.data.user,
+          userData: response.data.userData,
+          userInfo: response.data.userInfo,
+          authData: response.data.authData
+        })
+        
+        // Дополнительное логирование authData
+        if (response.data.authData) {
+          console.log('🔍 Содержимое authData:', response.data.authData)
+          console.log('🔍 Поля в authData:', Object.keys(response.data.authData))
+          console.log('🔍 Анализ токенов в authData:', {
+            token: response.data.authData.token,
+            accessToken: response.data.authData.accessToken,
+            access_token: response.data.authData.access_token,
+            authToken: response.data.authData.authToken,
+            jwt: response.data.authData.jwt,
+            user: response.data.authData.user
+          })
+        }
+      }
 
       // Поддерживаем оба статуса: COMPLETED и CONFIRMED
       if (response.data && (response.data.status === 'COMPLETED' || response.data.status === 'CONFIRMED')) {

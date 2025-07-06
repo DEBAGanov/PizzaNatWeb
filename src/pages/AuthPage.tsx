@@ -31,7 +31,7 @@ type AuthMode = 'login' | 'register'
 
 export const AuthPage: React.FC = () => {
   const { user, isLoading } = useAuth()
-  const [authMethod, setAuthMethod] = useState<AuthMethod>('email')
+  const [authMethod, setAuthMethod] = useState<AuthMethod>('sms')
   const [authMode, setAuthMode] = useState<AuthMode>('login')
 
   // Если пользователь уже авторизован, перенаправляем на главную

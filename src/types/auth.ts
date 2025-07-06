@@ -97,13 +97,32 @@ export interface TelegramInitRequest {
 
 // Telegram Status Response
 export interface TelegramStatusResponse {
+  success?: boolean
   status: 'PENDING' | 'COMPLETED' | 'CONFIRMED' | 'EXPIRED'
+  message?: string
   token?: string            // JWT токен при успешной авторизации
+  accessToken?: string      // Альтернативное поле для токена
+  access_token?: string     // Альтернативное поле для токена
+  authToken?: string        // Альтернативное поле для токена
+  jwt?: string              // Альтернативное поле для токена
   user?: {
     id: number
     phoneNumber: string
     telegramId: number
     role: 'USER' | 'ADMIN'
+  }
+  authData?: {              // Данные аутентификации могут быть вложены
+    token?: string
+    accessToken?: string
+    access_token?: string
+    authToken?: string
+    jwt?: string
+    user?: {
+      id: number
+      phoneNumber: string
+      telegramId: number
+      role: 'USER' | 'ADMIN'
+    }
   }
 }
 

@@ -376,26 +376,54 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (response && (response.status === 'COMPLETED' || response.status === 'CONFIRMED')) {
         console.log('🎉 Telegram авторизация успешна! Обрабатываем ответ...')
 
-        // Проверяем наличие токена
-        if (!response.token) {
+        // Проверяем наличие токена в различных полях (включая authData)
+        const token = response.token || response.accessToken || response.access_token || response.authToken || response.jwt ||
+                     response.authData?.token || response.authData?.accessToken || response.authData?.access_token || 
+                     response.authData?.authToken || response.authData?.jwt
+        
+        if (!token) {
           console.error('❌ Отсутствует токен в ответе Telegram API:', response)
+          console.error('❌ Проверенные поля токена:', {
+            token: response.token,
+            accessToken: response.accessToken,
+            access_token: response.access_token,
+            authToken: response.authToken,
+            jwt: response.jwt,
+            'authData.token': response.authData?.token,
+            'authData.accessToken': response.authData?.accessToken,
+            'authData.access_token': response.authData?.access_token,
+            'authData.authToken': response.authData?.authToken,
+            'authData.jwt': response.authData?.jwt
+          })
           throw new Error('Сервер не вернул токен авторизации')
         }
-
-        // Если есть пользователь в ответе, используем его
-        if (response.user) {
-          const responseUser = response.user
+        
+        console.log('🔑 Найден токен в поле:', 
+                    token === response.token ? 'token' : 
+                    token === response.accessToken ? 'accessToken' :
+                    token === response.access_token ? 'access_token' :
+                    token === response.authToken ? 'authToken' : 
+                    token === response.jwt ? 'jwt' :
+                    token === response.authData?.token ? 'authData.token' :
+                    token === response.authData?.accessToken ? 'authData.accessToken' :
+                    token === response.authData?.access_token ? 'authData.access_token' :
+                    token === response.authData?.authToken ? 'authData.authToken' :
+                    token === response.authData?.jwt ? 'authData.jwt' : 'unknown')
+        
+        // Если есть пользователь в ответе, используем его (проверяем и authData)
+        const userData = response.user || response.authData?.user
+        if (userData) {
           const user: User = {
-            id: responseUser.id,
-            username: responseUser.phoneNumber || `user_${responseUser.id}`,
+            id: userData.id,
+            username: userData.phoneNumber || `user_${userData.id}`,
             fullName: undefined,
-            phoneNumber: responseUser.phoneNumber,
-            telegramId: responseUser.telegramId,
-            role: responseUser.role
+            phoneNumber: userData.phoneNumber,
+            telegramId: userData.telegramId,
+            role: userData.role
           }
 
           const tokens: AuthTokens = {
-            access_token: response.token
+            access_token: token! // Используем non-null assertion, так как уже проверили
           }
 
           console.log('👤 Создан пользователь из Telegram ответа:', user)
@@ -416,7 +444,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           try {
             // Временно сохраняем токен для запроса профиля
             const tempTokens: AuthTokens = {
-              access_token: response.token
+              access_token: token! // Используем non-null assertion, так как уже проверили
             }
 
             // Устанавливаем токен в localStorage для API запроса
