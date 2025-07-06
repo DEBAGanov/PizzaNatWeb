@@ -22,14 +22,16 @@ import {
 import { useForm } from '@mantine/form'
 import { IconPhone, IconInfoCircle } from '@tabler/icons-react'
 import { useAuth } from '../../contexts/AuthContext'
+import { AppInstallButtons } from '../AppInstallButtons'
 import type { SmsAuthRequest } from '../../types/auth'
 
 interface SmsAuthFormProps {
+  // Пропсы оставляем для совместимости, но не используем
   onSwitchToLogin?: () => void
   onSwitchToTelegram?: () => void
 }
 
-export function SmsAuthForm({ onSwitchToLogin, onSwitchToTelegram }: SmsAuthFormProps) {
+export function SmsAuthForm({ }: SmsAuthFormProps) {
   const { sendSmsCode, verifySmsCode, isLoading } = useAuth()
   const [step, setStep] = useState<'phone' | 'code'>('phone')
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -231,36 +233,8 @@ export function SmsAuthForm({ onSwitchToLogin, onSwitchToTelegram }: SmsAuthForm
         </>
       )}
 
-      {/* Альтернативные способы входа */}
-      <Stack gap="xs" mt="xl">
-        <Text size="sm" ta="center" c="dimmed">
-          Или войдите другим способом
-        </Text>
-        
-        <Stack gap="xs">
-          {onSwitchToLogin && (
-            <Button
-              variant="light"
-              fullWidth
-              onClick={onSwitchToLogin}
-              disabled={isLoading || isSubmitting}
-            >
-              Войти по Email
-            </Button>
-          )}
-          
-          {onSwitchToTelegram && (
-            <Button
-              variant="light"
-              fullWidth
-              onClick={onSwitchToTelegram}
-              disabled={isLoading || isSubmitting}
-            >
-              Войти через Telegram
-            </Button>
-          )}
-        </Stack>
-      </Stack>
+      {/* Кнопки установки приложений */}
+      <AppInstallButtons />
     </Paper>
   )
 } 

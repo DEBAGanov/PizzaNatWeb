@@ -173,7 +173,7 @@ export class AuthApi {
       console.log('📋 Полный ответ статуса Telegram:', response)
       console.log('📋 Данные ответа:', response.data)
       console.log('📋 Статус:', response.data?.status)
-      
+
       // Детальное логирование всех полей ответа
       if (response.data) {
         console.log('🔍 Все поля ответа:', Object.keys(response.data))

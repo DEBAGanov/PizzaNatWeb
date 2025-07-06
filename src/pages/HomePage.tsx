@@ -24,7 +24,7 @@ import {
 import { IconPizza } from '@tabler/icons-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useProducts } from '../contexts/ProductsContext'
-import { AppStoreLinks } from '../components/AppStoreLinks'
+import { AppInstallButtons } from '../components/AppInstallButtons'
 
 export function HomePage() {
   const navigate = useNavigate()
@@ -60,12 +60,7 @@ export function HomePage() {
               Получите лучший опыт заказа пиццы с нашим мобильным приложением. 
               Быстрое оформление заказов, эксклюзивные акции и удобное отслеживание доставки.
             </Text>
-            <Center>
-              <AppStoreLinks 
-                googlePlayUrl="#google-play-placeholder"
-                ruStoreUrl="#rustore-placeholder"
-              />
-            </Center>
+            <AppInstallButtons title="Установите приложение прямо сейчас" />
           </Stack>
         </Card>
 

@@ -22,7 +22,6 @@ import { LoginForm } from '../components/auth/LoginForm'
 import { SmsAuthForm } from '../components/auth/SmsAuthForm'
 import { TelegramAuthForm } from '../components/auth/TelegramAuthForm'
 import { RegisterForm } from '../components/auth/RegisterForm'
-import { AppStoreLinks } from '../components/AppStoreLinks'
 import { useAuth } from '../contexts/AuthContext'
 import { Navigate } from 'react-router-dom'
 
@@ -159,13 +158,7 @@ export const AuthPage: React.FC = () => {
             {renderAuthForm()}
           </div>
 
-          {/* Ссылки на мобильные приложения */}
-          <Center>
-            <AppStoreLinks 
-              googlePlayUrl="#google-play-placeholder"
-              ruStoreUrl="#rustore-placeholder"
-            />
-          </Center>
+
 
           {/* Дополнительная информация */}
           <Center>
@@ -173,7 +166,7 @@ export const AuthPage: React.FC = () => {
               <Text size="xs" c="dimmed" ta="center">
                 Нужна помощь? Свяжитесь с нами по телефону{' '}
                 <Text component="span" fw={500}>
-                  +7 (999) 123-45-67
+                  +7 (906) 138-28-68
                 </Text>
               </Text>
             </Paper>

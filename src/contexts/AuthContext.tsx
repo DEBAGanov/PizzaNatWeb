@@ -397,7 +397,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           })
           throw new Error('Сервер не вернул токен авторизации')
         }
-        
+
         console.log('🔑 Найден токен в поле:', 
                     token === response.token ? 'token' : 
                     token === response.accessToken ? 'accessToken' :

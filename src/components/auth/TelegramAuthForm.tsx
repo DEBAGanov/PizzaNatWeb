@@ -35,6 +35,7 @@ import {
 } from '@tabler/icons-react'
 import { notifications } from '@mantine/notifications'
 import { useAuth } from '../../contexts/AuthContext'
+import { AppInstallButtons } from '../AppInstallButtons'
 
 interface TelegramAuthFormProps {
   onBack?: () => void
@@ -473,6 +474,9 @@ export const TelegramAuthForm: React.FC<TelegramAuthFormProps> = ({ onBack, onSu
             </Button>
           )}
         </Group>
+
+        {/* Кнопки установки приложений */}
+        <AppInstallButtons />
       </Stack>
     </Paper>
   )

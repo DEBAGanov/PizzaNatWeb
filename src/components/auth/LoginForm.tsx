@@ -20,18 +20,18 @@ import {
 import { useForm } from '@mantine/form'
 import { IconMail, IconLock } from '@tabler/icons-react'
 import { useAuth } from '../../contexts/AuthContext'
+import { AppInstallButtons } from '../AppInstallButtons'
 import type { LoginRequest } from '../../types/auth'
 
 interface LoginFormProps {
   onSwitchToRegister?: () => void
+  // Пропсы оставляем для совместимости, но не используем
   onSwitchToSms?: () => void
   onSwitchToTelegram?: () => void
 }
 
 export function LoginForm({ 
-  onSwitchToRegister, 
-  onSwitchToSms, 
-  onSwitchToTelegram 
+  onSwitchToRegister
 }: LoginFormProps) {
   const { login, isLoading } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -105,36 +105,8 @@ export function LoginForm({
         </Stack>
       </form>
 
-      {/* Альтернативные способы входа */}
-      <Stack gap="xs" mt="xl">
-        <Text size="sm" ta="center" c="dimmed">
-          Или войдите другим способом
-        </Text>
-        
-        <Stack gap="xs">
-          {onSwitchToSms && (
-            <Button
-              variant="light"
-              fullWidth
-              onClick={onSwitchToSms}
-              disabled={isLoading || isSubmitting}
-            >
-              Войти по SMS
-            </Button>
-          )}
-          
-          {onSwitchToTelegram && (
-            <Button
-              variant="light"
-              fullWidth
-              onClick={onSwitchToTelegram}
-              disabled={isLoading || isSubmitting}
-            >
-              Войти через Telegram
-            </Button>
-          )}
-        </Stack>
-      </Stack>
+      {/* Кнопки установки приложений */}
+      <AppInstallButtons />
 
       {/* Ссылка на регистрацию */}
       {onSwitchToRegister && (
