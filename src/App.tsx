@@ -18,6 +18,7 @@ import { HomePage } from './pages/HomePage'
 import { MenuPage } from './pages/MenuPage'
 import { ProductPage } from './pages/ProductPage'
 import { AuthTestPage } from './pages/AuthTestPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 
 // Компонент с навигацией (внутри Router)
 function AppWithRouter() {
@@ -57,6 +58,14 @@ function AppWithRouter() {
         element={
           <ProtectedRoute requireAuth={false}>
             <AuthPage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/privacy" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <PrivacyPolicyPage />
           </ProtectedRoute>
         } 
       />
