@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
               Настоящая политика обработки персональных данных составлена в соответствии с требованиями 
               Федерального закона от 27.07.2006. № 152-ФЗ «О персональных данных» (далее — Закон о персональных данных) 
               и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, 
-              предпринимаемые ИП Симоновым Данилой Сергеевичем (далее — Оператор).
+              предпринимаемые ИП Колезнев Глеб Сергеевич (далее — Оператор).
             </Text>
             
             <Text>
@@ -47,7 +47,7 @@ export default function PrivacyPolicyPage() {
             <Text>
               <strong>1.2.</strong> Настоящая политика Оператора в отношении обработки персональных данных (далее — Политика) 
               применяется ко всей информации, которую Оператор может получить о посетителях веб-сайта{' '}
-              <Text component="span" fw={600} c="blue">https://pizzanat.ru</Text>.
+              <Text component="span" fw={600} c="blue">https://dimbopizza.ru</Text>.
             </Text>
           </Stack>
 
@@ -316,7 +316,7 @@ export default function PrivacyPolicyPage() {
             <Text>
               <strong>8.1.</strong> Пользователь может получить любые разъяснения по интересующим вопросам, 
               касающимся обработки его персональных данных, обратившись к Оператору с помощью электронной почты{' '}
-              <Text component="span" fw={600} c="blue">privacy@pizzanat.ru</Text>.
+              <Text component="span" fw={600} c="blue">info@dimbopizza.ru</Text>.
             </Text>
             
             <Text>
@@ -327,7 +327,7 @@ export default function PrivacyPolicyPage() {
             <Text>
               <strong>8.3.</strong> Актуальная версия Политики в свободном доступе расположена в сети Интернет 
               по адресу{' '}
-              <Text component="span" fw={600} c="blue">https://pizzanat.ru/privacy</Text>.
+              <Text component="span" fw={600} c="blue">https://dimbopizza.ru/privacy</Text>.
             </Text>
           </Stack>
 
@@ -337,7 +337,7 @@ export default function PrivacyPolicyPage() {
           <Paper p="md" bg="gray.0" radius="md">
             <Stack gap="xs">
               <Text fw={600} c="dimmed">Контактная информация Оператора:</Text>
-              <Text size="sm">ИП Симонов Данила Сергеевич</Text>
+              <Text size="sm">ИП Колезнев Глеб Сергеевич</Text>
               <Text size="sm">
                 <ThemeIcon size="sm" variant="light" color="blue" mr="xs" style={{ display: 'inline-block' }}>
                   <IconMail size={12} />
@@ -348,7 +348,7 @@ export default function PrivacyPolicyPage() {
                 <ThemeIcon size="sm" variant="light" color="blue" mr="xs" style={{ display: 'inline-block' }}>
                   <IconLock size={12} />
                 </ThemeIcon>
-                Веб-сайт: https://pizzanat.ru
+                Веб-сайт: https://dimbopizza.ru
               </Text>
             </Stack>
           </Paper>
