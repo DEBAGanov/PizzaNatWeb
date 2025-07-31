@@ -17,10 +17,10 @@ export const APP_LINKS: AppLinks = {
   googlePlay: 'https://play.google.com/store/apps/details?id=ru.pizzanat.app',
   
   // RuStore
-  ruStore: 'https://apps.rustore.ru/app/ru.pizzanat.app',
+  ruStore: 'https://rustore.ru/catalog/app/com.pizzanat.app',
   
   // App Store (для будущего использования)
-  appStore: 'https://apps.apple.com/ru/app/pizzanat/id123456789'
+  appStore: 'https://rustore.ru/catalog/app/com.pizzanat.app'
 }
 
 // Функция для получения ссылок (с возможностью переопределения)
