@@ -14,7 +14,7 @@ export interface AppLinks {
 // Централизованная конфигурация ссылок на приложения
 export const APP_LINKS: AppLinks = {
   // Google Play Store
-  googlePlay: 'https://play.google.com/store/apps/details?id=ru.pizzanat.app',
+  googlePlay: 'https://rustore.ru/catalog/app/com.pizzanat.app',
   
   // RuStore
   ruStore: 'https://rustore.ru/catalog/app/com.pizzanat.app',
