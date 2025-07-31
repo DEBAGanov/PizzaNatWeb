@@ -31,7 +31,7 @@
 
 
 ### ❓ Вопрос 3: CORS настройки
-**Контекст**: Фронтенд будет размещен на pizzanat.ru, API на api.pizzanat.ru
+**Контекст**: Фронтенд будет размещен на dimbopizza.ru, API на api.dimbopizza.ru
 **Вопрос**: Настроены ли CORS заголовки на backend для поддержки cross-origin запросов?
 **Детали**: Необходимы заголовки для:
 - `Access-Control-Allow-Origin: https://pizzanat.ru`

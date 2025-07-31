@@ -16,7 +16,7 @@ export default defineConfig({
     proxy: {
       // Прокси для API запросов чтобы обойти CORS в разработке
       '/api': {
-        target: 'https://api.pizzanat.ru',
+        target: 'https://api.dimbopizza.ru',
         changeOrigin: true,
         secure: true,
         configure: (proxy, _options) => {

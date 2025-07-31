@@ -37,7 +37,7 @@ ports:
   - "3000:3000"  # Внутренний порт контейнера
 environment:
   - VITE_DOMAIN=your-domain.com  # Замените на ваш домен
-  - VITE_API_URL=https://api.pizzanat.ru/api/v1  # Ваш API
+  - VITE_API_URL=https://api.dimbopizza.ru/api/v1/  # Ваш API
 ```
 
 ### Файлы конфигурации:
@@ -178,7 +178,7 @@ nano .env
 
 ```env
 # API Configuration
-VITE_API_URL=https://api.pizzanat.ru/api/v1
+VITE_API_URL=https://api.dimbopizza.ru/api/v1/
 
 # Domain Configuration
 VITE_DOMAIN=your-domain.com

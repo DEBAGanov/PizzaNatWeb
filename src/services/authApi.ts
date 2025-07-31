@@ -65,8 +65,8 @@ export class AuthApi {
   static async initTelegramAuth(phoneNumber?: string): Promise<TelegramAuthResponse> {
     try {
       console.log('🔵 Инициализация Telegram аутентификации...')
-      console.log('🔧 API Base URL:', import.meta.env.DEV ? '/api/v1' : 'https://api.pizzanat.ru/api/v1')
-      console.log('🔧 Full URL:', `${import.meta.env.DEV ? '/api/v1' : 'https://api.pizzanat.ru/api/v1'}${API_ENDPOINTS.AUTH.TELEGRAM_INIT}`)
+      console.log('🔧 API Base URL:', import.meta.env.DEV ? '/api/v1' : 'https://api.dimbopizza.ru/api/v1/')
+      console.log('🔧 Full URL:', `${import.meta.env.DEV ? '/api/v1' : 'https://api.dimbopizza.ru/api/v1/'}${API_ENDPOINTS.AUTH.TELEGRAM_INIT}`)
 
       // Генерируем уникальный deviceId согласно тестовому сценарию
       const deviceId = `web_telegram_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`

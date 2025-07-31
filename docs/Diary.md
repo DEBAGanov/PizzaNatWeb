@@ -128,7 +128,7 @@
 #### 1. Анализ требований
 - **Цель**: Создать веб-альтернативу iOS приложению
 - **Дизайн**: Полное соответствие Android приложению
-- **Backend**: Интеграция с api.pizzanat.ru/api/v1/
+- **Backend**: Интеграция с api.dimbopizza.ru/api/v1/
 - **Хостинг**: TimeWeb Cloud без поддержки volumes
 - **Домен**: pizzanat.ru
 
@@ -493,14 +493,14 @@
 **Участники**: AI Assistant + Пользователь
 
 ### Цель
-Протестировать авторизацию через реальный API PizzaNat (api.pizzanat.ru)
+Протестировать авторизацию через реальный API DimboPizza (api.dimbopizza.ru)
 
 ### Выполненные действия
 
 #### 1. Проверка доступности API
 ```bash
 # Backend доступен и отвечает
-curl https://api.pizzanat.ru/api/v1/categories
+curl https://api.dimbopizza.ru/api/v1/categories
 # ✅ Возвращает 6 категорий: Пиццы, Бургеры, Напитки, Десерты, Закуски, Салаты
 ```
 
@@ -508,14 +508,14 @@ curl https://api.pizzanat.ru/api/v1/categories
 ```bash
 curl -X POST -H "Content-Type: application/json" \
   -d '{"phoneNumber":"+79999999999"}' \
-  https://api.pizzanat.ru/api/v1/auth/sms/send-code
+  https://api.dimbopizza.ru/api/v1/auth/sms/send-code
 # ✅ SMS код отправлен, маскированный номер: +7 (999) ***-**-99
 ```
 
 #### 3. Тестирование Telegram авторизации
 ```bash
 curl -X POST -H "Content-Type: application/json" -d '{}' \
-  https://api.pizzanat.ru/api/v1/auth/telegram/init
+  https://api.dimbopizza.ru/api/v1/auth/telegram/init
 # ✅ Получена ссылка: https://t.me/PizzaNatBot?start=tg_auth_KPS0B0GA1kX5WnXpKFlS
 ```
 
@@ -524,13 +524,13 @@ curl -X POST -H "Content-Type: application/json" -d '{}' \
 # Регистрация нового пользователя
 curl -X POST -H "Content-Type: application/json" \
   -d '{"username":"testuser","email":"test@test.com","password":"123456","firstName":"Test","lastName":"User"}' \
-  https://api.pizzanat.ru/api/v1/auth/register
+  https://api.dimbopizza.ru/api/v1/auth/register
 # ✅ Пользователь создан, получен JWT токен
 
 # Вход с созданным пользователем
 curl -X POST -H "Content-Type: application/json" \
   -d '{"username":"testuser","password":"123456"}' \
-  https://api.pizzanat.ru/api/v1/auth/login
+  https://api.dimbopizza.ru/api/v1/auth/login
 # ✅ Авторизация успешна, получен новый JWT токен
 ```
 
@@ -538,7 +538,7 @@ curl -X POST -H "Content-Type: application/json" \
 ```bash
 npm run dev
 # ✅ Проект запущен на http://localhost:5173
-# ✅ API настроен на https://api.pizzanat.ru/api/v1
+# ✅ API настроен на https://api.dimbopizza.ru/api/v1/
 ```
 
 ### Ключевые находки

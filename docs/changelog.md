@@ -12,6 +12,30 @@
 Формат основан на [Keep a Changelog](https://keepachangelog.com/ru/1.0.0/),
 и этот проект придерживается [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.11] - 2025-01-24 - Обновление API домена
+
+### Изменено
+- Обновлены все ссылки API с `https://api.pizzanat.ru/api/v1` на `https://api.dimbopizza.ru/api/v1/`
+- Обновлены staging ссылки с `https://staging-api.pizzanat.ru/api/v1` на `https://staging-api.dimbopizza.ru/api/v1/`
+- Исправлены конфигурационные файлы:
+  - `src/config/api.ts` - основная конфигурация API
+  - `src/services/authApi.ts` - отладочные логи
+  - `docker-compose.yml` и `docker-compose.local.yml` - переменные окружения
+  - `vite.config.ts` - настройки прокси
+  - `env.production` - production переменные
+  - `DEPLOY.md` - инструкции по деплою
+- Обновлена документация:
+  - `docs/testing-guide.md` - инструкции по тестированию
+  - `docs/Project.md` - архитектурная документация
+  - `docs/qa.md` - контекст проекта
+  - `docs/Diary.md` - журнал разработки
+- Изменены ссылки в qa.md с `pizzanat.ru` на `dimbopizza.ru` для frontend домена
+
+### Техническая информация
+- Все изменения затрагивают только URL-адреса, функциональность остается неизменной
+- Новый домен полностью совместим с существующим API
+- Обратная совместимость сохранена через переменные окружения
+
 ## [0.2.10] - 2025-01-21 - Добавление политики конфиденциальности
 
 ### Добавлено

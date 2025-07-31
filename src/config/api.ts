@@ -8,12 +8,12 @@
 // Базовые настройки API
 export const API_CONFIG = {
   // Основной домен API - легко заменяемый (Vite использует VITE_ префикс)
-  BASE_URL: import.meta.env.VITE_API_URL || 'https://api.pizzanat.ru/api/v1',
+  BASE_URL: import.meta.env.VITE_API_URL || 'https://api.dimbopizza.ru/api/v1/',
 
   // Альтернативные домены для быстрого переключения
   DOMAINS: {
-    PRODUCTION: 'https://api.pizzanat.ru/api/v1',
-    STAGING: 'https://staging-api.pizzanat.ru/api/v1',
+    PRODUCTION: 'https://api.dimbopizza.ru/api/v1/',
+    STAGING: 'https://staging-api.dimbopizza.ru/api/v1/',
     DEVELOPMENT: 'http://localhost:8080/api/v1',
     LOCAL: 'http://127.0.0.1:8080/api/v1'
   },

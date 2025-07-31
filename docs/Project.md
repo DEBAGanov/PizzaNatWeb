@@ -126,7 +126,7 @@ graph TB
 | **Reverse Proxy** | Nginx | Проксирование и статика |
 | **Hosting** | TimeWeb Cloud | Хостинг без volumes |
 | **Domain** | pizzanat.ru | Основной домен |
-| **API Endpoint** | api.pizzanat.ru/api/v1/ | Backend API |
+| **API Endpoint** | api.dimbopizza.ru/api/v1/ | Backend API |
 
 ## 📱 Дизайн-система и UI/UX
 
