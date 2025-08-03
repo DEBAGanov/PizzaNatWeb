@@ -1,0 +1,55 @@
+# Robots.txt для ДИМБО Пицца - Волжск
+# Доставка пиццы в г. Волжск, Республика Марий Эл
+
+User-agent: *
+
+# Разрешенные для индексации страницы
+Allow: /
+Allow: /menu
+Allow: /product/*
+Allow: /privacy
+
+# Запрещенные для индексации страницы
+Disallow: /cart
+Disallow: /checkout
+Disallow: /orders
+Disallow: /auth
+Disallow: /auth-test
+Disallow: /admin/*
+Disallow: /api/*
+
+# Статические ресурсы
+Allow: /assets/
+Allow: /images/
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.svg
+Allow: *.ico
+
+# Карта сайта
+Sitemap: https://dimbopizza.ru/sitemap.xml
+
+# Время обхода (в секундах)
+Crawl-delay: 1
+
+# Специфичные настройки для поисковых систем
+User-agent: Yandex
+Crawl-delay: 1
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term
+
+User-agent: Googlebot
+Crawl-delay: 1
+
+# Блокируем устаревшие или вредоносные боты
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /

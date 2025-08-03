@@ -1,0 +1,66 @@
+# Docker Compose специально для Timeweb Cloud Apps
+# Этот файл оптимизирован под требования облачной платформы Timeweb
+
+version: "3.8"
+
+services:
+  # ДИМБО Пицца - основное приложение для Timeweb Cloud Apps
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    
+    # Timeweb Cloud Apps автоматически проксирует на основной домен
+    ports:
+      - "3478:3478"
+
+    # Переменные окружения (настраиваются в панели Timeweb)
+    environment:
+      - NODE_ENV=production
+      - NODE_OPTIONS=--max-old-space-size=512
+      
+      # API
+      - VITE_API_URL=https://api.dimbopizza.ru/api/v1/
+      
+      # App Info
+      - VITE_APP_NAME=ДИМБО Пицца
+      - VITE_APP_VERSION=1.0.0
+      
+      # Домен (будет автоматически установлен Timeweb)
+      - VITE_DOMAIN=${DOMAIN}
+      
+      # Analytics (задайте в панели Timeweb)
+      - VITE_YANDEX_METRIKA_ID=${VITE_YANDEX_METRIKA_ID}
+      
+      # Telegram
+      - VITE_TELEGRAM_BOT_NAME=${VITE_TELEGRAM_BOT_NAME}
+      - VITE_TELEGRAM_WEBAPP_URL=${VITE_TELEGRAM_WEBAPP_URL}
+      
+      # Контакты (задайте в панели)
+      - VITE_PHONE=${VITE_PHONE}
+      - VITE_EMAIL=${VITE_EMAIL}
+      - VITE_ADDRESS=${VITE_ADDRESS}
+      
+      # Платежи
+      - VITE_YUKASSA_SHOP_ID=${VITE_YUKASSA_SHOP_ID}
+      
+      # Features
+      - VITE_ENABLE_PWA=true
+      - VITE_ENABLE_HTTPS=true
+
+    # Health check
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider http://localhost:3478/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+# Особенности Timeweb Cloud Apps:
+# ✅ Автоматический Nginx с SSL
+# ✅ Автоматический домен + возможность своего
+# ✅ Переменные через панель управления
+# ❌ Volumes не сохраняются
+# ❌ Порты 80/443 зарезервированы
+# ❌ Только первый сервис проксируется

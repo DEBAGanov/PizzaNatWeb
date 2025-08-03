@@ -1,72 +1,83 @@
 version: "3.8"
 
 services:
-  # Основное приложение PizzaNat Web для Timeweb Cloud Apps (оптимизировано для 1GB RAM)
-  pizzanat-web:
+  # ДИМБО Пицца Web для Production (упрощенная версия для деплоя)
+  dimbopizza-web:
     build:
       context: .
       dockerfile: Dockerfile
       target: production
-    container_name: pizzanat-web
+    container_name: dimbopizza-web
     restart: unless-stopped
     ports:
       - "3478:3478"
-
-    # Ограничения ресурсов для сервера 1GB RAM
-    deploy:
-      resources:
-        limits:
-          memory: 512M # Максимум 512MB для контейнера
-          cpus: "0.5" # Максимум 50% CPU
-        reservations:
-          memory: 256M # Минимум 256MB
-          cpus: "0.25" # Минимум 25% CPU
-
-    # Минимальный набор переменных окружения
+    
     environment:
-      # Node Environment (оптимизация памяти)
+      # Production Environment
       - NODE_ENV=production
-      - NODE_OPTIONS=--max-old-space-size=256
-
-      # API Configuration (только необходимое)
+      - NODE_OPTIONS=--max-old-space-size=512
+      
+      # API Configuration
       - VITE_API_URL=https://api.dimbopizza.ru/api/v1/
       - VITE_API_TIMEOUT=15000
-
-      # App Configuration (базовое)
-      - VITE_APP_NAME=PizzaNat
+      
+      # App Configuration
+      - VITE_APP_NAME=ДИМБО Пицца
       - VITE_APP_VERSION=1.0.0
-      - VITE_APP_DESCRIPTION=Лучшая пицца в городе - заказывайте онлайн!
-
+      - VITE_APP_DESCRIPTION=Вкусная пицца с доставкой в Волжске - заказывайте онлайн!
+      
       # Domain Configuration
-      - VITE_DOMAIN=pizzanat.ru
-
-      # Security (минимум)
+      - VITE_DOMAIN=${DOMAIN:-dimbopizza.ru}
+      - VITE_WWW_DOMAIN=${WWW_DOMAIN:-www.dimbopizza.ru}
+      
+      # Security
       - VITE_ENABLE_HTTPS=true
       - VITE_SECURE_COOKIES=true
-
-      # Build Optimization (экономия ресурсов)
+      
+      # Analytics
+      - VITE_YANDEX_METRIKA_ID=${VITE_YANDEX_METRIKA_ID}
+      - VITE_GOOGLE_ANALYTICS_ID=${VITE_GOOGLE_ANALYTICS_ID}
+      
+      # Telegram Web App
+      - VITE_TELEGRAM_BOT_NAME=${VITE_TELEGRAM_BOT_NAME:-DimboPizzaBot}
+      - VITE_TELEGRAM_BOT_URL=${VITE_TELEGRAM_BOT_URL:-https://t.me/DimboPizzaBot}
+      - VITE_TELEGRAM_WEBAPP_URL=${VITE_TELEGRAM_WEBAPP_URL:-https://dimbopizza.ru}
+      - VITE_TELEGRAM_ENABLED=${VITE_TELEGRAM_ENABLED:-true}
+      
+      # Contact Info
+      - VITE_PHONE=${VITE_PHONE:-+7902-105-34-34}
+      - VITE_EMAIL=${VITE_EMAIL:-info@dimbopizza.ru}
+      - VITE_ADDRESS=${VITE_ADDRESS:-ул.Шестакова, д.1Б, г. Волжск, Республика Марий Эл}
+      
+      # Payment & Maps
+      - VITE_PAYMENT_REDIRECT_URL=${VITE_PAYMENT_REDIRECT_URL:-https://dimbopizza.ru/payment/callback}
+      - VITE_YANDEX_MAPS_API_KEY=${VITE_YANDEX_MAPS_API_KEY}
+      
+      # Features
+      - VITE_ENABLE_PWA=true
+      - VITE_ENABLE_NOTIFICATIONS=true
+      - VITE_ENABLE_GEOLOCATION=true
+      
+      # Delivery Configuration
+      - VITE_DELIVERY_CITY=Волжск
+      - VITE_DELIVERY_ZONES_ENABLED=true
+      
+      # Build Optimization
       - VITE_BUILD_SOURCEMAP=false
       - VITE_BUILD_MINIFY=true
-      - VITE_BUILD_CHUNKS=false # Отключаем chunking для экономии памяти
+      - VITE_BUILD_CHUNKS=true
 
-    # Оптимизированный healthcheck (реже проверки)
+    # Health check
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "wget --no-verbose --tries=1 --spider http://localhost:3478/ || exit 1",
-        ]
-      interval: 60s # Увеличили интервал
-      timeout: 5s # Уменьшили таймаут
-      retries: 2 # Меньше попыток
-      start_period: 30s # Меньше времени ожидания
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3478/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
-    # Настройки для экономии ресурсов
+    # Настройки логирования
     logging:
       driver: "json-file"
       options:
-        max-size: "10m" # Максимум 10MB логов
-        max-file: "2" # Только 2 файла логов
-
-    # Отключаем swap для контейнера
-    mem_swappiness: 0
+        max-size: "10m"
+        max-file: "3"

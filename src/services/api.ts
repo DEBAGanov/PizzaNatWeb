@@ -19,7 +19,7 @@ const apiClient: AxiosInstance = axios.create({
 })
 
 // Функция для получения токена из localStorage
-const getAuthToken = (): string | null => {
+export const getAuthToken = (): string | null => {
   try {
     const tokens = localStorage.getItem('pizzanat_tokens')
     if (tokens) {
@@ -28,7 +28,7 @@ const getAuthToken = (): string | null => {
     }
     return null
   } catch (error) {
-    console.error('Ошибка получения токена:', error)
+    console.error('❌ Ошибка получения токена:', error)
     return null
   }
 }
@@ -72,23 +72,43 @@ apiClient.interceptors.response.use(
       error
     )
 
-    // Обработка ошибок авторизации
-    if (error.response?.status === 401) {
-      // Очищаем токены при 401
+    // Получаем статус ошибки
+    const status = error.response?.status
+    const url = error.config?.url || ''
+
+    // Обработка ошибок авторизации (401 - неавторизован, 403 - нет доступа)
+    if (status === 401 || status === 403) {
+      console.warn(`🔒 Ошибка авторизации ${status} для ${url}`)
+      
+      // Очищаем токены при 401/403
       localStorage.removeItem('pizzanat_tokens')
       localStorage.removeItem('pizzanat_user')
       
       // Перенаправляем на страницу авторизации если не на ней
       if (!window.location.pathname.includes('/auth')) {
+        console.log('🔄 Перенаправление на страницу авторизации')
         window.location.href = '/auth'
       }
     }
 
-    // Стандартизация ошибок для PizzaNat API
+    // Проверяем защищенные endpoints которые должны требовать авторизацию
+    const protectedEndpoints = ['/cart', '/orders', '/admin', '/payments']
+    const isProtectedEndpoint = protectedEndpoints.some(endpoint => url.includes(endpoint))
+    
+    if (isProtectedEndpoint && status === 200) {
+      console.warn(`⚠️ Защищенный endpoint ${url} вернул 200 без авторизации - это проблема безопасности!`)
+    }
+
+    // Стандартизация ошибок для ДИМБО Пицца API
     const apiError: ApiError = {
       code: error.response?.data?.error || error.code || 'UNKNOWN_ERROR',
       message: error.response?.data?.message || error.message || 'Произошла ошибка',
-      details: error.response?.data || {}
+      details: {
+        ...error.response?.data,
+        status,
+        url,
+        isProtectedEndpoint
+      }
     }
 
     return Promise.reject(apiError)

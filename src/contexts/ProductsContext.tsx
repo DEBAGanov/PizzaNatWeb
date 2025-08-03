@@ -43,6 +43,7 @@ interface ProductsState {
   cart: Cart | null
   cartLoading: boolean
   cartError: string | null
+  removedCartItemIds: Set<number> // Элементы, которые получили 404 ошибку
 
   // Поиск и фильтры
   searchQuery: string
@@ -76,6 +77,8 @@ type ProductsAction =
   | { type: 'SET_CART_LOADING'; payload: boolean }
   | { type: 'SET_CART'; payload: Cart | null }
   | { type: 'SET_CART_ERROR'; payload: string | null }
+  | { type: 'ADD_REMOVED_CART_ITEM'; payload: number }
+  | { type: 'CLEAR_REMOVED_CART_ITEMS' }
   
   // Поиск и фильтры
   | { type: 'SET_SEARCH_QUERY'; payload: string }
@@ -107,6 +110,7 @@ const initialState: ProductsState = {
   cart: null,
   cartLoading: false,
   cartError: null,
+  removedCartItemIds: new Set(),
 
   searchQuery: '',
   filters: {
@@ -167,6 +171,13 @@ function productsReducer(state: ProductsState, action: ProductsAction): Products
       return { ...state, cart: action.payload, cartLoading: false, cartError: null }
     case 'SET_CART_ERROR':
       return { ...state, cartError: action.payload, cartLoading: false }
+    case 'ADD_REMOVED_CART_ITEM':
+      const newRemovedSet = new Set([...state.removedCartItemIds, action.payload])
+      console.log(`➕ ADD_REMOVED_CART_ITEM: добавляем ID ${action.payload}, новый Set:`, Array.from(newRemovedSet))
+      return { ...state, removedCartItemIds: newRemovedSet }
+    case 'CLEAR_REMOVED_CART_ITEMS':
+      console.log('🧹 CLEAR_REMOVED_CART_ITEMS: очищаем Set удаленных элементов')
+      return { ...state, removedCartItemIds: new Set() }
 
     // Поиск и фильтры
     case 'SET_SEARCH_QUERY':
@@ -227,6 +238,7 @@ interface ProductsContextType {
   // Утилиты
   getCartItemsCount: () => number
   getCartTotal: () => number
+  getFilteredCart: () => Cart | null
   isFavorite: (productId: number) => boolean
 }
 
@@ -281,9 +293,8 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
       const nextPage = state.productsPage + 1
       const response = await productsApi.getProducts({
         page: nextPage,
-        limit: state.productsLimit,
-        search: state.searchQuery || undefined,
-        ...state.filters
+        size: state.productsLimit,
+        search: state.searchQuery || undefined
       })
       dispatch({ type: 'APPEND_PRODUCTS', payload: response.products })
     } catch (error: any) {
@@ -339,13 +350,36 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
   }
 
   // Загрузка корзины
-  const loadCart = async () => {
+  const loadCart = useCallback(async () => {
+    console.log('🛒 Загружаем корзину...')
     try {
       dispatch({ type: 'SET_CART_LOADING', payload: true })
       const cart = await productsApi.getCart()
+      console.log('✅ Корзина загружена из API:', cart)
       dispatch({ type: 'SET_CART', payload: cart })
+      dispatch({ type: 'SET_CART_ERROR', payload: null }) // Сбрасываем ошибку при успешной загрузке
+      // НЕ очищаем removedCartItemIds здесь - это вызывает бесконечный цикл!
+      dispatch({ type: 'SET_CART_LOADING', payload: false })
     } catch (error: any) {
+      // Для development окружения с dev токенами создаем пустую корзину
+      if (window.location.hostname === 'localhost' && window.location.port === '8080') {
+        console.warn('⚠️ Development mode: API ошибка корзины, создаем пустую корзину:', error.message)
+        const emptyCart = {
+          id: null,
+          sessionId: 'dev-session-' + Date.now(),
+          totalAmount: 0,
+          items: []
+        }
+        console.log('🔧 Создана пустая корзина для dev режима:', emptyCart)
+        dispatch({ type: 'SET_CART', payload: emptyCart })
+        dispatch({ type: 'SET_CART_ERROR', payload: null }) // Сбрасываем ошибку в dev режиме
+        // НЕ очищаем removedCartItemIds в dev режиме - это вызывает бесконечный цикл!
+        dispatch({ type: 'SET_CART_LOADING', payload: false })
+        return
+      }
+      
       dispatch({ type: 'SET_CART_ERROR', payload: error.message })
+      dispatch({ type: 'SET_CART_LOADING', payload: false })
       // Для корзины не показываем уведомление об ошибке, если пользователь не авторизован
       if (error.code !== 'UNAUTHORIZED') {
         notifications.show({
@@ -355,63 +389,191 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
         })
       }
     }
-  }
+  }, [])
 
   // Добавление в корзину
   const addToCart = useCallback(async (item: AddToCartRequest) => {
+    console.log('🛒 Добавляем товар в корзину:', item)
     try {
       dispatch({ type: 'SET_CART_LOADING', payload: true })
       const cart = await productsApi.addToCart(item)
+      console.log('✅ Товар добавлен через API:', cart)
       dispatch({ type: 'SET_CART', payload: cart })
+      console.log('🧹 addToCart УСПЕХ: очищаем removedCartItemIds')
+      dispatch({ type: 'CLEAR_REMOVED_CART_ITEMS' }) // Очищаем при успешном добавлении
+      dispatch({ type: 'SET_CART_LOADING', payload: false })
       notifications.show({
         title: 'Успешно',
         message: 'Товар добавлен в корзину',
         color: 'green'
       })
     } catch (error: any) {
+      // Для development окружения с dev токенами имитируем добавление товара
+      if (window.location.hostname === 'localhost' && window.location.port === '8080') {
+        console.warn('⚠️ Development mode: API ошибка добавления в корзину, имитируем добавление:', error.message)
+        
+        // Получаем текущую корзину и добавляем товар локально
+        const currentCart = state.cart || {
+          id: null,
+          sessionId: 'dev-session-' + Date.now(),
+          totalAmount: 0,
+          items: []
+        }
+        
+        // Проверяем есть ли товар уже в корзине
+        const existingItemIndex = currentCart.items.findIndex(cartItem => cartItem.productId === item.productId)
+        
+        let updatedCart
+        if (existingItemIndex >= 0) {
+          // Товар уже есть в корзине, увеличиваем количество
+          const existingItem = currentCart.items[existingItemIndex]
+          const newQuantity = existingItem.quantity + (item.quantity || 1)
+          const newSubtotal = existingItem.price * newQuantity
+          
+          const updatedItems = [...currentCart.items]
+          updatedItems[existingItemIndex] = {
+            ...existingItem,
+            quantity: newQuantity,
+            subtotal: newSubtotal
+          }
+          
+          updatedCart = {
+            ...currentCart,
+            items: updatedItems,
+            totalAmount: currentCart.totalAmount + existingItem.price * (item.quantity || 1)
+          }
+        } else {
+          // Имитируем добавление нового товара
+          const newItem = {
+            id: Date.now(),
+            productId: item.productId,
+            productName: 'Товар #' + item.productId,
+            productImageUrl: '',
+            price: 499,
+            discountedPrice: 499,
+            quantity: item.quantity || 1,
+            subtotal: 499 * (item.quantity || 1)
+          }
+          
+          updatedCart = {
+            ...currentCart,
+            items: [...currentCart.items, newItem],
+            totalAmount: currentCart.totalAmount + newItem.subtotal
+          }
+        }
+        
+        console.log('🔧 Dev mode: обновленная корзина:', updatedCart)
+        
+        dispatch({ type: 'SET_CART', payload: updatedCart })
+        console.log('🧹 addToCart DEV УСПЕХ: очищаем removedCartItemIds')
+        dispatch({ type: 'CLEAR_REMOVED_CART_ITEMS' }) // Очищаем при успешном добавлении в dev режиме
+        dispatch({ type: 'SET_CART_LOADING', payload: false })
+        notifications.show({
+          title: 'Успешно (Dev)',
+          message: 'Товар добавлен в корзину (имитация)',
+          color: 'green'
+        })
+        return
+      }
+      
       dispatch({ type: 'SET_CART_ERROR', payload: error.message })
+      dispatch({ type: 'SET_CART_LOADING', payload: false })
       notifications.show({
         title: 'Ошибка',
         message: 'Не удалось добавить товар в корзину',
         color: 'red'
       })
     }
-  }, [])
+  }, [state.cart])
 
-  // Обновление товара в корзине
-  const updateCartItem = async (itemId: number, updates: UpdateCartItemRequest) => {
+  // Обновление товара в корзине по productId
+  const updateCartItem = async (productId: number, updates: UpdateCartItemRequest) => {
+    console.log('📊 updateCartItem: начинаем обновление по productId', { productId, updates })
     try {
       dispatch({ type: 'SET_CART_LOADING', payload: true })
-      const cart = await productsApi.updateCartItem(itemId, updates)
+      const cart = await productsApi.updateCartItem(productId, updates)
+      console.log('✅ updateCartItem: успешно обновлено через API')
       dispatch({ type: 'SET_CART', payload: cart })
+      console.log('🧹 updateCartItem УСПЕХ: очищаем removedCartItemIds')
+      dispatch({ type: 'CLEAR_REMOVED_CART_ITEMS' }) // Очищаем при успешном обновлении
+      dispatch({ type: 'SET_CART_LOADING', payload: false })
     } catch (error: any) {
-      dispatch({ type: 'SET_CART_ERROR', payload: error.message })
-      notifications.show({
-        title: 'Ошибка',
-        message: 'Не удалось обновить товар в корзине',
-        color: 'red'
-      })
+      console.error('❌ Ошибка обновления элемента корзины:', error)
+      
+      // Если элемент не найден (404 или "не найден"), перезагружаем корзину
+      const isNotFound = error.message?.includes('404') || 
+                        error.status === 404 || 
+                        error.message?.includes('не найден') ||
+                        error.message?.includes('not found') ||
+                        (error.code === 'ERR_BAD_REQUEST' && error.message?.includes('не найден'))
+      
+      if (isNotFound) {
+        console.warn('⚠️ Элемент корзины не найден, помечаем как удаленный и перезагружаем корзину')
+        // Помечаем элемент как удаленный для немедленного скрытия из UI
+        dispatch({ type: 'ADD_REMOVED_CART_ITEM', payload: productId })
+        await loadCart()
+        notifications.show({
+          title: 'Товар не найден',
+          message: 'Товар был удален из корзины. Корзина обновлена.',
+          color: 'orange'
+        })
+      } else {
+        dispatch({ type: 'SET_CART_ERROR', payload: error.message })
+        dispatch({ type: 'SET_CART_LOADING', payload: false }) // Сбрасываем loading при ошибке
+        notifications.show({
+          title: 'Ошибка',
+          message: 'Не удалось обновить товар в корзине',
+          color: 'red'
+        })
+      }
     }
   }
 
-  // Удаление из корзины
-  const removeFromCart = async (itemId: number) => {
+  // Удаление из корзины по productId
+  const removeFromCart = async (productId: number) => {
+    console.log('🗑️ removeFromCart: начинаем удаление по productId', { productId })
     try {
       dispatch({ type: 'SET_CART_LOADING', payload: true })
-      const cart = await productsApi.removeFromCart(itemId)
+      const cart = await productsApi.removeFromCart(productId)
+      console.log('✅ removeFromCart: успешно удалено через API')
       dispatch({ type: 'SET_CART', payload: cart })
+      console.log('🧹 removeFromCart УСПЕХ: очищаем removedCartItemIds')
+      dispatch({ type: 'CLEAR_REMOVED_CART_ITEMS' }) // Очищаем при успешном удалении
+      dispatch({ type: 'SET_CART_LOADING', payload: false })
       notifications.show({
         title: 'Успешно',
         message: 'Товар удален из корзины',
         color: 'orange'
       })
     } catch (error: any) {
-      dispatch({ type: 'SET_CART_ERROR', payload: error.message })
-      notifications.show({
-        title: 'Ошибка',
-        message: 'Не удалось удалить товар из корзины',
-        color: 'red'
-      })
+      console.error('❌ Ошибка удаления элемента корзины:', error)
+      
+      // Если элемент не найден (404 или "не найден"), перезагружаем корзину
+      const isNotFound = error.message?.includes('404') || 
+                        error.status === 404 || 
+                        error.message?.includes('не найден') ||
+                        error.message?.includes('not found') ||
+                        (error.code === 'ERR_BAD_REQUEST' && error.message?.includes('не найден'))
+      
+      if (isNotFound) {
+        console.warn('⚠️ Элемент корзины не найден, помечаем как удаленный и перезагружаем корзину')
+        // Помечаем элемент как удаленный для немедленного скрытия из UI
+        dispatch({ type: 'ADD_REMOVED_CART_ITEM', payload: productId })
+        await loadCart()
+        notifications.show({
+          title: 'Товар не найден',
+          message: 'Товар уже был удален из корзины. Корзина обновлена.',
+          color: 'orange'
+        })
+      } else {
+        dispatch({ type: 'SET_CART_ERROR', payload: error.message })
+        dispatch({ type: 'SET_CART_LOADING', payload: false }) // Сбрасываем loading при ошибке
+        notifications.show({
+          title: 'Ошибка',
+          message: 'Не удалось удалить товар из корзины',
+          color: 'red'
+        })
+      }
     }
   }
 
@@ -487,11 +649,34 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
 
   // Утилитарные функции
   const getCartItemsCount = (): number => {
-    return state.cart?.total_items ?? 0
+    return state.cart?.items.length ?? 0
   }
 
   const getCartTotal = (): number => {
-    return state.cart?.total_price ?? 0
+    return state.cart?.totalAmount ?? 0
+  }
+
+  const getFilteredCart = (): Cart | null => {
+    if (!state.cart) return null
+    
+    console.log('🔍 getFilteredCart: removedCartItemIds =', Array.from(state.removedCartItemIds))
+    console.log('🔍 getFilteredCart: все элементы корзины =', state.cart.items.map(item => ({ id: item.id, name: item.productName })))
+    
+    // Фильтруем элементы корзины, исключая те, которые помечены как удаленные (по productId)
+    const filteredItems = state.cart.items.filter(item => {
+      const shouldKeep = item.productId && !state.removedCartItemIds.has(item.productId)
+      if (!shouldKeep && item.productId) {
+        console.log(`🚫 Фильтруем элемент productId: ${item.productId} (${item.productName})`)
+      }
+      return shouldKeep
+    })
+    
+    console.log('✅ getFilteredCart: отфильтрованные элементы =', filteredItems.map(item => ({ id: item.id, name: item.productName })))
+    
+    return {
+      ...state.cart,
+      items: filteredItems
+    }
   }
 
   const isFavorite = (productId: number): boolean => {
@@ -523,6 +708,7 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
     toggleFavorite,
     getCartItemsCount,
     getCartTotal,
+    getFilteredCart,
     isFavorite
   }
 

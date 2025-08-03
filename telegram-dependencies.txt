@@ -1,0 +1,31 @@
+# Зависимости для Telegram Web App
+
+## Для установки после настройки Node.js:
+
+```bash
+npm install @twa-dev/sdk
+npm install --save-dev @types/node
+```
+
+## Альтернативно через yarn:
+
+```bash
+yarn add @twa-dev/sdk
+yarn add --dev @types/node
+```
+
+## Описание зависимостей:
+
+- `@twa-dev/sdk` - Официальный SDK для Telegram Web Apps
+- `@types/node` - TypeScript типы для Node.js (для улучшенной типизации)
+
+## После установки:
+
+1. Перезапустите TypeScript сервер в VS Code (Cmd+Shift+P > "TypeScript: Restart TS Server")
+2. Запустите проект: `npm run dev` или `yarn dev`
+3. Проверьте работу в браузере и через Telegram Bot
+
+## Важно:
+
+Все файлы Telegram Web App уже созданы и готовы к работе.
+Нужно только установить зависимости и настроить Telegram Bot по инструкции в docs/telegram-setup.md

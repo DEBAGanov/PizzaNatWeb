@@ -142,14 +142,196 @@ export function AuthProvider({ children }: AuthProviderProps) {
             console.log('❌ Токен недействителен, требуется повторная авторизация')
             clearStorage()
             dispatch({ type: 'SET_LOADING', payload: false })
+            
+            // Автоматический логин для development окружения если токен недействителен
+            if (window.location.hostname === 'localhost' && window.location.port === '8080') {
+              console.log('🔧 Development mode: токен недействителен, регистрируем нового пользователя через API')
+              
+              try {
+                // Попробуем зарегистрировать dev пользователя через API
+                const registerResponse = await fetch('/api/v1/auth/register', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    username: 'devuser' + Date.now(),
+                    password: 'dev123456',
+                    email: 'dev' + Date.now() + '@example.com',
+                    firstName: 'Dev',
+                    lastName: 'User',
+                    phone: '+7900' + String(Date.now()).slice(-7)
+                  })
+                })
+                
+                if (registerResponse.ok) {
+                  const registerData = await registerResponse.json()
+                  if (registerData.token) {
+                    const devUser: User = {
+                      id: registerData.user?.id || 1,
+                      username: registerData.user?.username || 'devuser',
+                      fullName: 'Dev User (Auto-registered)',
+                      phoneNumber: registerData.user?.phone || '+79001234567',
+                      telegramId: null,
+                      role: registerData.user?.role || 'USER',
+                      createdAt: new Date().toISOString()
+                    }
+                    const devTokens: AuthTokens = { access_token: registerData.token }
+                    saveToStorage(devUser, devTokens)
+                    dispatch({ type: 'SET_USER', payload: { user: devUser, tokens: devTokens } })
+                    console.log('✅ Автоматический development логин через API регистрацию (токен недействителен)')
+                    return
+                  }
+                }
+              } catch (error) {
+                console.warn('⚠️ Не удалось зарегистрировать dev пользователя через API:', error)
+              }
+              
+              // Fallback: создаем временного пользователя
+              const devUser: User = {
+                id: 1,
+                username: 'admin',
+                fullName: 'Администратор (Dev)',
+                phoneNumber: '+79001234567',
+                telegramId: null,
+                role: 'ADMIN',
+                createdAt: new Date().toISOString()
+              }
+              
+              const devTokens: AuthTokens = {
+                access_token: 'dev-session-token-' + Date.now()
+              }
+              
+              saveToStorage(devUser, devTokens)
+              dispatch({ type: 'SET_USER', payload: { user: devUser, tokens: devTokens } })
+              console.log('✅ Автоматический development логин (fallback - токен недействителен)')
+            }
           }
         } else {
           dispatch({ type: 'SET_LOADING', payload: false })
+          
+          // Автоматический логин для development окружения если нет сохраненных данных
+          if (window.location.hostname === 'localhost' && window.location.port === '8080') {
+            console.log('🔧 Development mode: нет сохраненного пользователя, входим как admin через API')
+            
+            try {
+              // Попробуем войти как реальный admin пользователь
+              const loginResponse = await fetch('/api/v1/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  username: 'admin',
+                  password: 'admin123'
+                })
+              })
+              
+              if (loginResponse.ok) {
+                const loginData = await loginResponse.json()
+                if (loginData.token) {
+                  const devUser: User = {
+                    id: loginData.user?.id || 1,
+                    username: loginData.user?.username || 'admin',
+                    fullName: loginData.user?.fullName || 'Администратор (Real)',
+                    phoneNumber: loginData.user?.phoneNumber || '+79001234567',
+                    telegramId: null,
+                    role: loginData.user?.role || 'ADMIN',
+                    createdAt: new Date().toISOString()
+                  }
+                  const devTokens: AuthTokens = { access_token: loginData.token }
+                  saveToStorage(devUser, devTokens)
+                  dispatch({ type: 'SET_USER', payload: { user: devUser, tokens: devTokens } })
+                  console.log('✅ Автоматический development логин через реальный admin аккаунт')
+                  return
+                }
+              }
+            } catch (error) {
+              console.warn('⚠️ Не удалось войти как admin пользователь через API:', error)
+            }
+            
+            // Fallback: создаем временного пользователя
+            const devUser: User = {
+              id: 1,
+              username: 'admin',
+              fullName: 'Администратор (Dev)',
+              phoneNumber: '+79001234567',
+              telegramId: null,
+              role: 'ADMIN',
+              createdAt: new Date().toISOString()
+            }
+            
+            const devTokens: AuthTokens = {
+              access_token: 'dev-session-token-' + Date.now()
+            }
+            
+            saveToStorage(devUser, devTokens)
+            dispatch({ type: 'SET_USER', payload: { user: devUser, tokens: devTokens } })
+            console.log('✅ Автоматический development логин (fallback)')
+          }
         }
       } catch (error) {
         console.error('Ошибка загрузки данных аутентификации:', error)
         clearStorage()
         dispatch({ type: 'SET_LOADING', payload: false })
+        
+        // Автоматический логин для development окружения
+        if (window.location.hostname === 'localhost' && window.location.port === '8080') {
+          console.log('🔧 Development mode: ошибка авторизации, регистрируем пользователя через API')
+          
+          try {
+            // Попробуем зарегистрировать dev пользователя через API
+            const registerResponse = await fetch('/api/v1/auth/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                username: 'devuser' + Date.now(),
+                password: 'dev123456',
+                email: 'dev' + Date.now() + '@example.com',
+                firstName: 'Dev',
+                lastName: 'User',
+                phone: '+7900' + String(Date.now()).slice(-7)
+              })
+            })
+            
+            if (registerResponse.ok) {
+              const registerData = await registerResponse.json()
+              if (registerData.token) {
+                const devUser: User = {
+                  id: registerData.user?.id || 1,
+                  username: registerData.user?.username || 'devuser',
+                  fullName: 'Dev User (Auto-registered)',
+                  phoneNumber: registerData.user?.phone || '+79001234567',
+                  telegramId: null,
+                  role: registerData.user?.role || 'USER',
+                  createdAt: new Date().toISOString()
+                }
+                const devTokens: AuthTokens = { access_token: registerData.token }
+                saveToStorage(devUser, devTokens)
+                dispatch({ type: 'SET_USER', payload: { user: devUser, tokens: devTokens } })
+                console.log('✅ Автоматический development логин через API регистрацию (catch block)')
+                return
+              }
+            }
+          } catch (apiError) {
+            console.warn('⚠️ Не удалось зарегистрировать dev пользователя через API:', apiError)
+          }
+          
+          // Fallback: создаем временного пользователя
+          const devUser: User = {
+            id: 1,
+            username: 'admin',
+            fullName: 'Администратор (Dev)',
+            phoneNumber: '+79001234567',
+            telegramId: null,
+            role: 'ADMIN',
+            createdAt: new Date().toISOString()
+          }
+          
+          const devTokens: AuthTokens = {
+            access_token: 'dev-session-token-' + Date.now()
+          }
+          
+          saveToStorage(devUser, devTokens)
+          dispatch({ type: 'SET_USER', payload: { user: devUser, tokens: devTokens } })
+          console.log('✅ Автоматический development логин (fallback - catch block)')
+        }
       }
     }
 

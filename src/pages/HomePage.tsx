@@ -16,21 +16,28 @@ import {
   Grid,
   Center,
   Loader,
-  Image,
+
   Text,
   Group,
   Button
 } from '@mantine/core'
-import { IconPizza } from '@tabler/icons-react'
+import { IconPizza, IconShoppingCart } from '@tabler/icons-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useProducts } from '../contexts/ProductsContext'
+import { SEOPageWrapper } from '../components/SEOHead'
+import { HomePageSEOContent, AboutUsSEOBlock } from '../components/seo/IndexingContent'
+import { generateLocalBusinessSchema, generateBreadcrumbSchema } from '../utils/seo'
 import { AppInstallButtons } from '../components/AppInstallButtons'
+import { CategoryImage, ProductCardImage } from '../components/common/OptimizedImage'
 
 export function HomePage() {
   const navigate = useNavigate()
   const { } = useAuth()
   const { 
     state: { 
+      categories,
+      categoriesLoading,
+      categoriesError,
       products, 
       productsLoading, 
       productsError 
@@ -40,19 +47,37 @@ export function HomePage() {
   } = useProducts()
 
   // Загружаем популярные продукты при инициализации
+  // (категории уже загружаются в App.tsx)
   useEffect(() => {
-    loadProducts({ limit: 8, is_popular: true })
+    loadProducts({ size: 8, page: 0 })
   }, [])
 
+  // JSON-LD данные для главной страницы
+  const structuredData = {
+    businessSchema: generateLocalBusinessSchema(),
+    breadcrumbSchema: generateBreadcrumbSchema([
+      { name: 'Главная', url: 'https://dimbopizza.ru/' }
+    ])
+  }
+
   return (
-    <Container size="lg">
+    <SEOPageWrapper 
+      page="home" 
+      customSeo={{
+        structuredData,
+        title: 'ДИМБО Пицца - Доставка вкусной пиццы в Волжске | Заказать онлайн',
+        description: 'Заказать пиццу в Волжске с доставкой на дом. Свежие ингредиенты, быстрая доставка 30-60 минут, оплата наличными или картой. Работаем ежедневно!',
+        keywords: ['заказать пиццу Волжск', 'доставка пиццы Волжск', 'ДИМБО пицца', 'пицца на дом Волжск']
+      }}
+    >
+      <Container size="lg">
       <Stack gap="lg">
         {/* Блок с установкой приложения */}
         <Card shadow="sm" padding="lg" radius="md" withBorder>
           <Stack gap="md">
             <Group justify="space-between">
               <Title order={2} c="orange.7">
-                Скачайте мобильное приложение PizzaNat
+                Скачайте мобильное приложение ДИМБО Пицца
               </Title>
               <Badge color="blue" variant="light">Рекомендуем</Badge>
             </Group>
@@ -63,6 +88,55 @@ export function HomePage() {
             <AppInstallButtons title="Установите приложение прямо сейчас" />
           </Stack>
         </Card>
+
+        {/* Категории */}
+        <Title order={3} c="dark">Категории</Title>
+        
+        {categoriesLoading && (
+          <Center>
+            <Loader size="md" />
+            <Text ml="md">Загрузка категорий...</Text>
+          </Center>
+        )}
+        
+        {categoriesError && (
+          <Card shadow="sm" padding="lg" radius="md" withBorder bg="red.0">
+            <Text c="red.7">Ошибка загрузки категорий: {categoriesError}</Text>
+          </Card>
+        )}
+        
+        {!categoriesLoading && !categoriesError && categories && categories.length > 0 && (
+          <Grid>
+            {categories.map((category) => (
+              <Grid.Col key={category.id} span={{ base: 12, sm: 6, md: 4 }}>
+                <Card 
+                  shadow="sm" 
+                  padding="lg" 
+                  radius="md" 
+                  withBorder
+                  className="category-card-compact"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => navigate(`/menu?category=${category.id}`)}
+                >
+                  <Card.Section>
+                    <CategoryImage 
+                      src={category.imageUrl}
+                      alt={category.name}
+                    />
+                  </Card.Section>
+
+                  <Group justify="center" mt="md">
+                    <Text fw={500} ta="center">{category.name}</Text>
+                  </Group>
+
+                  <Text size="sm" c="dimmed" ta="center" mt="xs">
+                    {category.description}
+                  </Text>
+                </Card>
+              </Grid.Col>
+            ))}
+          </Grid>
+        )}
 
         {/* Продукты из API */}
         <Title order={3} c="dark">Популярные пиццы</Title>
@@ -84,35 +158,31 @@ export function HomePage() {
           <Grid>
             {products.slice(0, 8).map((product) => (
               <Grid.Col key={product.id} span={{ base: 12, sm: 6, md: 4 }}>
-                <Card shadow="sm" padding="lg" radius="md" withBorder>
+                <Card shadow="sm" padding="lg" radius="md" withBorder className="product-card-compact">
                   <Card.Section>
-                    {product.images && product.images.length > 0 ? (
-                      <Image
-                        src={product.images.find(img => img.is_primary)?.url || product.images[0]?.url}
-                        height={160}
-                        alt={product.name}
-                        fallbackSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 24 24'%3E%3Cpath fill='%23ff8000' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E"
-                      />
-                    ) : (
-                      <div style={{ 
-                        height: 160, 
-                        backgroundColor: '#f8f9fa',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}>
-                        <IconPizza size={48} color="#ff8000" />
-                      </div>
-                    )}
+                    <ProductCardImage 
+                      src={product.imageUrl}
+                      alt={product.name}
+                    />
                   </Card.Section>
 
                   <Group justify="space-between" mt="md" mb="xs">
                     <Text fw={500} lineClamp={2}>{product.name}</Text>
                     <Badge 
-                      color={product.is_available ? "orange" : "gray"} 
+                      color={product.available ? "orange" : "gray"} 
                       variant="light"
                     >
-                      {product.base_price} ₽
+                      {product.discountedPrice ? (
+                        <>
+                          <Text component="span" td="line-through" c="gray" size="sm">
+                            {product.price} ₽
+                          </Text>
+                          {' '}
+                          {product.discountedPrice} ₽
+                        </>
+                      ) : (
+                        `${product.price} ₽`
+                      )}
                     </Badge>
                   </Group>
 
@@ -132,13 +202,16 @@ export function HomePage() {
                     <Button 
                       color="orange" 
                       radius="md"
-                      disabled={!product.is_available}
-                      onClick={() => addToCart({ 
-                        product_id: product.id, 
-                        quantity: 1 
-                      })}
+                      disabled={!product.available}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        addToCart({ 
+                          productId: product.id, 
+                          quantity: 1 
+                        })
+                      }}
                     >
-                      {product.is_available ? 'В корзину' : 'Недоступно'}
+                      {product.available ? 'В корзину' : 'Недоступно'}
                     </Button>
                   </Group>
                 </Card>
@@ -167,29 +240,16 @@ export function HomePage() {
           </Center>
         )}
 
-
-
+        
         {/* Статус разработки - обновлен */}
-        <Card shadow="sm" padding="lg" radius="md" withBorder bg="green.0">
-          <Stack gap="xs">
-            <Title order={4} c="green.7">Статус разработки - Фаза 3 в процессе!</Title>
-            <Text size="sm" c="dimmed">
-              ✅ Базовая настройка проекта<br/>
-              ✅ Интеграция Mantine<br/>
-              ✅ Мобильная адаптивность<br/>
-              ✅ Система аутентификации (Email, SMS, Telegram)<br/>
-              ✅ Управление состоянием пользователя<br/>
-              ✅ Персистентность и автообновление токенов<br/>
-              ✅ Интеграция с API продуктов<br/>
-              ✅ Контекст управления продуктами<br/>
-              ✅ Отображение реальных продуктов<br/>
-              🔄 Страница меню с категориями<br/>
-              ⏳ Корзина и заказы<br/>
-              ⏳ Система платежей
-            </Text>
-          </Stack>
-        </Card>
-      </Stack>
-    </Container>
+       
+                {/* SEO контент для главной страницы */}
+          <HomePageSEOContent />
+
+          {/* Блок "О нас" */}
+          <AboutUsSEOBlock />
+        </Stack>
+      </Container>
+    </SEOPageWrapper>
   )
 } 

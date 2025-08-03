@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Главная страница -->
+  <url>
+    <loc>https://dimbopizza.ru/</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Меню -->
+  <url>
+    <loc>https://dimbopizza.ru/menu</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Политика конфиденциальности -->
+  <url>
+    <loc>https://dimbopizza.ru/privacy</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Примеры продуктов (будут динамически генерироваться) -->
+  <url>
+    <loc>https://dimbopizza.ru/product/1</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://dimbopizza.ru/images/pizza-margherita.jpg</image:loc>
+      <image:title>Пицца Маргарита - ДИМБО Пицца Волжск</image:title>
+      <image:caption>Классическая итальянская пицца с моцареллой и базиликом</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://dimbopizza.ru/product/2</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://dimbopizza.ru/images/pizza-pepperoni.jpg</image:loc>
+      <image:title>Пицца Пепперони - ДИМБО Пицца Волжск</image:title>
+      <image:caption>Острая пицца с пепперони и сыром моцарелла</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://dimbopizza.ru/product/3</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://dimbopizza.ru/images/pizza-four-cheese.jpg</image:loc>
+      <image:title>Пицца Четыре сыра - ДИМБО Пицца Волжск</image:title>
+      <image:caption>Изысканная пицца с четырьмя видами сыра</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Категории меню -->
+  <url>
+    <loc>https://dimbopizza.ru/menu?category=pizza</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://dimbopizza.ru/menu?category=drinks</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://dimbopizza.ru/menu?category=desserts</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+</urlset>

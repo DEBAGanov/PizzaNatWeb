@@ -1,26 +1,29 @@
 /**
  * @file: ProtectedRoute.tsx
- * @description: Компонент для защиты маршрутов, требующих аутентификации
+ * @description: Улучшенный компонент для защиты маршрутов с проверкой токенов
  * @dependencies: AuthContext, React Router
  * @created: 2024-12-19
+ * @updated: 2025-01-24 - Исправление проблем безопасности из comprehensive тестов
  */
 
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { Center, Loader, Stack, Text, ThemeIcon } from '@mantine/core'
-import { IconPizza } from '@tabler/icons-react'
+import { Center, Loader, Stack, Text, ThemeIcon, Alert } from '@mantine/core'
+import { IconPizza, IconLock } from '@tabler/icons-react'
 import { useAuth } from '../contexts/AuthContext'
 
 interface ProtectedRouteProps {
   children: React.ReactNode
   requireAuth?: boolean // По умолчанию true
+  requiredRole?: 'USER' | 'ADMIN' // Опциональная проверка роли
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
   children, 
-  requireAuth = true 
+  requireAuth = true,
+  requiredRole 
 }) => {
-  const { user, isLoading } = useAuth()
+  const { user, isLoading, tokens } = useAuth()
   const location = useLocation()
 
   // Показываем загрузку пока инициализируется AuthContext
@@ -40,19 +43,59 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     )
   }
 
+  // Дополнительная проверка токенов для повышения безопасности
+  const hasValidTokens = tokens?.access_token && user
+  
+  // Проверяем защищенные routes (исправление проблемы из comprehensive тестов)
+  const protectedPaths = ['/cart', '/checkout', '/orders', '/profile', '/order-success', '/admin', '/payments']
+  const isProtectedPath = protectedPaths.some(path => location.pathname.startsWith(path))
+  
+  // Если это защищенный путь и требуется авторизация
+  if (requireAuth && isProtectedPath) {
+    // Строгая проверка для защищенных путей
+    if (!hasValidTokens) {
+      console.warn(`🔒 Заблокирован доступ к защищенному пути: ${location.pathname}`)
+      return <Navigate to="/auth" state={{ from: location }} replace />
+    }
+    
+    // Проверка роли если требуется
+    if (requiredRole && user?.role !== requiredRole) {
+      return (
+        <Center style={{ minHeight: '100vh' }}>
+          <Alert 
+            icon={<IconLock size={16} />} 
+            title="Доступ запрещен" 
+            color="red"
+            variant="filled"
+          >
+            У вас недостаточно прав для доступа к этой странице.
+            <br />
+            Требуется роль: {requiredRole}, ваша роль: {user?.role || 'неизвестна'}
+          </Alert>
+        </Center>
+      )
+    }
+  }
+
   // Если требуется авторизация, но пользователь не авторизован
   if (requireAuth && !user) {
-    // Сохраняем текущий путь для возврата после авторизации
+    console.warn(`🔒 Неавторизованный доступ к: ${location.pathname}`)
     return <Navigate to="/auth" state={{ from: location }} replace />
   }
 
   // Если не требуется авторизация, но пользователь авторизован
   // (например, для страницы входа)
   if (!requireAuth && user) {
-    // Возвращаем на главную или на сохраненный путь
     const from = location.state?.from?.pathname || '/'
     return <Navigate to={from} replace />
   }
+
+  // Логирование для отладки проблем безопасности
+  React.useEffect(() => {
+    if (isProtectedPath && hasValidTokens) {
+      console.log(`✅ Авторизованный доступ к защищенному пути: ${location.pathname}`)
+    }
+  }, [isProtectedPath, hasValidTokens, location.pathname])
 
   // Отображаем защищенный контент
   return <>{children}</>

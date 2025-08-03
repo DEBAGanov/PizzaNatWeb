@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  # Web приложение (production сборка)
+  dimbopizza-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: dimbopizza-web-dev
+    restart: unless-stopped
+    environment:
+      # Development переменные для production сборки
+      - NODE_ENV=production
+      - VITE_API_URL=/api/v1
+      - VITE_API_TIMEOUT=10000
+      - VITE_APP_NAME=ДИМБО Пицца (Dev)
+      - VITE_YANDEX_METRIKA_ID=dev_metrika_id
+      - VITE_TELEGRAM_BOT_NAME=PizzaNatBot
+      - VITE_TELEGRAM_BOT_URL=https://t.me/PizzaNatBot
+    expose:
+      - "3478"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3478/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Nginx прокси для решения CORS
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: nginx-dev-proxy
+    restart: unless-stopped
+    ports:
+      - "8080:80"  # Доступ через localhost:8080
+    volumes:
+      - ./nginx/dev-proxy.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - dimbopizza-web
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

@@ -20,6 +20,9 @@ import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css'
 // В Mantine 8.x стили модалов включены в основные стили
 
+// Импорт кастомных стилей
+import './styles/images.css'
+
 // Создаем клиент для React Query
 const queryClient = new QueryClient({
   defaultOptions: {

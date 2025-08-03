@@ -6,49 +6,74 @@
  */
 
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
-import { AppShell, Burger, Group, Button, Stack, Title } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import { IconPizza, IconShoppingCart, IconUser, IconHome, IconMenu2, IconLogout } from '@tabler/icons-react'
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
+import { AppShell } from '@mantine/core'
 import { useAuth } from './contexts/AuthContext'
 import { useProducts } from './contexts/ProductsContext'
+import { TelegramProvider, useIsTelegram } from './contexts/TelegramContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { YandexMetrikaProvider } from './components/analytics/YandexMetrika'
+import { TelegramApp } from './components/telegram/TelegramApp'
+import { TelegramBottomNav } from './components/telegram/TelegramNavigation'
 import { AuthPage } from './pages/AuthPage'
 import { HomePage } from './pages/HomePage'
 import { MenuPage } from './pages/MenuPage'
+import { CategoryProductsPage } from './pages/CategoryProductsPage'
 import { ProductPage } from './pages/ProductPage'
+import { CartPage } from './pages/CartPage'
+import { CheckoutPage } from './pages/CheckoutPage'
+import ProfilePage from './pages/ProfilePage'
+import OrderSuccessPage from './pages/OrderSuccessPage'
 import { AuthTestPage } from './pages/AuthTestPage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 
-// Компонент с навигацией (внутри Router)
-function AppWithRouter() {
-  const [opened, { toggle }] = useDisclosure()
-  const { user, logout } = useAuth()
-  const { loadCategories } = useProducts()
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  // Загружаем данные при инициализации
-  useEffect(() => {
-    if (user) {
-      console.log('🔄 Пользователь аутентифицирован, загружаем данные...')
-      loadCategories()
-    }
-  }, [user, loadCategories])
-
-  // Обработчик выхода
-  const handleLogout = async () => {
-    try {
-      await logout()
-      console.log('✅ Пользователь вышел из системы')
-      navigate('/auth', { replace: true })
-    } catch (error) {
-      console.error('❌ Ошибка при выходе:', error)
-    }
+// Компонент для определения платформы (внутри Router и TelegramProvider)
+function PlatformRouter() {
+  const isInTelegram = useIsTelegram()
+  
+  // Если мы в Telegram, рендерим Telegram версию
+  if (isInTelegram) {
+    return <TelegramApp />
   }
+  
+  // Иначе рендерим обычную веб версию
+  return <WebApp />
+}
 
-  // Определяем активную страницу
-  const isActive = (path: string) => location.pathname === path
+// Роутер для страницы меню - показывает категории или продукты категории
+function MenuPageRouter() {
+  const [searchParams] = useSearchParams()
+  const categoryParam = searchParams.get('category')
+  
+  // Если есть параметр category, показываем продукты категории
+  if (categoryParam) {
+    return <CategoryProductsPage />
+  }
+  
+  // Иначе показываем список категорий
+  return <MenuPage />
+}
+
+// Веб-версия приложения (переименованная из AppWithRouter)
+function WebApp() {
+  const { user } = useAuth()
+  const { loadCategories, loadCart } = useProducts()
+
+  // Загружаем категории только один раз
+  useEffect(() => {
+    console.log('🔄 Загружаем категории...')
+    loadCategories()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Загружаем корзину при появлении пользователя
+  useEffect(() => {
+    if (user && user.id) {
+      console.log('🔄 Пользователь аутентифицирован, загружаем корзину...', user.username, 'ID:', user.id)
+      loadCart()
+    }
+  }, [user?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+
 
   return (
     <Routes>
@@ -76,93 +101,23 @@ function AppWithRouter() {
         element={
           <ProtectedRoute requireAuth={true}>
             <AppShell
-              header={{ height: 60 }}
-              navbar={{
-                width: 300,
-                breakpoint: 'sm',
-                collapsed: { mobile: !opened },
-              }}
               padding="md"
             >
-              <AppShell.Header>
-                <Group h="100%" px="md" justify="space-between">
-                  <Group>
-                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                    <Group gap="xs" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
-                      <IconPizza size={28} color="#ff8000" />
-                      <Title order={3} c="orange.6">PizzaNat</Title>
-                    </Group>
-                  </Group>
-                  <Group>
-                    <Button variant="subtle" leftSection={<IconShoppingCart size={18} />}>
-                      Корзина
-                    </Button>
-                    <Button variant="subtle" leftSection={<IconUser size={18} />}>
-                      {user?.fullName || user?.username || 'Профиль'}
-                    </Button>
-                    <Button 
-                      variant="subtle" 
-                      color="red" 
-                      leftSection={<IconLogout size={18} />} 
-                      onClick={handleLogout}
-                    >
-                      Выйти
-                    </Button>
-                  </Group>
-                </Group>
-              </AppShell.Header>
-
-              <AppShell.Navbar p="md">
-                <Stack gap="xs">
-                  <Button 
-                    variant={isActive('/') ? "filled" : "light"}
-                    color="orange"
-                    leftSection={<IconHome size={18} />}
-                    justify="flex-start"
-                    fullWidth
-                    onClick={() => navigate('/')}
-                  >
-                    Главная
-                  </Button>
-                  <Button 
-                    variant={isActive('/menu') ? "filled" : "light"}
-                    color="orange"
-                    leftSection={<IconMenu2 size={18} />}
-                    justify="flex-start"
-                    fullWidth
-                    onClick={() => navigate('/menu')}
-                  >
-                    Меню
-                  </Button>
-                  <Button 
-                    variant="light" 
-                    leftSection={<IconShoppingCart size={18} />}
-                    justify="flex-start"
-                    fullWidth
-                    disabled
-                  >
-                    Корзина
-                  </Button>
-                  <Button 
-                    variant="light" 
-                    leftSection={<IconUser size={18} />}
-                    justify="flex-start"
-                    fullWidth
-                    disabled
-                  >
-                    Профиль
-                  </Button>
-                </Stack>
-              </AppShell.Navbar>
-
-              <AppShell.Main>
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
                 <Routes>
                   <Route path="/" element={<HomePage />} />
-                  <Route path="/menu" element={<MenuPage />} />
+                  <Route path="/menu" element={<MenuPageRouter />} />
                   <Route path="/product/:id" element={<ProductPage />} />
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/checkout" element={<CheckoutPage />} />
+                              <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/order-success/:orderId" element={<OrderSuccessPage />} />
                   <Route path="/auth-test" element={<AuthTestPage />} />
                 </Routes>
               </AppShell.Main>
+              
+              {/* Bottom Navigation для веба */}
+              <TelegramBottomNav />
             </AppShell>
           </ProtectedRoute>
         } 
@@ -172,10 +127,17 @@ function AppWithRouter() {
 }
 
 const App: React.FC = () => {
+  // ID счетчика Яндекс.Метрики (заменить на реальный)
+  const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '12345678'
+  
   return (
-    <Router>
-      <AppWithRouter />
-    </Router>
+    <YandexMetrikaProvider counterId={YANDEX_METRIKA_ID}>
+      <Router>
+        <TelegramProvider>
+          <PlatformRouter />
+        </TelegramProvider>
+      </Router>
+    </YandexMetrikaProvider>
   )
 }
 

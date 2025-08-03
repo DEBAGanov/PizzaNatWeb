@@ -1,0 +1,13 @@
+# Директория для SSL сертификатов
+# Поместите сюда файлы:
+# - fullchain.pem (сертификат + промежуточные сертификаты)
+# - privkey.pem (приватный ключ)
+
+# Для Let's Encrypt используйте certbot:
+# certbot certonly --webroot -w /var/www/certbot -d dimbopizza.ru -d www.dimbopizza.ru
+
+# Или для самоподписанных сертификатов (только для тестирования):
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+#   -keyout privkey.pem \
+#   -out fullchain.pem \
+#   -subj "/C=RU/ST=Mari El/L=Volzhsk/O=DIMBO Pizza/CN=dimbopizza.ru"

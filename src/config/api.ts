@@ -8,12 +8,12 @@
 // Базовые настройки API
 export const API_CONFIG = {
   // Основной домен API - легко заменяемый (Vite использует VITE_ префикс)
-  BASE_URL: import.meta.env.VITE_API_URL || 'https://api.dimbopizza.ru/api/v1/',
+  BASE_URL: import.meta.env.VITE_API_URL || 'https://api.dimbopizza.ru/api/v1',
 
   // Альтернативные домены для быстрого переключения
   DOMAINS: {
-    PRODUCTION: 'https://api.dimbopizza.ru/api/v1/',
-    STAGING: 'https://staging-api.dimbopizza.ru/api/v1/',
+    PRODUCTION: 'https://api.dimbopizza.ru/api/v1',
+    STAGING: 'https://staging-api.dimbopizza.ru/api/v1',
     DEVELOPMENT: 'http://localhost:8080/api/v1',
     LOCAL: 'http://127.0.0.1:8080/api/v1'
   },
@@ -32,9 +32,15 @@ export const API_CONFIG = {
 
 // Функция для получения текущего базового URL
 export const getApiBaseUrl = (): string => {
+  // Для Docker development через localhost:8080 используем прокси
+  if (window.location.hostname === 'localhost' && window.location.port === '8080') {
+    console.info('🔧 Docker development mode: using Nginx proxy', '/api/v1')
+    return '/api/v1' // Используем Nginx прокси
+  }
+
   // В режиме разработки используем прокси для обхода CORS
   if (import.meta.env.DEV) {
-    console.info('🔧 Development mode: using proxy to avoid CORS', '/api/v1')
+    console.info('🔧 Vite development mode: using proxy to avoid CORS', '/api/v1')
     return '/api/v1' // Используем прокси из vite.config.ts
   }
 
@@ -77,6 +83,7 @@ export const API_ENDPOINTS = {
   PRODUCTS: {
     LIST: '/products',
     DETAIL: (id: number) => `/products/${id}`,
+    BY_CATEGORY: (categoryId: number) => `/products/category/${categoryId}`,
     SEARCH: '/products/search',
     POPULAR: '/products/popular',
     NEW: '/products/new'
@@ -91,7 +98,7 @@ export const API_ENDPOINTS = {
   // Корзина
   CART: {
     GET: '/cart',
-    ADD: '/cart/add',
+    ADD: '/cart/items',
     UPDATE: (itemId: number) => `/cart/items/${itemId}`,
     REMOVE: (itemId: number) => `/cart/items/${itemId}`,
     CLEAR: '/cart/clear'
@@ -115,14 +122,27 @@ export const API_ENDPOINTS = {
   // Доставка
   DELIVERY: {
     ZONES: '/delivery/zones',
-    COST: '/delivery/cost',
-    ADDRESS_SUGGESTIONS: '/delivery/address-suggestions'
+    ESTIMATE: '/delivery/estimate',
+    VALIDATE_ADDRESS: '/delivery/validate-address',
+    ADDRESS_SUGGESTIONS: '/delivery/address-suggestions',
+    LOCATIONS: '/delivery-locations'
   },
 
   // Платежи
   PAYMENTS: {
-    YOOKASSA: '/payments/yookassa',
-    STATUS: (paymentId: string) => `/payments/${paymentId}/status`
+    YOOKASSA_CREATE: '/payments/yookassa/create',
+    YOOKASSA_STATUS: (paymentId: string) => `/payments/yookassa/${paymentId}`,
+    ORDER_PAYMENTS: (orderId: number) => `/payments/yookassa/order/${orderId}`,
+    ORDER_PAYMENT_URL: (orderId: number) => `/orders/${orderId}/payment-url`,
+    SBP_BANKS: '/payments/yookassa/sbp/banks'
+  },
+
+  // Заказы
+  ORDERS: {
+    LIST: '/orders',
+    CREATE: '/orders',
+    DETAIL: (id: number) => `/orders/${id}`,
+    PAYMENT_URL: (id: number) => `/orders/${id}/payment-url`
   },
 
   // Пользователь

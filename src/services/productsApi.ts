@@ -19,7 +19,11 @@ import type {
   CartResponse,
   FavoritesResponse,
   SearchResponse,
-  SearchSuggestion
+  SearchSuggestion,
+  Order,
+  OrdersResponse,
+  CreateOrderRequest,
+  PaymentUrlResponse
 } from '../types/products'
 
 export class ProductsApi extends BaseApiService {
@@ -29,7 +33,11 @@ export class ProductsApi extends BaseApiService {
 
   // Категории
   async getCategories(): Promise<CategoriesListResponse> {
-    return this.get<CategoriesListResponse>(API_ENDPOINTS.CATEGORIES.LIST)
+    const apiResponse = await this.get<Category[]>(API_ENDPOINTS.CATEGORIES.LIST)
+    return {
+      categories: apiResponse,
+      total: apiResponse.length
+    }
   }
 
   async getCategoryById(id: number): Promise<Category> {
@@ -56,12 +64,11 @@ export class ProductsApi extends BaseApiService {
     
     // Адаптируем структуру ответа к нашему интерфейсу
     // API возвращает: { content: Product[], totalElements: number, totalPages: number, pageable: {...} }
-    // Нам нужно: { products: Product[], total: number, page: number, limit: number, total_pages: number }
     const adaptedResponse: ProductsListResponse = {
       products: apiResponse.content || [],
       total: apiResponse.totalElements || 0,
       page: apiResponse.pageable?.pageNumber ? apiResponse.pageable.pageNumber + 1 : 1, // API использует 0-based индексацию
-      limit: apiResponse.pageable?.pageSize || params.limit || 20,
+      limit: apiResponse.pageable?.pageSize || params.size || 20,
       total_pages: apiResponse.totalPages || 0
     }
     
@@ -72,35 +79,56 @@ export class ProductsApi extends BaseApiService {
     return this.get<Product>(API_ENDPOINTS.PRODUCTS.DETAIL(id))
   }
 
-  async getPopularProducts(limit: number = 10): Promise<Product[]> {
+  // Алиас для совместимости
+  async getProduct(id: number): Promise<Product> {
+    return this.getProductById(id)
+  }
+
+  async getPopularProducts(size: number = 10): Promise<Product[]> {
     const response = await this.getProducts({ 
-      is_popular: true, 
-      limit,
-      sort_by: 'popularity',
-      sort_order: 'desc'
+      size,
+      page: 0
     })
     return response.products
   }
 
-  async getNewProducts(limit: number = 10): Promise<Product[]> {
+  async getNewProducts(size: number = 10): Promise<Product[]> {
     const response = await this.getProducts({ 
-      is_new: true, 
-      limit,
-      sort_by: 'created_at',
-      sort_order: 'desc'
+      size,
+      page: 0
     })
     return response.products
   }
 
-  async getProductsByCategory(categoryId: number, params: Omit<ProductsListRequest, 'category_id'> = {}): Promise<ProductsListResponse> {
-    return this.getProducts({ ...params, category_id: categoryId })
+  async getProductsByCategory(categoryId: number, params: Omit<ProductsListRequest, 'category'> = {}): Promise<ProductsListResponse> {
+    const searchParams = new URLSearchParams()
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        searchParams.append(key, String(value))
+      }
+    })
+    const queryString = searchParams.toString()
+    const url = queryString
+      ? `${API_ENDPOINTS.PRODUCTS.BY_CATEGORY(categoryId)}?${queryString}`
+      : API_ENDPOINTS.PRODUCTS.BY_CATEGORY(categoryId)
+      
+    const apiResponse = await this.get<any>(url)
+    const adaptedResponse: ProductsListResponse = {
+      products: apiResponse.content || [],
+      total: apiResponse.totalElements || 0,
+      page: apiResponse.pageable?.pageNumber ? apiResponse.pageable.pageNumber + 1 : 1,
+      limit: apiResponse.pageable?.pageSize || params.size || 20,
+      total_pages: apiResponse.totalPages || 0
+    }
+    return adaptedResponse
   }
 
   // Поиск
-  async searchProducts(query: string, limit: number = 20): Promise<SearchResponse> {
+  async searchProducts(query: string, size: number = 20): Promise<SearchResponse> {
     const response = await this.getProducts({ 
       search: query, 
-      limit 
+      size,
+      page: 0
     })
     
     return {
@@ -125,25 +153,49 @@ export class ProductsApi extends BaseApiService {
     }
   }
 
-  // Корзина
+  // Корзина (обновлено под реальное API)
   async getCart(): Promise<Cart> {
-    const response = await this.get<CartResponse>(API_ENDPOINTS.CART.GET)
-    return response.cart
+    try {
+      // API возвращает корзину напрямую, не в wrapper'е
+      const response = await this.get<Cart>(API_ENDPOINTS.CART.GET)
+      return response
+    } catch (error: any) {
+      // Если корзина не найдена, возвращаем пустую корзину
+      if (error.status === 404) {
+        return {
+          id: null,
+          sessionId: 'empty-cart-session',
+          totalAmount: 0,
+          items: []
+        }
+      }
+      throw error
+    }
   }
 
   async addToCart(item: AddToCartRequest): Promise<Cart> {
-    const response = await this.post<CartResponse>(API_ENDPOINTS.CART.ADD, item)
-    return response.cart
+    // API принимает: {"productId": 1, "quantity": 2, "selectedOptions": {...}}
+    const apiPayload = {
+      productId: item.productId,
+      quantity: item.quantity,
+      selectedOptions: item.selectedOptions,
+      notes: item.notes
+    }
+    
+    const response = await this.post<Cart>(API_ENDPOINTS.CART.ADD, apiPayload)
+    return response
   }
 
   async updateCartItem(itemId: number, updates: UpdateCartItemRequest): Promise<Cart> {
-    const response = await this.put<CartResponse>(API_ENDPOINTS.CART.UPDATE(itemId), updates)
-    return response.cart
+    console.log('🔧 API updateCartItem:', { itemId, updates, endpoint: API_ENDPOINTS.CART.UPDATE(itemId) })
+    const response = await this.put<Cart>(API_ENDPOINTS.CART.UPDATE(itemId), updates)
+    console.log('✅ API updateCartItem response:', response)
+    return response
   }
 
   async removeFromCart(itemId: number): Promise<Cart> {
-    const response = await this.delete<CartResponse>(API_ENDPOINTS.CART.REMOVE(itemId))
-    return response.cart
+    const response = await this.delete<Cart>(API_ENDPOINTS.CART.REMOVE(itemId))
+    return response
   }
 
   async clearCart(): Promise<void> {
@@ -356,6 +408,88 @@ export class ProductsApi extends BaseApiService {
     }
     
     return errors
+  }
+
+  // Заказы (новая функциональность)
+  async createOrder(orderData: any): Promise<any> {
+    return this.post(API_ENDPOINTS.ORDERS.CREATE, orderData)
+  }
+
+  async getOrders(): Promise<any[]> {
+    return this.get(API_ENDPOINTS.ORDERS.LIST)
+  }
+
+  async getOrderById(orderId: number): Promise<any> {
+    return this.get(API_ENDPOINTS.ORDERS.DETAIL(orderId))
+  }
+
+  // Доставка (новая функциональность)
+  async estimateDelivery(address: string, orderAmount: number): Promise<any> {
+    const params = new URLSearchParams({
+      address,
+      orderAmount: orderAmount.toString()
+    })
+    return this.get(`${API_ENDPOINTS.DELIVERY.ESTIMATE}?${params}`)
+  }
+
+  async validateAddress(address: string): Promise<any> {
+    const params = new URLSearchParams({ address })
+    return this.get(`${API_ENDPOINTS.DELIVERY.VALIDATE_ADDRESS}?${params}`)
+  }
+
+  async getAddressSuggestions(query: string, limit: number = 5): Promise<any[]> {
+    const params = new URLSearchParams({ 
+      query,
+      limit: limit.toString()
+    })
+    return this.get(`${API_ENDPOINTS.DELIVERY.ADDRESS_SUGGESTIONS}?${params}`)
+  }
+
+  async getDeliveryLocations(): Promise<any[]> {
+    return this.get(API_ENDPOINTS.DELIVERY.LOCATIONS)
+  }
+
+  // Платежи ЮКасса (новая функциональность)
+  async createPayment(paymentData: {
+    orderId: number
+    method: 'BANK_CARD' | 'SBP'
+    description: string
+    bankId?: string
+  }): Promise<any> {
+    return this.post(API_ENDPOINTS.PAYMENTS.YOOKASSA_CREATE, paymentData)
+  }
+
+  async getPaymentStatus(paymentId: string): Promise<any> {
+    return this.get(API_ENDPOINTS.PAYMENTS.YOOKASSA_STATUS(paymentId))
+  }
+
+  async getOrderPayments(orderId: number): Promise<any[]> {
+    return this.get(API_ENDPOINTS.PAYMENTS.ORDER_PAYMENTS(orderId))
+  }
+
+  async getOrderPaymentUrl(orderId: number): Promise<{ paymentUrl: string }> {
+    return this.get(API_ENDPOINTS.PAYMENTS.ORDER_PAYMENT_URL(orderId))
+  }
+
+  async getSbpBanks(): Promise<any[]> {
+    return this.get(API_ENDPOINTS.PAYMENTS.SBP_BANKS)
+  }
+
+  // Заказы
+  async getOrders(): Promise<OrdersResponse> {
+    return this.get<OrdersResponse>(API_ENDPOINTS.ORDERS.LIST)
+  }
+
+  async createOrder(orderData: CreateOrderRequest): Promise<Order> {
+    return this.post<Order>(API_ENDPOINTS.ORDERS.CREATE, orderData)
+  }
+
+  async getOrderById(orderId: number): Promise<Order> {
+    return this.get<Order>(API_ENDPOINTS.ORDERS.DETAIL(orderId))
+  }
+
+  async getPaymentUrl(orderId: number): Promise<PaymentUrlResponse> {
+    return this.get<PaymentUrlResponse>(API_ENDPOINTS.ORDERS.PAYMENT_URL(orderId))
   }
 }
 

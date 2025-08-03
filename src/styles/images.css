@@ -1,0 +1,189 @@
+/**
+ * @file: images.css
+ * @description: CSS стили для оптимизированных изображений
+ * @created: 2025-01-26
+ */
+
+/* Базовые стили для оптимизированных изображений */
+.optimized-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.optimized-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+  border-radius: inherit;
+}
+
+/* Hover эффекты для интерактивности */
+.optimized-image-container:hover .optimized-image {
+  transform: scale(1.05);
+}
+
+/* Адаптивные размеры изображений для разных устройств */
+.category-image {
+  width: 100%;
+  height: 140px; /* Фиксированная высота для десктопа */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-card-image {
+  width: 100%;
+  height: 160px; /* Фиксированная высота для десктопа */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-detail-image {
+  width: 100%;
+  height: 350px; /* Больше для детальной страницы */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Планшеты */
+@media (max-width: 768px) {
+  .category-image {
+    height: 120px;
+  }
+  
+  .product-card-image {
+    height: 140px;
+  }
+  
+  .product-detail-image {
+    height: 280px;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 480px) {
+  .category-image {
+    height: 100px;
+  }
+  
+  .product-card-image {
+    height: 120px;
+  }
+  
+  .product-detail-image {
+    height: 220px;
+  }
+}
+
+/* Стили загрузки изображений */
+.image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  border: 2px dashed #e9ecef;
+  color: #adb5bd;
+  transition: all 0.2s ease;
+}
+
+.image-placeholder:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+/* Анимация появления изображений */
+.optimized-image {
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Стили для ошибки загрузки */
+.image-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #868e96;
+  font-size: 14px;
+  text-align: center;
+  padding: 16px;
+}
+
+.image-error svg {
+  opacity: 0.5;
+}
+
+/* Дополнительные стили для компактности */
+.category-card-compact {
+  padding: 16px !important; /* Комфортные отступы */
+}
+
+.product-card-compact {
+  padding: 16px !important; /* Комфортные отступы */
+}
+
+/* Улучшенные стили для touch устройств */
+@media (hover: none) and (pointer: coarse) {
+  .optimized-image-container:active .optimized-image {
+    transform: scale(0.98);
+  }
+  
+  .optimized-image-container:hover .optimized-image {
+    transform: none; /* Отключаем hover на touch устройствах */
+  }
+  
+  /* Более компактные отступы на мобильных */
+  .category-card-compact {
+    padding: 12px !important;
+  }
+  
+  .product-card-compact {
+    padding: 12px !important;
+  }
+}
+
+/* Lazy loading стили */
+.image-lazy {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-lazy.loaded {
+  opacity: 1;
+}
+
+/* WebP поддержка */
+.webp .optimized-image {
+  /* Оптимизация для браузеров с поддержкой WebP */
+}
+
+/* Высокая плотность пикселей (Retina) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .optimized-image {
+    /* Стили для Retina дисплеев */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}

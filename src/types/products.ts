@@ -9,12 +9,9 @@
 export interface Category {
   id: number
   name: string
-  description?: string
-  image?: string
-  sort_order: number
-  is_active: boolean
-  created_at: string
-  updated_at: string
+  description: string
+  imageUrl: string
+  displayOrder: number
 }
 
 export interface ProductImage {
@@ -38,40 +35,25 @@ export interface Product {
   id: number
   name: string
   description: string
-  short_description?: string
-  category_id: number
-  category: Category
-  images: ProductImage[]
-  variants: ProductVariant[]
-  base_price: number
-  is_available: boolean
-  is_popular: boolean
-  is_new: boolean
-  ingredients?: string[]
-  allergens?: string[]
-  nutritional_info?: {
-    calories: number
-    proteins: number
-    fats: number
-    carbohydrates: number
-  }
-  cooking_time?: number
-  weight?: number
-  created_at: string
-  updated_at: string
+  price: number
+  discountedPrice?: number
+  categoryId: number
+  categoryName: string
+  imageUrl: string
+  weight: number
+  discountPercent?: number
+  available: boolean
+  specialOffer: boolean
 }
 
-// Типы для API запросов
+// Типы для API запросов (адаптированы под реальное API)
 export interface ProductsListRequest {
-  category_id?: number
+  category?: number
   search?: string
-  is_available?: boolean
-  is_popular?: boolean
-  is_new?: boolean
+  available?: boolean
   page?: number
-  limit?: number
-  sort_by?: 'name' | 'price' | 'created_at' | 'popularity'
-  sort_order?: 'asc' | 'desc'
+  size?: number
+  sort?: string
 }
 
 export interface ProductsListResponse {
@@ -87,34 +69,29 @@ export interface CategoriesListResponse {
   total: number
 }
 
-// Типы для корзины
+// Типы для корзины (адаптированы под реальное API)
 export interface CartItem {
-  id?: number
-  product_id: number
-  product: Product
-  variant_id?: number
-  variant?: ProductVariant
-  quantity: number
+  id: number
+  productId: number
+  productName: string
+  productImageUrl: string
   price: number
-  total_price: number
-  notes?: string
+  discountedPrice?: number
+  quantity: number
+  subtotal: number
 }
 
 export interface Cart {
   id?: number
-  user_id?: number
-  session_id?: string
+  sessionId: string
+  totalAmount: number
   items: CartItem[]
-  total_items: number
-  total_price: number
-  created_at?: string
-  updated_at?: string
 }
 
 export interface AddToCartRequest {
-  product_id: number
-  variant_id?: number
+  productId: number
   quantity: number
+  selectedOptions?: Record<string, any>
   notes?: string
 }
 
@@ -175,21 +152,125 @@ export interface ProductFilters {
 
 // Утилитарные типы
 export type ProductSortOption = {
-  value: ProductsListRequest['sort_by']
+  value: string
   label: string
-  order: ProductsListRequest['sort_order']
 }
 
 export type ProductDisplayMode = 'grid' | 'list'
 
 // Константы для продуктов
-export const PRODUCT_SORT_OPTIONS: ProductSortOption[] = [
-  { value: 'popularity', label: 'По популярности', order: 'desc' },
-  { value: 'name', label: 'По названию', order: 'asc' },
-  { value: 'price', label: 'По цене (возрастание)', order: 'asc' },
-  { value: 'price', label: 'По цене (убывание)', order: 'desc' },
-  { value: 'created_at', label: 'Новинки', order: 'desc' }
+export const PRODUCT_SORT_OPTIONS = [
+  { value: 'popularity', label: 'По популярности' },
+  { value: 'name', label: 'По названию' },
+  { value: 'price_asc', label: 'По цене (возрастание)' },
+  { value: 'price_desc', label: 'По цене (убывание)' },
+  { value: 'newest', label: 'Новинки' }
 ]
 
 export const DEFAULT_PRODUCTS_LIMIT = 20
-export const DEFAULT_SEARCH_LIMIT = 10 
+export const DEFAULT_SEARCH_LIMIT = 10
+
+// Типы для доставки
+export interface AddressSuggestion {
+  value: string
+  label: string
+  district?: string
+  city?: string
+  fullAddress?: string
+}
+
+export interface DeliveryEstimate {
+  deliveryCost: number
+  isDeliveryFree: boolean
+  deliveryAvailable: boolean
+  zoneName: string
+  city?: string
+  estimatedTime?: string
+  description?: string
+  baseCost?: number
+  freeDeliveryThreshold?: number
+}
+
+export interface DeliveryZone {
+  id: number
+  name: string
+  deliveryCost: number
+  freeDeliveryThreshold: number
+  estimatedTime: string
+}
+
+// Типы для заказов
+export interface OrderItem {
+  id: number
+  productId: number
+  productName: string
+  productImageUrl: string
+  quantity: number
+  price: number
+  subtotal: number
+}
+
+export interface Order {
+  id: number
+  status: string
+  statusDescription: string
+  deliveryLocationId?: number
+  deliveryLocationName?: string
+  deliveryLocationAddress?: string
+  deliveryAddress?: string
+  totalAmount: number
+  deliveryCost: number
+  deliveryType: string
+  comment?: string
+  contactName: string
+  contactPhone: string
+  createdAt: string
+  updatedAt: string
+  items: OrderItem[]
+  pickup: boolean
+  deliveryByCourier: boolean
+  itemsAmount: number
+}
+
+export interface OrdersResponse {
+  content: Order[]
+  pageable: {
+    pageNumber: number
+    pageSize: number
+    sort: {
+      empty: boolean
+      unsorted: boolean
+      sorted: boolean
+    }
+    offset: number
+    unpaged: boolean
+    paged: boolean
+  }
+  totalElements: number
+  totalPages: number
+  last: boolean
+  size: number
+  number: number
+  sort: {
+    empty: boolean
+    unsorted: boolean
+    sorted: boolean
+  }
+  numberOfElements: number
+  first: boolean
+  empty: boolean
+}
+
+export interface CreateOrderRequest {
+  deliveryLocationId?: number
+  deliveryAddress?: string
+  contactName: string
+  contactPhone: string
+  comment?: string
+  notes?: string
+  paymentMethod?: 'cash' | 'sbp'
+}
+
+export interface PaymentUrlResponse {
+  url: string
+} 
