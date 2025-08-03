@@ -126,7 +126,7 @@ export function HomePage() {
                   </Card.Section>
 
                   <Group justify="center" mt="md">
-                    <Text fw={500} ta="center">{category.name}</Text>
+                    <Text fw={500} ta="center" className="category-title">{category.name}</Text>
                   </Group>
 
                   <Text size="sm" c="dimmed" ta="center" mt="xs">
@@ -167,10 +167,11 @@ export function HomePage() {
                   </Card.Section>
 
                   <Group justify="space-between" mt="md" mb="xs">
-                    <Text fw={500} lineClamp={2}>{product.name}</Text>
+                    <Text fw={500} lineClamp={2} className="product-title">{product.name}</Text>
                     <Badge 
                       color={product.available ? "orange" : "gray"} 
                       variant="light"
+                      className="product-price"
                     >
                       {product.discountedPrice ? (
                         <>

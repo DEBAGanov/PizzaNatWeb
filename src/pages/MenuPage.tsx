@@ -114,7 +114,7 @@ export function MenuPage() {
                     </Card.Section>
                     
                     <Group justify="center" mt="md">
-                      <Text fw={500} size="lg" ta="center">{category.name}</Text>
+                      <Text fw={500} size="lg" ta="center" className="category-title">{category.name}</Text>
                     </Group>
                     
                     <Text size="sm" c="dimmed" ta="center" mt="xs" lineClamp={2}>

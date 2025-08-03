@@ -285,13 +285,14 @@ export function CategoryProductsPage() {
                     <Stack justify="space-between" h="100%" pt="md">
                       {/* Название и цена */}
                       <Group justify="space-between" align="flex-start">
-                        <Text fw={600} lineClamp={2} style={{ flexGrow: 1 }}>
+                        <Text fw={600} lineClamp={2} style={{ flexGrow: 1 }} className="product-title">
                           {product.name}
                         </Text>
                         <Badge 
                           color={product.available ? "orange" : "gray"} 
                           variant="light"
                           size="lg"
+                          className="product-price"
                         >
                           {product.discountedPrice ? (
                             <>
