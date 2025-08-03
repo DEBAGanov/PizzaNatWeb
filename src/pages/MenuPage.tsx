@@ -96,7 +96,7 @@ export function MenuPage() {
           {!categoriesLoading && !categoriesError && categories && categories.length > 0 && (
             <Grid>
               {categories.map((category) => (
-                <Grid.Col key={category.id} span={{ base: 12, sm: 6, md: 4 }}>
+                <Grid.Col key={category.id} span={{ base: 6, sm: 6, md: 4 }}>
                   <Card
                     shadow="sm"
                     padding="lg"

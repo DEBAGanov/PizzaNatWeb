@@ -108,7 +108,7 @@ export function HomePage() {
         {!categoriesLoading && !categoriesError && categories && categories.length > 0 && (
           <Grid>
             {categories.map((category) => (
-              <Grid.Col key={category.id} span={{ base: 12, sm: 6, md: 4 }}>
+              <Grid.Col key={category.id} span={{ base: 6, sm: 6, md: 4 }}>
                 <Card 
                   shadow="sm" 
                   padding="lg" 
@@ -157,7 +157,7 @@ export function HomePage() {
         {!productsLoading && !productsError && products && products.length > 0 && (
           <Grid>
             {products.slice(0, 8).map((product) => (
-              <Grid.Col key={product.id} span={{ base: 12, sm: 6, md: 4 }}>
+              <Grid.Col key={product.id} span={{ base: 6, sm: 6, md: 4 }}>
                 <Card shadow="sm" padding="lg" radius="md" withBorder className="product-card-compact">
                   <Card.Section>
                     <ProductCardImage 

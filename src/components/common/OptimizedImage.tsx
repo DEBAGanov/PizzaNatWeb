@@ -86,7 +86,7 @@ export function CategoryImage({ src, alt }: { src?: string; alt: string }) {
         src={src}
         alt={alt}
         objectFit="cover"
-        fallbackIcon={<IconPizza size={32} color="#ff8000" />}
+        fallbackIcon={<IconPizza size={24} color="#ff8000" />}
       />
     </Box>
   )
@@ -99,7 +99,7 @@ export function ProductCardImage({ src, alt }: { src?: string; alt: string }) {
         src={src}
         alt={alt}
         objectFit="cover"
-        fallbackIcon={<IconPizza size={32} color="#ccc" />}
+        fallbackIcon={<IconPizza size={28} color="#ccc" />}
       />
     </Box>
   )

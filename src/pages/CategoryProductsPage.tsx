@@ -229,7 +229,7 @@ export function CategoryProductsPage() {
           {!isLoadingFiltered && !productsError && filteredProducts.length > 0 && (
             <Grid>
               {filteredProducts.map((product) => (
-                <Grid.Col key={product.id} span={{ base: 12, sm: 6, md: 4, lg: 3 }}>
+                <Grid.Col key={product.id} span={{ base: 6, sm: 6, md: 4, lg: 3 }}>
                   <Card 
                     shadow="sm" 
                     padding="lg" 

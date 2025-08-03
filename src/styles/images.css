@@ -73,15 +73,38 @@
 /* Мобильные устройства */
 @media (max-width: 480px) {
   .category-image {
-    height: 100px;
+    height: 70px; /* Очень компактно как в приложении */
   }
   
   .product-card-image {
-    height: 120px;
+    height: 80px; /* Намного компактнее */
   }
   
   .product-detail-image {
-    height: 220px;
+    height: 180px; /* Меньше для мобильных */
+  }
+  
+  /* Компактные заголовки и текст в карточках */
+  .category-card-compact .mantine-Text-root,
+  .product-card-compact .mantine-Text-root {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+    margin: 4px 0 !important;
+  }
+  
+  .category-card-compact .mantine-Group-root,
+  .product-card-compact .mantine-Group-root {
+    gap: 4px !important;
+    margin: 6px 0 !important;
+  }
+  
+  /* Более плотная сетка на мобильных */
+  .mantine-Grid-col[data-span="12"] {
+    width: 100% !important;
+  }
+  
+  .mantine-Grid-col[data-span="6"] {
+    width: 50% !important;
   }
 }
 
@@ -154,13 +177,13 @@
     transform: none; /* Отключаем hover на touch устройствах */
   }
   
-  /* Более компактные отступы на мобильных */
+  /* Очень компактные отступы на мобильных */
   .category-card-compact {
-    padding: 12px !important;
+    padding: 8px !important; /* Минимальные отступы */
   }
   
   .product-card-compact {
-    padding: 12px !important;
+    padding: 8px !important; /* Минимальные отступы */
   }
 }
 
