@@ -89,20 +89,20 @@
 /* Мобильные устройства */
 @media (max-width: 480px) {
   .category-image {
-    height: 60px; /* УЛЬТРА компактно как в приложении */
-    width: 60px; /* КВАДРАТ для идеального круга */
+    height: 80px; /* БОЛЬШЕ чтобы круг не обрезался */
+    width: 80px; /* КВАДРАТ для идеального круга */
     margin: 0 auto; /* Центрируем */
   }
   
   .product-card-image {
-    height: 65px; /* УЛЬТРА компактнее */
-    width: 65px; /* КВАДРАТ для идеального круга */
+    height: 90px; /* БОЛЬШЕ чтобы круг не обрезался */
+    width: 90px; /* КВАДРАТ для идеального круга */
     margin: 0 auto; /* Центрируем */
   }
   
   .product-detail-image {
-    height: 160px; /* Еще меньше для мобильных */
-    width: 160px; /* КВАДРАТ для идеального круга */
+    height: 180px; /* БОЛЬШЕ чтобы круг не обрезался */
+    width: 180px; /* КВАДРАТ для идеального круга */
     margin: 0 auto; /* Центрируем */
   }
   
@@ -159,6 +159,33 @@
     font-size: 10px !important;
     line-height: 1.1 !important;
     margin: 1px 0 !important;
+  }
+  
+  /* КОМПАКТНЫЕ КНОПКИ для мобильных */
+  .product-card-compact .mantine-Button-root,
+  .category-card-compact .mantine-Button-root {
+    font-size: 10px !important; /* МЕЛКИЙ шрифт на кнопках */
+    padding: 4px 8px !important; /* МЕНЬШЕ отступы */
+    height: auto !important;
+    min-height: 28px !important; /* МИНИМАЛЬНАЯ высота */
+  }
+  
+  /* КОМПАКТНЫЕ группы кнопок */
+  .product-card-compact .mantine-Group-root .mantine-Button-root {
+    flex: 1 !important; /* РАСТЯГИВАЕМ кнопки */
+    font-size: 9px !important; /* ЕЩЕ МЕЛЬЧЕ для групп */
+    padding: 3px 6px !important;
+  }
+  
+  /* МОБИЛЬНЫЕ КНОПКИ с классом telegram-button-mobile */
+  .telegram-button-mobile {
+    font-size: 10px !important; /* МЕЛКИЙ шрифт */
+    padding: 4px 6px !important; /* КОМПАКТНЫЕ отступы */
+    height: auto !important;
+    min-height: 32px !important; /* ДОСТАТОЧНАЯ высота */
+    white-space: nowrap !important; /* НЕ ПЕРЕНОСИМ текст */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 }
 

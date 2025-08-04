@@ -83,6 +83,7 @@ export const TelegramButton: React.FC<TelegramButtonProps> = ({
       color={color}
       size={size}
       fullWidth={fullWidth}
+      className="telegram-button-mobile"
       {...buttonProps}
     >
       {children}

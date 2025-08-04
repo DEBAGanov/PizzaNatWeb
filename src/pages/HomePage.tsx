@@ -196,6 +196,7 @@ export function HomePage() {
                       variant="outline"
                       color="orange" 
                       radius="md"
+                      className="telegram-button-mobile"
                       onClick={() => navigate(`/product/${product.id}`)}
                     >
                       Подробнее
@@ -203,6 +204,7 @@ export function HomePage() {
                     <Button 
                       color="orange" 
                       radius="md"
+                      className="telegram-button-mobile"
                       disabled={!product.available}
                       onClick={(e) => {
                         e.stopPropagation()
