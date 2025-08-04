@@ -25,14 +25,15 @@ import { IconPizza, IconShoppingCart } from '@tabler/icons-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useProducts } from '../contexts/ProductsContext'
 import { SEOPageWrapper } from '../components/SEOHead'
-import { HomePageSEOContent, AboutUsSEOBlock } from '../components/seo/IndexingContent'
+import { HomePageSEOContent, AboutUsSEOBlock, SEOQuestionsBlock } from '../components/seo/IndexingContent'
 import { generateLocalBusinessSchema, generateBreadcrumbSchema } from '../utils/seo'
 import { AppInstallButtons } from '../components/AppInstallButtons'
 import { CategoryImage, ProductCardImage } from '../components/common/OptimizedImage'
 
 export function HomePage() {
   const navigate = useNavigate()
-  const { } = useAuth()
+  const { user } = useAuth()
+  
   const { 
     state: { 
       categories,
@@ -52,6 +53,18 @@ export function HomePage() {
     loadProducts({ size: 8, page: 0 })
   }, [])
 
+  // Проверка авторизации перед выполнением действий
+  const handleActionWithAuth = (action: () => void) => {
+    if (!user) {
+      // Перенаправляем на внешнюю страницу авторизации
+      window.location.href = 'https://dimbopizza.ru/auth'
+      return
+    }
+    
+    // Если пользователь авторизован, выполняем действие
+    action()
+  }
+
   // JSON-LD данные для главной страницы
   const structuredData = {
     businessSchema: generateLocalBusinessSchema(),
@@ -59,15 +72,15 @@ export function HomePage() {
       { name: 'Главная', url: 'https://dimbopizza.ru/' }
     ])
   }
-
+  
   return (
     <SEOPageWrapper 
       page="home" 
       customSeo={{
         structuredData,
-        title: 'ДИМБО Пицца - Доставка вкусной пиццы в Волжске | Заказать онлайн',
-        description: 'Заказать пиццу в Волжске с доставкой на дом. Свежие ингредиенты, быстрая доставка 30-60 минут, оплата наличными или картой. Работаем ежедневно!',
-        keywords: ['заказать пиццу Волжск', 'доставка пиццы Волжск', 'ДИМБО пицца', 'пицца на дом Волжск']
+        title: 'ДИМБО Пицца Волжск - быстрая доставка пиццы на дом | Заказать онлайн',
+        description: 'Доставка пиццы на дом в Волжске за 30-60 минут ⭐ Горячая пицца с доставкой от 800₽ ⭐ Лучше чем Додо Пицца на ул. Ленина 52 ⭐ Заказать пиццу с доставкой 24 часа',
+        keywords: ['доставка пиццы на дом', 'быстрая доставка пиццы', 'заказать пиццу с доставкой', 'горячая пицца с доставкой', 'пицца волжск', 'димбо пицца', 'закрытая пицца', 'купить пиццу онлайн', 'бесплатная доставка пиццы', 'водитель доставит пиццу', 'самая вкусная пицца с доставкой', 'время доставки пиццы', 'режим работы пиццерий с доставкой']
       }}
     >
       <Container size="lg">
@@ -116,7 +129,7 @@ export function HomePage() {
                   withBorder
                   className="category-card-compact"
                   style={{ cursor: 'pointer' }}
-                  onClick={() => navigate(`/menu?category=${category.id}`)}
+                  onClick={() => handleActionWithAuth(() => navigate(`/menu?category=${category.id}`))}
                 >
                   <Card.Section>
                     <CategoryImage 
@@ -197,7 +210,7 @@ export function HomePage() {
                       color="orange" 
                       radius="md"
                       className="telegram-button-mobile"
-                      onClick={() => navigate(`/product/${product.id}`)}
+                      onClick={() => handleActionWithAuth(() => navigate(`/product/${product.id}`))}
                     >
                       Подробнее
                     </Button>
@@ -208,10 +221,10 @@ export function HomePage() {
                       disabled={!product.available}
                       onClick={(e) => {
                         e.stopPropagation()
-                        addToCart({ 
+                        handleActionWithAuth(() => addToCart({ 
                           productId: product.id, 
                           quantity: 1 
-                        })
+                        }))
                       }}
                     >
                       {product.available ? 'В корзину' : 'Недоступно'}
@@ -244,10 +257,11 @@ export function HomePage() {
         )}
 
         
-        {/* Статус разработки - обновлен */}
-       
-                {/* SEO контент для главной страницы */}
-          <HomePageSEOContent />
+        {/* SEO контент для главной страницы */}
+        <HomePageSEOContent />
+        
+        {/* SEO блок с вопросами про доставку пиццы */}
+        <SEOQuestionsBlock />
 
           {/* Блок "О нас" */}
           <AboutUsSEOBlock />

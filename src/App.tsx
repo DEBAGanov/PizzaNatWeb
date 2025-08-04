@@ -95,6 +95,21 @@ function WebApp() {
         } 
       />
       
+      {/* Главная страница БЕЗ авторизации для SEO */}
+      <Route 
+        path="/" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <AppShell padding="md">
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
+                <HomePage />
+              </AppShell.Main>
+              <TelegramBottomNav />
+            </AppShell>
+          </ProtectedRoute>
+        } 
+      />
+      
       {/* Защищенные маршруты */}
       <Route 
         path="/*" 
@@ -105,12 +120,11 @@ function WebApp() {
             >
               <AppShell.Main style={{ paddingBottom: '120px' }}>
                 <Routes>
-                  <Route path="/" element={<HomePage />} />
                   <Route path="/menu" element={<MenuPageRouter />} />
                   <Route path="/product/:id" element={<ProductPage />} />
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/checkout" element={<CheckoutPage />} />
-                              <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/order-success/:orderId" element={<OrderSuccessPage />} />
                   <Route path="/auth-test" element={<AuthTestPage />} />
                 </Routes>
@@ -127,8 +141,8 @@ function WebApp() {
 }
 
 const App: React.FC = () => {
-  // ID счетчика Яндекс.Метрики (заменить на реальный)
-  const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '12345678'
+  // ID счетчика Яндекс.Метрики
+  const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '103585127'
   
   return (
     <YandexMetrikaProvider counterId={YANDEX_METRIKA_ID}>

@@ -1,55 +1,32 @@
-# Robots.txt для ДИМБО Пицца - Волжск
-# Доставка пиццы в г. Волжск, Республика Марий Эл
-
 User-agent: *
-
-# Разрешенные для индексации страницы
 Allow: /
+
+# Основные страницы для SEO
 Allow: /menu
 Allow: /product/*
-Allow: /privacy
+Allow: /auth
+Allow: /
 
-# Запрещенные для индексации страницы
+# Приоритетные для индексации
+Crawl-delay: 1
+
+# Блокируем личные разделы
+Disallow: /admin
+Disallow: /profile
 Disallow: /cart
 Disallow: /checkout
-Disallow: /orders
-Disallow: /auth
-Disallow: /auth-test
-Disallow: /admin/*
-Disallow: /api/*
+Disallow: /order-success
 
-# Статические ресурсы
-Allow: /assets/
-Allow: /images/
-Allow: *.css
-Allow: *.js
-Allow: *.png
-Allow: *.jpg
-Allow: *.jpeg
-Allow: *.gif
-Allow: *.svg
-Allow: *.ico
+# Блокируем API
+Disallow: /api/
+Disallow: /*.json$
 
-# Карта сайта
+# Sitemap
 Sitemap: https://dimbopizza.ru/sitemap.xml
 
-# Время обхода (в секундах)
-Crawl-delay: 1
-
-# Специфичные настройки для поисковых систем
-User-agent: Yandex
-Crawl-delay: 1
-Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term
-
-User-agent: Googlebot
-Crawl-delay: 1
-
-# Блокируем устаревшие или вредоносные боты
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: DotBot
-Disallow: /
+# Контактная информация ДИМБО Пицца Волжск
+# Адрес: г. Волжск, ул. Шестакова, д.1Б  
+# Телефон: +7 (902) 105-34-34
+# Email: info@dimbopizza.ru
+# Время работы: Ежедневно 10:00-20:00
+# Доставка пиццы по всему Волжску

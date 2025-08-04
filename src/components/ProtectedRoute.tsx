@@ -84,8 +84,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   // Если не требуется авторизация, но пользователь авторизован
-  // (например, для страницы входа)
-  if (!requireAuth && user) {
+  // (например, для страницы входа) - НО НЕ для главной страницы!
+  if (!requireAuth && user && location.pathname !== '/') {
     const from = location.state?.from?.pathname || '/'
     return <Navigate to={from} replace />
   }

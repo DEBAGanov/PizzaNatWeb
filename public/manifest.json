@@ -1,0 +1,42 @@
+{
+  "name": "ДИМБО Пицца - Доставка пиццы в Волжске",
+  "short_name": "ДИМБО Пицца",
+  "description": "Заказать пиццу с доставкой на дом в Волжске. Быстрая доставка за 30-60 минут.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FFD700",
+  "orientation": "portrait-primary",
+  "categories": ["food", "delivery"],
+  "lang": "ru",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Меню пиццы",
+      "short_name": "Меню",
+      "description": "Посмотреть все виды пиццы",
+      "url": "/menu",
+      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Корзина",
+      "short_name": "Корзина",
+      "description": "Оформить заказ",
+      "url": "/cart",
+      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+    }
+  ]
+}

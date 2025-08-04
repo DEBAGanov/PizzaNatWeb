@@ -35,23 +35,23 @@ export function YandexMetrika({
       return
     }
 
-    // Создаем скрипт Яндекс.Метрики
+    // Создаем скрипт Яндекс.Метрики (обновленная версия)
     const script = document.createElement('script')
     script.innerHTML = `
       (function(m,e,t,r,i,k,a){
         m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
         m[i].l=1*new Date();
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0];
-        k.async=1;k.src=r;a.parentNode.insertBefore(k,a)
-      })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=${counterId}', 'ym');
 
-      ym(${counterId}, "init", {
-        clickmap: ${clickmap},
-        trackLinks: ${trackLinks},
-        accurateTrackBounce: ${accurateTrackBounce},
+      ym(${counterId}, 'init', {
+        ssr: true,
         webvisor: ${webvisor},
-        trackHash: true,
-        ecommerce: "dataLayer"
+        clickmap: ${clickmap},
+        ecommerce: "dataLayer",
+        accurateTrackBounce: ${accurateTrackBounce},
+        trackLinks: ${trackLinks}
       });
     `
     

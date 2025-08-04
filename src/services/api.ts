@@ -84,10 +84,15 @@ apiClient.interceptors.response.use(
       localStorage.removeItem('pizzanat_tokens')
       localStorage.removeItem('pizzanat_user')
       
-      // Перенаправляем на страницу авторизации если не на ней
-      if (!window.location.pathname.includes('/auth')) {
+      // НЕ ПЕРЕНАПРАВЛЯЕМ на авторизацию с главной страницы (для SEO)
+      const isHomePage = window.location.pathname === '/'
+      const isAuthPage = window.location.pathname.includes('/auth')
+      
+      if (!isHomePage && !isAuthPage) {
         console.log('🔄 Перенаправление на страницу авторизации')
         window.location.href = '/auth'
+      } else if (isHomePage) {
+        console.log('🏠 Остаемся на главной странице для SEO, ошибка авторизации игнорируется')
       }
     }
 

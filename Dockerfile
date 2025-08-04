@@ -54,9 +54,8 @@ FROM node:18-alpine AS production
 # Установка рабочей директории
 WORKDIR /app
 
-# Установка только production зависимостей для preview сервера
-RUN apk add --no-cache wget curl && \
-    npm install -g serve
+# Установка nginx для production сервера
+RUN apk add --no-cache wget curl nginx
 
 # Создание непривилегированного пользователя
 RUN addgroup -g 1001 -S dimbopizza && \
@@ -69,12 +68,17 @@ COPY --from=builder /app/package*.json ./
 # Копирование конфигурационных файлов
 COPY public/robots.txt ./dist/
 COPY public/sitemap.xml ./dist/
+COPY public/yandex_3d9c38ef35de5e25.html ./dist/
+
+# Копирование nginx конфигурации
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Создание health endpoint
 RUN echo '{"status":"ok","service":"dimbopizza-web","version":"1.0.0"}' > ./dist/health
 
-# Настройка прав доступа
-RUN chown -R dimbopizza:dimbopizza /app && \
+# Настройка прав доступа и создание временных директорий для nginx
+RUN mkdir -p /var/log/nginx /tmp/nginx_client_temp /tmp/nginx_proxy_temp /tmp/nginx_fastcgi_temp /tmp/nginx_uwsgi_temp /tmp/nginx_scgi_temp && \
+    chown -R dimbopizza:dimbopizza /app /var/log/nginx /var/run/nginx /tmp/nginx_* && \
     chmod -R 755 /app/dist
 
 # Переключение на непривилегированного пользователя
@@ -87,5 +91,5 @@ EXPOSE 3478
 HEALTHCHECK --interval=60s --timeout=5s --start-period=30s --retries=2 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:3478/health || exit 1
 
-# Запуск статического сервера
-CMD ["serve", "-s", "dist", "-l", "3478", "--no-clipboard"] 
+# Запуск nginx сервера
+CMD ["nginx", "-g", "daemon off;"] 

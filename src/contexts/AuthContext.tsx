@@ -122,6 +122,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
       try {
         const stored = loadFromStorage()
         if (stored) {
+          // НЕ ВОССТАНАВЛИВАЕМ токены на главной странице (для SEO режима)
+          const isHomePage = window.location.pathname === '/'
+          
+          if (isHomePage) {
+            dispatch({ type: 'SET_LOADING', payload: false })
+            return
+          }
+          
           // Проверяем валидность токена через получение профиля
           try {
             const profile = await AuthApi.getProfile()
@@ -144,7 +152,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
             dispatch({ type: 'SET_LOADING', payload: false })
             
             // Автоматический логин для development окружения если токен недействителен
-            if (window.location.hostname === 'localhost' && window.location.port === '8080') {
+            // НО НЕ на главной странице (для SEO режима)
+            const isHomePage = window.location.pathname === '/'
+            if (window.location.hostname === 'localhost' && window.location.port === '8080' && !isHomePage) {
               console.log('🔧 Development mode: токен недействителен, регистрируем нового пользователя через API')
               
               try {
@@ -209,7 +219,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
           dispatch({ type: 'SET_LOADING', payload: false })
           
           // Автоматический логин для development окружения если нет сохраненных данных
-          if (window.location.hostname === 'localhost' && window.location.port === '8080') {
+          // НО НЕ на главной странице (для SEO режима)
+          const isHomePage = window.location.pathname === '/'
+          if (window.location.hostname === 'localhost' && window.location.port === '8080' && !isHomePage) {
             console.log('🔧 Development mode: нет сохраненного пользователя, входим как admin через API')
             
             try {
@@ -272,7 +284,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         dispatch({ type: 'SET_LOADING', payload: false })
         
         // Автоматический логин для development окружения
-        if (window.location.hostname === 'localhost' && window.location.port === '8080') {
+        // НО НЕ на главной странице (для SEO режима)
+        const isHomePage = window.location.pathname === '/'
+        if (window.location.hostname === 'localhost' && window.location.port === '8080' && !isHomePage) {
           console.log('🔧 Development mode: ошибка авторизации, регистрируем пользователя через API')
           
           try {
