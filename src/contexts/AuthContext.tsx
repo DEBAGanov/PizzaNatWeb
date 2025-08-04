@@ -9,6 +9,7 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react'
 import { notifications } from '@mantine/notifications'
 import { AuthApi } from '../services/authApi'
+import { isPublicPage, isDevelopmentEnvironment } from '../utils/pageUtils'
 import type {
   User,
   AuthTokens,
@@ -108,6 +109,8 @@ const loadFromStorage = (): { user: User; tokens: AuthTokens } | null => {
   return null
 }
 
+
+
 // Провайдер контекста
 interface AuthProviderProps {
   children: React.ReactNode
@@ -122,10 +125,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       try {
         const stored = loadFromStorage()
         if (stored) {
-          // НЕ ВОССТАНАВЛИВАЕМ токены на главной странице (для SEO режима)
-          const isHomePage = window.location.pathname === '/'
-          
-          if (isHomePage) {
+          // НЕ ВОССТАНАВЛИВАЕМ токены на публичных страницах (для SEO режима)
+          if (isPublicPage()) {
+            console.log('🏠 Публичная страница - не восстанавливаем токены для SEO режима')
             dispatch({ type: 'SET_LOADING', payload: false })
             return
           }
@@ -152,9 +154,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
             dispatch({ type: 'SET_LOADING', payload: false })
             
             // Автоматический логин для development окружения если токен недействителен
-            // НО НЕ на главной странице (для SEO режима)
-            const isHomePage = window.location.pathname === '/'
-            if (window.location.hostname === 'localhost' && window.location.port === '8080' && !isHomePage) {
+            // НО НЕ на публичных страницах (для SEO режима)
+            if (isDevelopmentEnvironment() && !isPublicPage()) {
               console.log('🔧 Development mode: токен недействителен, регистрируем нового пользователя через API')
               
               try {
@@ -219,9 +220,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
           dispatch({ type: 'SET_LOADING', payload: false })
           
           // Автоматический логин для development окружения если нет сохраненных данных
-          // НО НЕ на главной странице (для SEO режима)
-          const isHomePage = window.location.pathname === '/'
-          if (window.location.hostname === 'localhost' && window.location.port === '8080' && !isHomePage) {
+          // НО НЕ на публичных страницах (для SEO режима)
+          if (isDevelopmentEnvironment() && !isPublicPage()) {
             console.log('🔧 Development mode: нет сохраненного пользователя, входим как admin через API')
             
             try {
@@ -284,9 +284,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         dispatch({ type: 'SET_LOADING', payload: false })
         
         // Автоматический логин для development окружения
-        // НО НЕ на главной странице (для SEO режима)
-        const isHomePage = window.location.pathname === '/'
-        if (window.location.hostname === 'localhost' && window.location.port === '8080' && !isHomePage) {
+        // НО НЕ на публичных страницах (для SEO режима)
+        if (isDevelopmentEnvironment() && !isPublicPage()) {
           console.log('🔧 Development mode: ошибка авторизации, регистрируем пользователя через API')
           
           try {

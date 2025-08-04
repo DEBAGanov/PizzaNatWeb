@@ -26,6 +26,7 @@ import ProfilePage from './pages/ProfilePage'
 import OrderSuccessPage from './pages/OrderSuccessPage'
 import { AuthTestPage } from './pages/AuthTestPage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
+import { DimboKidsPage } from './pages/DimboKidsPage'
 
 // Компонент для определения платформы (внутри Router и TelegramProvider)
 function PlatformRouter() {
@@ -91,6 +92,19 @@ function WebApp() {
         element={
           <ProtectedRoute requireAuth={false}>
             <PrivacyPolicyPage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/dimbokids" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <AppShell padding="md">
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
+                <DimboKidsPage />
+              </AppShell.Main>
+              <TelegramBottomNav />
+            </AppShell>
           </ProtectedRoute>
         } 
       />

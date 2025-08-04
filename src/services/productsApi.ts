@@ -410,18 +410,7 @@ export class ProductsApi extends BaseApiService {
     return errors
   }
 
-  // Заказы (новая функциональность)
-  async createOrder(orderData: any): Promise<any> {
-    return this.post(API_ENDPOINTS.ORDERS.CREATE, orderData)
-  }
 
-  async getOrders(): Promise<any[]> {
-    return this.get(API_ENDPOINTS.ORDERS.LIST)
-  }
-
-  async getOrderById(orderId: number): Promise<any> {
-    return this.get(API_ENDPOINTS.ORDERS.DETAIL(orderId))
-  }
 
   // Доставка (новая функциональность)
   async estimateDelivery(address: string, orderAmount: number): Promise<any> {

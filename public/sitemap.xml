@@ -30,6 +30,14 @@
     <priority>0.5</priority>
   </url>
   
+  <!-- ДИМБО детям - мастер-классы и дни рождения -->
+  <url>
+    <loc>https://dimbopizza.ru/dimbokids</loc>
+    <lastmod>2025-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
   <!-- Политика конфиденциальности -->
   <url>
     <loc>https://dimbopizza.ru/privacy</loc>
@@ -75,6 +83,14 @@
     <priority>0.7</priority>
   </url>
   
+  <url>
+    <loc>https://dimbopizza.ru/product/3</loc>
+    <lastmod>2025-01-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+</urlset>
   <url>
     <loc>https://dimbopizza.ru/product/3</loc>
     <lastmod>2025-01-26</lastmod>

@@ -70,6 +70,9 @@ COPY public/robots.txt ./dist/
 COPY public/sitemap.xml ./dist/
 COPY public/yandex_3d9c38ef35de5e25.html ./dist/
 
+# Копирование изображений
+COPY public/images/ ./dist/images/
+
 # Копирование nginx конфигурации
 COPY nginx.conf /etc/nginx/nginx.conf
 

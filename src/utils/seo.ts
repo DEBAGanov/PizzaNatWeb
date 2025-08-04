@@ -83,6 +83,16 @@ export const generatePageSeo = (page: string, data?: Partial<SeoData>): SeoData 
         canonical: `${BASE_SEO.baseUrl}/checkout`
       }
       
+    case 'kids':
+      return {
+        title: `ДИМБО детям - мастер-классы и дни рождения в пиццерии Волжск | ${BASE_SEO.siteName}`,
+        description: 'Мастер-классы по приготовлению пиццы для детей от 4 лет в ДИМБО Пицца Волжск. Празднование дня рождения, игровые комнаты, раскраски и развивающие активности.',
+        keywords: [...baseKeywords, 'мастер-класс пицца дети', 'день рождения пиццерия Волжск', 'ДИМБО дети', 'детские праздники Волжск', 'обучение готовке детей', 'игровая комната пиццерия'],
+        ogTitle: 'ДИМБО детям - мастер-классы в пиццерии Волжск',
+        ogDescription: 'Незабываемые мастер-классы и дни рождения для детей в ДИМБО Пицца. Обучение готовке, игры и развлечения.',
+        canonical: `${BASE_SEO.baseUrl}/dimbokids`
+      }
+      
     default:
       return {
         title: BASE_SEO.defaultTitle,
