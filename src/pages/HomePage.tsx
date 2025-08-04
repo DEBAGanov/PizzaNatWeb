@@ -83,10 +83,10 @@ export function HomePage() {
         keywords: ['доставка пиццы на дом', 'быстрая доставка пиццы', 'заказать пиццу с доставкой', 'горячая пицца с доставкой', 'пицца волжск', 'димбо пицца', 'закрытая пицца', 'купить пиццу онлайн', 'бесплатная доставка пиццы', 'водитель доставит пиццу', 'самая вкусная пицца с доставкой', 'время доставки пиццы', 'режим работы пиццерий с доставкой']
       }}
     >
-      <Container size="md">
-      <Stack gap="lg">
+      <Container size="lg">
+      <Stack gap="md">
         {/* Блок с установкой приложения */}
-        <Card shadow="sm" padding="lg" radius="md" withBorder className="app-download-block">
+        <Card shadow="sm" padding="lg" radius="md" withBorder>
           <Stack gap="md">
             <Group justify="space-between">
               <Title order={2} c="orange.7">
