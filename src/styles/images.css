@@ -68,20 +68,20 @@
 /* Планшеты */
 @media (max-width: 768px) {
   .category-image {
-    height: 120px;
-    width: 120px; /* КВАДРАТ для идеального круга */
-    margin: 0 auto; /* Центрируем */
-  }
-  
-  .product-card-image {
-    height: 140px;
+    height: 140px; /* БОЛЬШЕ для планшетов */
     width: 140px; /* КВАДРАТ для идеального круга */
     margin: 0 auto; /* Центрируем */
   }
   
+  .product-card-image {
+    height: 160px; /* БОЛЬШЕ для планшетов */
+    width: 160px; /* КВАДРАТ для идеального круга */
+    margin: 0 auto; /* Центрируем */
+  }
+  
   .product-detail-image {
-    height: 280px;
-    width: 280px; /* КВАДРАТ для идеального круга */
+    height: 300px; /* БОЛЬШЕ для планшетов */
+    width: 300px; /* КВАДРАТ для идеального круга */
     margin: 0 auto; /* Центрируем */
   }
 }
@@ -89,35 +89,35 @@
 /* Мобильные устройства */
 @media (max-width: 480px) {
   .category-image {
-    height: 80px; /* БОЛЬШЕ чтобы круг не обрезался */
-    width: 80px; /* КВАДРАТ для идеального круга */
+    height: 100px; /* ЕЩЕ БОЛЬШЕ чтобы круг полностью поместился */
+    width: 100px; /* КВАДРАТ для идеального круга */
     margin: 0 auto; /* Центрируем */
   }
   
   .product-card-image {
-    height: 90px; /* БОЛЬШЕ чтобы круг не обрезался */
-    width: 90px; /* КВАДРАТ для идеального круга */
+    height: 110px; /* ЕЩЕ БОЛЬШЕ чтобы круг полностью поместился */
+    width: 110px; /* КВАДРАТ для идеального круга */
     margin: 0 auto; /* Центрируем */
   }
   
   .product-detail-image {
-    height: 180px; /* БОЛЬШЕ чтобы круг не обрезался */
-    width: 180px; /* КВАДРАТ для идеального круга */
+    height: 200px; /* ЕЩЕ БОЛЬШЕ чтобы круг полностью поместился */
+    width: 200px; /* КВАДРАТ для идеального круга */
     margin: 0 auto; /* Центрируем */
   }
   
-  /* УЛЬТРА компактные заголовки и текст в карточках */
+  /* УЛЬТРА МЕЛКИЕ заголовки и текст в карточках */
   .category-card-compact .mantine-Text-root,
   .product-card-compact .mantine-Text-root {
-    font-size: 12px !important; /* Очень мелкий шрифт */
-    line-height: 1.2 !important;
-    margin: 2px 0 !important;
+    font-size: 10px !important; /* ЕЩЕ МЕЛЬЧЕ */
+    line-height: 1.1 !important;
+    margin: 1px 0 !important;
   }
   
   .category-card-compact .mantine-Group-root,
   .product-card-compact .mantine-Group-root {
-    gap: 2px !important;
-    margin: 3px 0 !important;
+    gap: 1px !important;
+    margin: 2px 0 !important;
   }
   
   /* Более плотная сетка на мобильных */
@@ -129,35 +129,35 @@
     width: 50% !important;
   }
   
-  /* УЛЬТРА компактные заголовки товаров */
+  /* УЛЬТРА МЕЛКИЕ заголовки товаров */
   .product-card-compact .product-title {
-    font-size: 12px !important;
+    font-size: 10px !important; /* ЕЩЕ МЕЛЬЧЕ */
     font-weight: 600 !important;
     margin: 1px 0 !important;
-    line-height: 1.2 !important;
+    line-height: 1.1 !important;
   }
   
-  /* УЛЬТРА компактные заголовки категорий */
+  /* УЛЬТРА МЕЛКИЕ заголовки категорий */
   .category-card-compact .category-title {
-    font-size: 11px !important;
+    font-size: 9px !important; /* ЕЩЕ МЕЛЬЧЕ */
     font-weight: 600 !important;
     margin: 1px 0 !important;
-    line-height: 1.2 !important;
+    line-height: 1.1 !important;
   }
   
-  /* Компактные цены */
+  /* МЕЛКИЕ цены */
   .product-card-compact .product-price {
-    font-size: 11px !important;
+    font-size: 9px !important; /* ЕЩЕ МЕЛЬЧЕ */
     font-weight: 700 !important;
     margin: 1px 0 !important;
-    padding: 2px 6px !important;
+    padding: 2px 4px !important; /* МЕНЬШЕ отступы */
   }
   
-  /* Очень мелкие описания */
+  /* МИКРО описания */
   .product-card-compact .mantine-Text-root[data-variant="dimmed"],
   .category-card-compact .mantine-Text-root[data-variant="dimmed"] {
-    font-size: 10px !important;
-    line-height: 1.1 !important;
+    font-size: 8px !important; /* МИКРО размер */
+    line-height: 1.0 !important;
     margin: 1px 0 !important;
   }
   
@@ -179,10 +179,10 @@
   
   /* МОБИЛЬНЫЕ КНОПКИ с классом telegram-button-mobile */
   .telegram-button-mobile {
-    font-size: 10px !important; /* МЕЛКИЙ шрифт */
-    padding: 4px 6px !important; /* КОМПАКТНЫЕ отступы */
+    font-size: 8px !important; /* ЕЩЕ МЕЛЬЧЕ шрифт */
+    padding: 3px 5px !important; /* ЕЩЕ КОМПАКТНЕЕ отступы */
     height: auto !important;
-    min-height: 32px !important; /* ДОСТАТОЧНАЯ высота */
+    min-height: 28px !important; /* МЕНЬШЕ высота */
     white-space: nowrap !important; /* НЕ ПЕРЕНОСИМ текст */
     overflow: hidden !important;
     text-overflow: ellipsis !important;
