@@ -86,8 +86,8 @@ export function HomePage() {
       <Container size="lg">
       <Stack gap="md">
         {/* Блок с установкой приложения */}
-        <Card shadow="sm" padding="lg" radius="md" withBorder>
-          <Stack gap="md">
+        <Card shadow="sm" padding="sm" radius="sm" withBorder>
+          <Stack gap="sm">
             <Group justify="space-between">
               <Title order={2} c="orange.7">
                 Скачайте мобильное приложение ДИМБО Пицца
