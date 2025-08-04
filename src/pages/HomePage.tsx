@@ -86,7 +86,7 @@ export function HomePage() {
       <Container size="lg">
       <Stack gap="lg">
         {/* Блок с установкой приложения */}
-        <Card shadow="sm" padding="lg" radius="md" withBorder>
+        <Card shadow="sm" padding="lg" radius="md" withBorder className="app-download-block">
           <Stack gap="md">
             <Group justify="space-between">
               <Title order={2} c="orange.7">

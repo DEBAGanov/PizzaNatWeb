@@ -229,7 +229,7 @@ export function CartPage() {
                     return null
                   }
                   return (
-                  <Card key={item.id} shadow="sm" padding="md" radius="md" withBorder>
+                  <Card key={item.id} shadow="sm" padding="md" radius="md" withBorder className="cart-item-compact">
                     <Group gap="md" align="flex-start">
                       {/* Изображение товара */}
                       <Image
@@ -239,13 +239,14 @@ export function CartPage() {
                         h={80}
                         radius="md"
                         fallbackSrc="/placeholder-food.jpg"
+                        className="cart-item-image"
                       />
 
                       {/* Информация о товаре */}
                       <Stack gap="xs" style={{ flex: 1 }}>
                         <Group justify="space-between" align="flex-start">
                           <div>
-                            <Text fw={600} size="md">{item.productName}</Text>
+                            <Text fw={600} size="md" className="cart-item-title">{item.productName}</Text>
                             {item.notes && (
                               <Text size="sm" c="dimmed">{item.notes}</Text>
                             )}
@@ -263,7 +264,7 @@ export function CartPage() {
                         </Group>
 
                         {/* Управление количеством */}
-                        <Group justify="space-between" align="center">
+                        <Group justify="space-between" align="center" className="cart-item-controls">
                           <Group gap="xs">
                             <ActionIcon
                               variant="outline"
@@ -283,6 +284,7 @@ export function CartPage() {
                               w={60}
                               hideControls
                               disabled={cartLoading || updateLoading === item.productId}
+                              className="cart-item-quantity"
                             />
                             
                             <ActionIcon
@@ -295,7 +297,7 @@ export function CartPage() {
                             </ActionIcon>
                           </Group>
 
-                          <Text fw={600} size="lg" c="orange.7">
+                          <Text fw={600} size="lg" c="orange.7" className="cart-item-price">
                             {item.subtotal} ₽
                           </Text>
                         </Group>
@@ -310,7 +312,7 @@ export function CartPage() {
 
           {/* Итоги и оформление заказа */}
           <Stack gap="md">
-            <Paper shadow="sm" p="md" radius="md" withBorder>
+            <Paper shadow="sm" p="md" radius="md" withBorder className="cart-total-compact">
               <Stack gap="md">
                 <Title order={3}>Итого</Title>
                 
