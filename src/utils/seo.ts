@@ -24,7 +24,7 @@ export const BASE_SEO = {
   baseUrl: 'https://dimbopizza.ru',
   city: 'Волжск',
   region: 'Республика Марий Эл',
-  phone: '+7 (XXX) XXX-XX-XX', // TODO: добавить реальный номер
+  phone: '+7 (906) 138-28-68', // TODO: добавить реальный номер
   email: 'info@dimbopizza.ru'
 }
 

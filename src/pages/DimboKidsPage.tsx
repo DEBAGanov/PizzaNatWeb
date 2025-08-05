@@ -391,6 +391,7 @@ export function DimboKidsPage() {
                   <div>
                     <Text size="sm" c="dimmed">Адрес</Text>
                     <Text size="sm">г. Волжск ул. Шестакова 1Б</Text>
+                    <Text size="sm">г. Волжск ул. Ленина 69</Text>
                   </div>
                 </Group>
 
