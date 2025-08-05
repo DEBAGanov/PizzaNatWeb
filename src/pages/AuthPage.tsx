@@ -127,7 +127,7 @@ export const AuthPage: React.FC = () => {
                   <IconPizza size={32} />
                 </ThemeIcon>
                 <Title order={1} c="orange">
-                  PizzaNat
+                  DIMBO PIZZA
                 </Title>
               </Group>
               <Text size="lg" c="dimmed" ta="center">

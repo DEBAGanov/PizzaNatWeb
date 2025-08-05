@@ -68,7 +68,7 @@ export function LoginForm({
   return (
     <Paper p="xl" shadow="md" radius="md" style={{ maxWidth: 400, width: '100%' }}>
       <Title order={2} ta="center" mb="md">
-        Вход в PizzaNat
+        Вход в DIMBO PIZZA
       </Title>
       
       <Text c="dimmed" size="sm" ta="center" mb="xl">

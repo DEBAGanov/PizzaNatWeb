@@ -84,7 +84,7 @@ export function AuthTestPage() {
         <Paper p="md" shadow="sm" radius="md">
           <Alert icon={<IconInfoCircle size={16} />} color="blue">
             <Text size="sm">
-              <strong>Тестирование авторизации PizzaNat</strong><br />
+              <strong>Тестирование авторизации DIMBO PIZZA</strong><br />
               API: <Code>{window.location.origin}/api/v1</Code><br />
               CORS настроен для: pizzanat.ru, www.pizzanat.ru, localhost:5173, localhost:3000
             </Text>
