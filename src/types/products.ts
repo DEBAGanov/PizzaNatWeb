@@ -268,9 +268,10 @@ export interface CreateOrderRequest {
   contactPhone: string
   comment?: string
   notes?: string
-  paymentMethod?: 'cash' | 'sbp'
+  paymentMethod?: 'CASH' | 'SBP'
+  deliveryType?: string
 }
 
 export interface PaymentUrlResponse {
-  url: string
+  paymentUrl: string
 } 

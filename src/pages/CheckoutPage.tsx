@@ -312,13 +312,17 @@ export function CheckoutPage() {
             contactName: orderData.contactName,
             contactPhone: getPhoneForApi(orderData.contactPhone),
             comment: orderData.comment || undefined,
-            notes: `Оплата: ${paymentMethod === 'cash' ? 'Наличными курьеру' : 'СБП'}`
+            notes: `Оплата: ${paymentMethod === 'cash' ? 'Наличными курьеру' : 'СБП'}`,
+            paymentMethod: paymentMethod === 'cash' ? 'CASH' as const : 'SBP' as const,
+            deliveryType: 'Доставка курьером'
           }
         : {
             deliveryLocationId: 1, // Основной пункт выдачи
             contactName: orderData.contactName,
             contactPhone: getPhoneForApi(orderData.contactPhone),
-            comment: orderData.comment || undefined
+            comment: orderData.comment || undefined,
+            paymentMethod: paymentMethod === 'cash' ? 'CASH' as const : 'SBP' as const,
+            deliveryType: 'Самовывоз'
           }
 
       const order = await productsApi.createOrder(requestData as CreateOrderRequest)
@@ -349,16 +353,49 @@ export function CheckoutPage() {
   // Переход на оплату ЮКасса
   const redirectToPayment = async (orderId: number) => {
     try {
-      // Получаем ссылку на оплату заказа
-      const data = await productsApi.getPaymentUrl(orderId)
+      console.log('🔄 Начинаем процесс создания платежа для заказа:', orderId)
+      
+      // Сначала пробуем получить ссылку через orders/{id}/payment-url
+      try {
+        const data = await productsApi.getPaymentUrl(orderId)
+        console.log('📋 Ответ от /orders/{id}/payment-url:', data)
         
-      // Перенаправляем на страницу оплаты ЮКасса
-      if (data.url) {
-        console.log('🔗 Переход на оплату ЮКасса:', data.url)
-        window.location.href = data.url
+        if (data.paymentUrl) {
+          console.log('✅ Получена ссылка через orders endpoint:', data.paymentUrl)
+          window.location.href = data.paymentUrl
+          return
+        }
+      } catch (orderUrlError) {
+        console.warn('⚠️ Endpoint /orders/{id}/payment-url не работает:', orderUrlError)
+      }
+      
+      // Альтернативный метод: создаем платеж напрямую через yookassa/create
+      console.log('🔄 Пробуем создать платеж напрямую через yookassa/create...')
+      
+      const paymentData = {
+        orderId: orderId,
+        method: paymentMethod === 'cash' ? 'CASH' : 'SBP',
+        description: `Оплата заказа №${orderId} в ДИМБО Пицца`,
+        returnUrl: `${window.location.origin}/order-success/${orderId}`
+      }
+      
+      console.log('📋 Данные для создания платежа:', paymentData)
+      
+      // Используем метод создания платежа напрямую
+      const paymentResponse = await productsApi.createYookassaPayment(paymentData)
+      console.log('📋 Ответ от yookassa/create:', paymentResponse)
+      
+      // Извлекаем ссылку из ответа ЮКасса
+      const confirmationUrl = paymentResponse.confirmation?.confirmation_url || paymentResponse.confirmation_url
+      
+      if (confirmationUrl) {
+        console.log('✅ Получена ссылка от ЮКасса:', confirmationUrl)
+        window.location.href = confirmationUrl
       } else {
+        console.error('❌ Ответ не содержит ссылки для оплаты:', paymentResponse)
         throw new Error('Не получена ссылка для оплаты')
       }
+      
     } catch (error: any) {
       notifications.show({
         title: 'Ошибка оплаты',

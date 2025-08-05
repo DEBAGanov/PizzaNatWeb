@@ -480,6 +480,10 @@ export class ProductsApi extends BaseApiService {
   async getPaymentUrl(orderId: number): Promise<PaymentUrlResponse> {
     return this.get<PaymentUrlResponse>(API_ENDPOINTS.ORDERS.PAYMENT_URL(orderId))
   }
+
+  async createYookassaPayment(paymentData: any): Promise<any> {
+    return this.post(API_ENDPOINTS.PAYMENTS.YOOKASSA_CREATE, paymentData)
+  }
 }
 
 // Экспорт синглтона
