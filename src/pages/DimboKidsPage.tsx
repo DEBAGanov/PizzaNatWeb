@@ -25,7 +25,7 @@ import {
   Box,
   Divider
 } from '@mantine/core'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   IconUsers,
   IconCake,
@@ -37,7 +37,10 @@ import {
   IconClock,
   IconGift,
   IconChefHat,
-  IconHome
+  IconHome,
+  IconChevronLeft,
+  IconChevronRight,
+  IconX
 } from '@tabler/icons-react'
 import { SEOPageWrapper } from '../components/SEOHead'
 
@@ -69,7 +72,7 @@ const birthdayImages = [
 // Компонент галереи изображений
 interface ImageGalleryProps {
   images: { src: string; alt: string }[]
-  onImageClick: (src: string, alt: string) => void
+  onImageClick: (images: { src: string; alt: string }[], initialIndex: number) => void
 }
 
 function ImageGallery({ images, onImageClick }: ImageGalleryProps) {
@@ -79,7 +82,7 @@ function ImageGallery({ images, onImageClick }: ImageGalleryProps) {
         <Box
           key={index}
           style={{ cursor: 'pointer' }}
-          onClick={() => onImageClick(image.src, image.alt)}
+          onClick={() => onImageClick(images, index)}
         >
           <Image
             src={image.src}
@@ -96,20 +99,73 @@ function ImageGallery({ images, onImageClick }: ImageGalleryProps) {
 }
 
 export function DimboKidsPage() {
-  // Состояние для модального окна с изображением
-  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null)
+  // Состояние для слайдера изображений
+  const [galleryState, setGalleryState] = useState<{
+    images: { src: string; alt: string }[]
+    currentIndex: number
+    isOpen: boolean
+  }>({
+    images: [],
+    currentIndex: 0,
+    isOpen: false
+  })
 
-  const handleImageClick = (src: string, alt: string) => {
-    setModalImage({ src, alt })
+  const handleImageClick = (images: { src: string; alt: string }[], initialIndex: number) => {
+    setGalleryState({
+      images,
+      currentIndex: initialIndex,
+      isOpen: true
+    })
   }
 
   const closeModal = () => {
-    setModalImage(null)
+    setGalleryState(prev => ({ ...prev, isOpen: false }))
   }
+
+  const goToNext = () => {
+    setGalleryState(prev => ({
+      ...prev,
+      currentIndex: (prev.currentIndex + 1) % prev.images.length
+    }))
+  }
+
+  const goToPrevious = () => {
+    setGalleryState(prev => ({
+      ...prev,
+      currentIndex: prev.currentIndex === 0 ? prev.images.length - 1 : prev.currentIndex - 1
+    }))
+  }
+
+  // Обработка клавиш стрелок
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (!galleryState.isOpen) return
+      
+      switch (event.key) {
+        case 'ArrowLeft':
+          event.preventDefault()
+          goToPrevious()
+          break
+        case 'ArrowRight':
+          event.preventDefault()
+          goToNext()
+          break
+        case 'Escape':
+          event.preventDefault()
+          closeModal()
+          break
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyPress)
+    return () => document.removeEventListener('keydown', handleKeyPress)
+  }, [galleryState.isOpen])
+
+  const currentImage = galleryState.images[galleryState.currentIndex]
 
   const handleMasterClassRegistration = () => {
     // TODO: Добавить форму записи на мастер-класс
-    window.open('tel:+79001234567', '_blank')
+    window.open('tel:+79061382868', '_blank')
   }
 
   const handleBirthdayRegistration = () => {
@@ -299,71 +355,7 @@ export function DimboKidsPage() {
             </Stack>
           </Card>
 
-          {/* ДИМБО-домики */}
-          <Card shadow="lg" padding="xl" radius="lg" withBorder>
-            <Stack gap="lg">
-              <Group>
-                <ThemeIcon size="xl" color="blue" variant="light">
-                  <IconHome size={28} />
-                </ThemeIcon>
-                <div>
-                  <Title order={2} c="blue.7">а еще у нас есть...</Title>
-                  <Title order={3} c="blue.6" mt="xs">Занятные ДИМБО-домики</Title>
-                </div>
-              </Group>
 
-              <Text size="lg" lh={1.6}>
-                В игровых комнатах начинают появляться занятные ДИМБО-домики. Они развивают творческое 
-                мышление детей, помогают адаптировать ребенка к бытовой среде, тренируют логическое мышление.
-              </Text>
-
-              <Text size="lg" lh={1.6}>
-                А еще ДИМБО-домик помогает родителям обучать ребенка буквам, цифрам, определять время по часам.
-              </Text>
-
-              <Paper p="md" radius="md" bg="blue.0" withBorder>
-                <Group>
-                  <ThemeIcon color="blue" variant="light">
-                    <IconMapPin size={20} />
-                  </ThemeIcon>
-                  <Text fw={600}>Карта пиццерий с игровыми комнатами</Text>
-                </Group>
-                <Text size="sm" mt="xs" c="dimmed">
-                  Игровые комнаты доступны в наших пиццериях в Волжске
-                </Text>
-              </Paper>
-            </Stack>
-          </Card>
-
-          {/* Раскраски */}
-          <Card shadow="lg" padding="xl" radius="lg" withBorder>
-            <Stack gap="lg">
-              <Group>
-                <ThemeIcon size="xl" color="grape" variant="light">
-                  <IconPalette size={28} />
-                </ThemeIcon>
-                <Title order={2} c="grape.7">
-                  И-и-и раскраски!
-                </Title>
-              </Group>
-
-              <Text size="lg" lh={1.6}>
-                В пиццериях можно найти наши раскраски. А если вы не смогли посетить нас, 
-                то мы предлагаем скачать и распечатать ДИМБО-раскраску.
-              </Text>
-
-              <Center>
-                <Button 
-                  size="xl" 
-                  color="grape"
-                  onClick={handleDownloadColoring}
-                  leftSection={<IconDownload size={20} />}
-                >
-                  Скачать раскраску
-                </Button>
-              </Center>
-            </Stack>
-          </Card>
 
           {/* Контакты и дополнительная информация */}
           <Paper p="xl" radius="lg" bg="gray.0" withBorder>
@@ -379,7 +371,7 @@ export function DimboKidsPage() {
                   </ThemeIcon>
                   <div>
                     <Text size="sm" c="dimmed">Телефон</Text>
-                    <Anchor href="tel:+79001234567" c="orange.7">
+                    <Anchor href="tel:+79061382868" c="orange.7">
                       +7 900 123-45-67
                     </Anchor>
                   </div>
