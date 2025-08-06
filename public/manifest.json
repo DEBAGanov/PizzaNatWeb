@@ -1,42 +1,43 @@
 {
-  "name": "ДИМБО Пицца - Доставка пиццы в Волжске",
-  "short_name": "ДИМБО Пицца",
-  "description": "Заказать пиццу с доставкой на дом в Волжске. Быстрая доставка за 30-60 минут.",
+  "name": "ДИМБО Пицца",
+  "short_name": "ДИМБО",
+  "description": "Заказ пиццы онлайн - быстро, вкусно, удобно",
+  "lang": "ru-RU",
   "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#FFD700",
-  "orientation": "portrait-primary",
-  "categories": ["food", "delivery"],
-  "lang": "ru",
   "scope": "/",
+  "display": "standalone",
+  "theme_color": "#FFD700",
+  "background_color": "#FFFFFF",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "android-icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "density": "1.5"
     },
     {
-      "src": "/favicon.ico",
-      "sizes": "16x16 32x32 48x48",
-      "type": "image/x-icon"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Меню пиццы",
-      "short_name": "Меню",
-      "description": "Посмотреть все виды пиццы",
-      "url": "/menu",
-      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+      "src": "android-icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "density": "2.0"
     },
     {
-      "name": "Корзина",
-      "short_name": "Корзина",
-      "description": "Оформить заказ",
-      "url": "/cart",
-      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+      "src": "android-icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "density": "3.0"
+    },
+    {
+      "src": "android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "density": "4.0"
+    },
+    {
+      "src": "android-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }
