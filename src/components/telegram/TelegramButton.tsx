@@ -6,7 +6,8 @@
  */
 
 import React, { useEffect } from 'react'
-import { Button, ButtonProps } from '@mantine/core'
+import { Button } from '@mantine/core'
+import type { ButtonProps } from '@mantine/core'
 import { useTelegram } from '../../contexts/TelegramContext'
 
 interface TelegramButtonProps extends Omit<ButtonProps, 'onClick'> {

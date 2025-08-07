@@ -104,12 +104,13 @@ export const API_ENDPOINTS = {
     CLEAR: '/cart/clear'
   },
 
-  // Заказы
+  // Заказы (объединенный раздел)
   ORDERS: {
     LIST: '/orders',
     CREATE: '/orders',
     DETAIL: (id: number) => `/orders/${id}`,
-    CANCEL: (id: number) => `/orders/${id}/cancel`
+    CANCEL: (id: number) => `/orders/${id}/cancel`,
+    PAYMENT_URL: (id: number) => `/orders/${id}/payment-url`
   },
 
   // Избранное
@@ -137,13 +138,7 @@ export const API_ENDPOINTS = {
     SBP_BANKS: '/payments/yookassa/sbp/banks'
   },
 
-  // Заказы
-  ORDERS: {
-    LIST: '/orders',
-    CREATE: '/orders',
-    DETAIL: (id: number) => `/orders/${id}`,
-    PAYMENT_URL: (id: number) => `/orders/${id}/payment-url`
-  },
+
 
   // Пользователь
   USER: {

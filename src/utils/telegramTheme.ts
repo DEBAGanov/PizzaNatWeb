@@ -5,7 +5,11 @@
  * @created: 2025-01-24
  */
 
-import { MantineTheme, MantineColorScheme, createTheme } from '@mantine/core'
+import { createTheme } from '@mantine/core'
+import type { MantineTheme } from '@mantine/core'
+
+// Тип для цветовой схемы (заменяет MantineColorScheme)
+type ColorScheme = 'light' | 'dark' | 'auto'
 
 // Типы для Telegram тем
 interface TelegramThemeParams {
@@ -32,7 +36,7 @@ const hexToMantineColor = (hex: string): string => {
 // Создание Mantine темы на основе Telegram параметров
 export const createTelegramTheme = (
   themeParams: TelegramThemeParams,
-  colorScheme: MantineColorScheme
+  colorScheme: ColorScheme
 ): MantineTheme => {
   const isLight = colorScheme === 'light'
   
@@ -229,7 +233,7 @@ export const createWebTheme = (): MantineTheme => {
 // Хук для получения текущей темы в зависимости от платформы
 export const useTelegramTheme = (
   themeParams: TelegramThemeParams = {},
-  colorScheme: MantineColorScheme = 'light',
+  colorScheme: ColorScheme = 'light',
   isInTelegram: boolean = false
 ): MantineTheme => {
   if (isInTelegram) {

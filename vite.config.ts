@@ -6,10 +6,11 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    host: 'localhost',
+    host: '0.0.0.0',
     hmr: {
       port: 5174,
-      host: 'localhost'
+      host: '0.0.0.0',
+      clientPort: 5174
     },
     // Если проблемы с WebSocket продолжаются, раскомментируйте следующую строку:
     // hmr: false,

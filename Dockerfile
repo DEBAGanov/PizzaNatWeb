@@ -1,5 +1,5 @@
 # Multi-stage build для ДИМБО Пицца (оптимизировано для 1GB RAM, 15GB диск)
-FROM node:18-alpine AS dependencies
+FROM node:20-alpine AS dependencies
 
 # Установка рабочей директории
 WORKDIR /app
@@ -16,7 +16,7 @@ RUN npm ci --no-audit --no-fund --prefer-offline && \
     npm cache clean --force
 
 # Stage для сборки приложения
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -31,7 +31,7 @@ COPY . .
 RUN NODE_OPTIONS="--max-old-space-size=1024" npm run build
 
 # Development stage - для разработки с hot reload
-FROM node:18-alpine AS development
+FROM node:20-alpine AS development
 
 WORKDIR /app
 
@@ -49,7 +49,7 @@ EXPOSE 3478 5174
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3478"]
 
 # Production stage - Node.js приложение
-FROM node:18-alpine AS production
+FROM node:20-alpine AS production
 
 # Установка рабочей директории
 WORKDIR /app
