@@ -61,7 +61,7 @@ RUN apk add --no-cache wget curl nginx
 RUN addgroup -g 1001 -S dimbopizza && \
     adduser -S dimbopizza -u 1001 -G dimbopizza
 
-# Копирование собранного приложения
+# Копирование собранного приложения из builder stage
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json ./
 
@@ -87,12 +87,12 @@ RUN mkdir -p /var/log/nginx /tmp/nginx_client_temp /tmp/nginx_proxy_temp /tmp/ng
 # Переключение на непривилегированного пользователя
 USER dimbopizza
 
-# Открытие порта для Timeweb Cloud Apps
-EXPOSE 3478
+# Открытие порта для production
+EXPOSE 80
 
 # Health check для контейнера
 HEALTHCHECK --interval=60s --timeout=5s --start-period=30s --retries=2 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:3478/health || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:80/health || exit 1
 
 # Запуск nginx сервера
 CMD ["nginx", "-g", "daemon off;"] 

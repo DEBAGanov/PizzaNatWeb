@@ -10,7 +10,7 @@ services:
     container_name: dimbopizza-web
     restart: unless-stopped
     ports:
-      - "3478:3478"
+      - "80:80"
     
     environment:
       # Production Environment
@@ -69,7 +69,7 @@ services:
 
     # Health check
     healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3478/health || exit 1"]
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:80/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
