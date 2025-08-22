@@ -227,7 +227,7 @@ export function generateCompetitorContent(competitorType: keyof typeof SEO_STRAT
     description: strategy.content,
     keywords: strategy.keywords,
     content: `
-      <h2>Почему ДИМБО Пицца лучше конкурентов в Волжске?</h2>
+      <h2>Почему ДИМБО Пицца вкуснее конкурентов в Волжске?</h2>
       <p>${strategy.content}</p>
       <ul>
         ${strategy.keywords.map(keyword => `<li>✅ ${keyword}</li>`).join('')}

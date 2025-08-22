@@ -52,7 +52,7 @@ export function HomePageSEOContent() {
                 🏆 Наши преимущества перед конкурентами в Волжске:
               </Title>
               <List spacing="xs" size="sm" c="orange.9">
-                <List.Item>✅ <strong>Лучше Додо Пиццы</strong> - местная пиццерия против федеральной сети</List.Item>
+                <List.Item>✅ <strong>Вкуснее Додо Пиццы</strong> - местная пиццерия против федеральной сети</List.Item>
                 <List.Item>✅ <strong>Дешевле Pizza Time</strong> - доступные цены для жителей Волжска</List.Item>
                 <List.Item>✅ <strong>Быстрее Pizza Express</strong> - оптимизированная доставка по городу</List.Item>
                 <List.Item>✅ <strong>Вкуснее Модерниссимо</strong> - профессиональные итальянские повара</List.Item>
@@ -124,7 +124,7 @@ export function HomePageSEOContent() {
               <Card padding="lg" radius="md" bg="white" withBorder>
                 <Stack gap="sm">
                   <Title order={4} c="orange.7">🆚 Додо Пицца (ул. Ленина 52)</Title>
-                  <Text size="sm" c="green.7" fw={600}>✅ ДИМБО лучше:</Text>
+                  <Text size="sm" c="green.7" fw={600}>✅ ДИМБО вкуснее:</Text>
                   <List size="xs" spacing={4}>
                     <List.Item>Персональный подход, а не поток</List.Item>
                     <List.Item>Локальные рецепты для Волжска</List.Item>
@@ -137,7 +137,7 @@ export function HomePageSEOContent() {
               <Card padding="lg" radius="md" bg="white" withBorder>
                 <Stack gap="sm">
                   <Title order={4} c="orange.7">🆚 Pizza Express & Pizza Time</Title>
-                  <Text size="sm" c="green.7" fw={600}>✅ ДИМБО лучше:</Text>
+                  <Text size="sm" c="green.7" fw={600}>✅ ДИМБО вкуснее:</Text>
                   <List size="xs" spacing={4}>
                     <List.Item>Стабильное качество каждый день</List.Item>
                     <List.Item>Профессиональная доставка пиццы</List.Item>
@@ -150,7 +150,7 @@ export function HomePageSEOContent() {
               <Card padding="lg" radius="md" bg="white" withBorder>
                 <Stack gap="sm">
                   <Title order={4} c="orange.7">🆚 Фастфуд (Crazy Food, E-food)</Title>
-                  <Text size="sm" c="green.7" fw={600}>✅ ДИМБО лучше:</Text>
+                  <Text size="sm" c="green.7" fw={600}>✅ ДИМБО вкуснее:</Text>
                   <List size="xs" spacing={4}>
                     <List.Item>Настоящая итальянская пицца</List.Item>
                     <List.Item>Качественные ингредиенты</List.Item>
@@ -171,12 +171,12 @@ export function HomePageSEOContent() {
         <Card shadow="sm" padding="xl" radius="lg" withBorder>
           <Stack gap="lg">
             <Title order={2} ta="center" c="orange.7">
-              Почему ДИМБО Пицца лучше других пиццерий Волжска?
+              Почему ДИМБО Пицца вкуснее других пиццерий Волжска?
             </Title>
             
             <Text size="md" ta="center">
               В отличие от сетевых пиццерий (Додо Пицца на ул. Ленина 52), мы - локальная команда, которая работает 
-              специально для жителей Волжска. Знаем ваши предпочтения лучше чем Pizza Time Cafe или Pizza Express. 
+              специально для жителей Волжска. Знаем ваши предпочтения вкуснее чем Pizza Time Cafe или Pizza Express. 
               Наша самая вкусная пицца с доставкой готовится с любовью к каждому клиенту!
             </Text>
             

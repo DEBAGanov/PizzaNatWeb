@@ -44,3 +44,15 @@ Allow: /dostavka-kartoshki-fri
 Allow: /zakazat-kartoshku-fri
 Allow: /dostavka-edy-volzhsk
 Allow: /zakazat-edu-volzhsk
+Allow: /dostavka-nagetcov
+Allow: /zakazat-nagetsy
+
+# High-frequency keyword pages (Cyrillic URLs)
+Allow: /пицца
+Allow: /суши
+Allow: /роллы
+Allow: /бургеры
+Allow: /шашлык
+Allow: /картошка-фри
+Allow: /закрытая-пицца
+Allow: /нагетсы
