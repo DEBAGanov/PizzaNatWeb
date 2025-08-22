@@ -29,6 +29,7 @@ import { HomePageSEOContent, AboutUsSEOBlock, SEOQuestionsBlock } from '../compo
 import { generateLocalBusinessSchema, generateBreadcrumbSchema } from '../utils/seo'
 import { AppInstallButtons } from '../components/AppInstallButtons'
 import { CategoryImage, ProductCardImage } from '../components/common/OptimizedImage'
+import { AllProductsLinks } from '../components/seo/RelatedProducts'
 
 export function HomePage() {
   const navigate = useNavigate()
@@ -47,10 +48,10 @@ export function HomePage() {
     loadProducts
   } = useProducts()
 
-  // Загружаем популярные продукты при инициализации
+  // Загружаем ВСЕ товары для главной страницы (без ограничений для SEO)
   // (категории уже загружаются в App.tsx)
   useEffect(() => {
-    loadProducts({ size: 8, page: 0 })
+    loadProducts({ size: 50, page: 0 }) // Увеличиваем лимит до 50 товаров
   }, [])
 
   // Проверка авторизации перед выполнением действий
@@ -102,6 +103,9 @@ export function HomePage() {
           </Stack>
         </Card>
 
+        {/* Все товары для SEO */}
+        <AllProductsLinks />
+
         {/* Категории */}
         <Title order={3} c="dark">Категории</Title>
         
@@ -152,7 +156,7 @@ export function HomePage() {
         )}
 
         {/* Продукты из API */}
-        <Title order={3} c="dark">Популярные пиццы</Title>
+        <Title order={3} c="dark">Все товары</Title>
         
         {productsLoading && (
           <Center>
@@ -169,7 +173,7 @@ export function HomePage() {
         
         {!productsLoading && !productsError && products && products.length > 0 && (
           <Grid>
-            {products.slice(0, 8).map((product) => (
+            {products.map((product) => (
               <Grid.Col key={product.id} span={{ base: 6, sm: 6, md: 4 }}>
                 <Card shadow="sm" padding="lg" radius="md" withBorder className="product-card-compact">
                   <Card.Section>

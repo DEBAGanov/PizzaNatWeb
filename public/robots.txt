@@ -1,32 +1,46 @@
 User-agent: *
 Allow: /
-
-# Основные страницы для SEO
-Allow: /menu
-Allow: /product/*
-Allow: /auth
-Allow: /
-
-# Приоритетные для индексации
+Allow: /dostavka-*
+Allow: /zakazat-*
 Crawl-delay: 1
 
-# Блокируем личные разделы
-Disallow: /admin
-Disallow: /profile
-Disallow: /cart
-Disallow: /checkout
-Disallow: /order-success
-
-# Блокируем API
-Disallow: /api/
-Disallow: /*.json$
-
-# Sitemap
+# Приоритетные страницы для индексации
 Sitemap: https://dimbopizza.ru/sitemap.xml
 
-# Контактная информация ДИМБО Пицца Волжск
+# Контактная информация для поисковиков
+# ДИМБО Пицца - доставка еды в Волжске
 # Адрес: г. Волжск, ул. Шестакова, д.1Б  
-# Телефон: +7 (902) 105-34-34
-# Email: info@dimbopizza.ru
-# Время работы: Ежедневно 10:00-20:00
-# Доставка пиццы по всему Волжску
+# Телефон: +7(902)105-34-34
+# Ключевые услуги: доставка пиццы, суши, шашлыка, бургеров
+# Зона обслуживания: весь город Волжск
+# Время работы: ежедневно с 10:00 до 20:00
+
+# SEO приоритеты для роботов:
+# Высокий приоритет: главная, меню, SEO-страницы продуктов
+# Средний приоритет: категории, отдельные товары
+# Низкий приоритет: служебные страницы, профиль
+
+# Запрещенные для индексации разделы
+Disallow: /admin/
+Disallow: /api/
+Disallow: /checkout/
+Disallow: /profile/
+Disallow: /order-success/
+Disallow: /auth/
+Disallow: /cart/
+
+# Разрешенные для всех роботов страницы
+Allow: /dostavka-pizzy
+Allow: /zakazat-pizzu
+Allow: /dostavka-shashlyka
+Allow: /zakazat-shashlyk
+Allow: /dostavka-sushi
+Allow: /zakazat-sushi
+Allow: /dostavka-burgerov
+Allow: /zakazat-burgery
+Allow: /dostavka-krylyshek
+Allow: /zakazat-krylyshki
+Allow: /dostavka-kartoshki-fri
+Allow: /zakazat-kartoshku-fri
+Allow: /dostavka-edy-volzhsk
+Allow: /zakazat-edu-volzhsk

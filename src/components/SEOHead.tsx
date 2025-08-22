@@ -7,6 +7,7 @@
 
 import { useEffect } from 'react'
 import { BASE_SEO, generatePageSeo, setPageMeta } from '../utils/seo'
+import { generateRestaurantSchema, generateLocalBusinessSchema, insertSchemaMarkup } from '../utils/schemaOrg'
 
 interface SEOHeadProps {
   page: string
