@@ -50,8 +50,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const protectedPaths = ['/cart', '/checkout', '/orders', '/profile', '/order-success', '/admin', '/payments']
   const isProtectedPath = protectedPaths.some(path => location.pathname.startsWith(path))
   
-  // Если это защищенный путь и требуется авторизация
-  if (requireAuth && isProtectedPath) {
+  // Если это защищенный путь, всегда требуется авторизация
+  if (isProtectedPath) {
     // Строгая проверка для защищенных путей
     if (!hasValidTokens) {
       console.warn(`🔒 Заблокирован доступ к защищенному пути: ${location.pathname}`)
@@ -77,8 +77,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     }
   }
 
-  // Если требуется авторизация, но пользователь не авторизован
-  if (requireAuth && !user) {
+  // Если требуется авторизация, но пользователь не авторизован (только для не-защищенных путей)
+  if (requireAuth && !isProtectedPath && !user) {
     console.warn(`🔒 Неавторизованный доступ к: ${location.pathname}`)
     return <Navigate to="/auth" state={{ from: location }} replace />
   }

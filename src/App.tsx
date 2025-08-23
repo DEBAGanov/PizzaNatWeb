@@ -28,6 +28,16 @@ import { AuthTestPage } from './pages/AuthTestPage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import { DimboKidsPage } from './pages/DimboKidsPage'
 import { PizzaSEOPage, ShashlykSEOPage, SushiSEOPage, BurgerSEOPage, WingsSEOPage, FriesSEOPage, FoodSEOPage, ShortKeywordSEOPage, NuggetsSEOPage } from './pages/product-seo'
+// Импорты индивидуальных товарных страниц
+import { 
+  PitstsaMargaritaSEOPage, GribnayaPitstsaSEOPage, GavayskayaPitstsaSEOPage, MyasnayaPitstsaSEOPage,
+  PitstsaMorskayaSEOPage, PitstsaSalyamiSEOPage, PitstsaPepperoniSEOPage, PitstsaTsezarSEOPage,
+  DomashnyayaPitstsaSEOPage, SyrnayaPitstsaSEOPage, BurgerDimburgerSEOPage, BurgerChikenburgerSEOPage,
+  BurgerChizburgerSEOPage, BurgerDzhuniorSEOPage, KartofelFri100GrSEOPage, KartofelFri150GrSEOPage,
+  Nagetsy6ShtukSEOPage, Nagetsy9ShtukSEOPage, Nagetsy12ShtukSEOPage, Krylya6ShtukSEOPage,
+  Krylya9ShtukSEOPage, ZakrytayaPitstsaKlassicheskayaSEOPage, ZakrytayaPitstsaOkhotnichyaSEOPage,
+  ZakrytayaPitstsaKurinayaSEOPage, ZakrytayaPitstsaSyrnayaSEOPage, ZakrytayaPitstsaGavayskayaSEOPage
+} from './pages/product-seo/products'
 
 // Компонент для определения платформы (внутри Router и TelegramProvider)
 function PlatformRouter() {
@@ -427,6 +437,34 @@ function WebApp() {
           </ProtectedRoute>
         } 
       />
+
+      {/* Индивидуальные товарные SEO страницы */}
+      <Route path="/pitstsa-margarita" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PitstsaMargaritaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/gribnaya-pitstsa" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><GribnayaPitstsaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/gavayskaya-pitstsa" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><GavayskayaPitstsaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/myasnaya-pitstsa" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><MyasnayaPitstsaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/pitstsa-morskaya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PitstsaMorskayaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/pitstsa-salyami" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PitstsaSalyamiSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/pitstsa-pepperoni" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PitstsaPepperoniSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/pitstsa-tsezar" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PitstsaTsezarSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/domashnyaya-pitstsa" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DomashnyayaPitstsaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/syrnaya-pitstsa" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><SyrnayaPitstsaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/burger-dimburger" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><BurgerDimburgerSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/burger-chikenburger" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><BurgerChikenburgerSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/burger-chizburger" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><BurgerChizburgerSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/burger-dzhunior" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><BurgerDzhuniorSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/kartofel-fri-100-gr" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><KartofelFri100GrSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/kartofel-fri-150-gr" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><KartofelFri150GrSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/nagetsy-6-shtuk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><Nagetsy6ShtukSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/nagetsy-9-shtuk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><Nagetsy9ShtukSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/nagetsy-12-shtuk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><Nagetsy12ShtukSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/krylya-6-shtuk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><Krylya6ShtukSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/krylya-9-shtuk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><Krylya9ShtukSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakrytaya-pitstsa-klassicheskaya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakrytayaPitstsaKlassicheskayaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakrytaya-pitstsa-okhotnichya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakrytayaPitstsaOkhotnichyaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakrytaya-pitstsa-kurinaya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakrytayaPitstsaKurinayaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakrytaya-pitstsa-syrnaya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakrytayaPitstsaSyrnayaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakrytaya-pitstsa-gavayskaya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakrytayaPitstsaGavayskayaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
       
       {/* Главная страница БЕЗ авторизации для SEO */}
       <Route 

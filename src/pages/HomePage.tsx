@@ -30,6 +30,7 @@ import { generateLocalBusinessSchema, generateBreadcrumbSchema } from '../utils/
 import { AppInstallButtons } from '../components/AppInstallButtons'
 import { CategoryImage, ProductCardImage } from '../components/common/OptimizedImage'
 import { AllProductsLinks } from '../components/seo/RelatedProducts'
+import { LocalInfo } from '../components/seo/LocalInfo'
 
 export function HomePage() {
   const navigate = useNavigate()
@@ -105,6 +106,9 @@ export function HomePage() {
 
         {/* Все товары для SEO */}
         <AllProductsLinks />
+
+        {/* Локальная информация о пиццерии (по образцу Додо Пиццы) */}
+        <LocalInfo variant="full" showRating={true} showDeliveryInfo={true} />
 
         {/* Категории */}
         <Title order={3} c="dark">Категории</Title>
