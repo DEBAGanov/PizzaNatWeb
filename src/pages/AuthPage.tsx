@@ -30,7 +30,7 @@ type AuthMode = 'login' | 'register'
 
 export const AuthPage: React.FC = () => {
   const { user, isLoading } = useAuth()
-  const [authMethod, setAuthMethod] = useState<AuthMethod>('sms')
+  const [authMethod, setAuthMethod] = useState<AuthMethod>('telegram')
   const [authMode, setAuthMode] = useState<AuthMode>('login')
 
   // Если пользователь уже авторизован, перенаправляем на главную
@@ -143,9 +143,9 @@ export const AuthPage: React.FC = () => {
                 value={authMethod}
                 onChange={(value) => handleMethodSwitch(value as AuthMethod)}
                 data={[
-                  { label: 'Email', value: 'email' },
-                  { label: 'SMS', value: 'sms' },
                   { label: 'Telegram', value: 'telegram' },
+                  { label: 'SMS', value: 'sms' },
+                  { label: 'Email', value: 'email' },
                 ]}
                 size="sm"
                 radius="md"
