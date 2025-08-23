@@ -27,7 +27,11 @@ import OrderSuccessPage from './pages/OrderSuccessPage'
 import { AuthTestPage } from './pages/AuthTestPage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import { DimboKidsPage } from './pages/DimboKidsPage'
-import { PizzaSEOPage, ShashlykSEOPage, SushiSEOPage, BurgerSEOPage, WingsSEOPage, FriesSEOPage, FoodSEOPage, ShortKeywordSEOPage, NuggetsSEOPage } from './pages/product-seo'
+import { 
+  PizzaSEOPage, ShashlykSEOPage, SushiSEOPage, BurgerSEOPage, WingsSEOPage, FriesSEOPage, FoodSEOPage, ShortKeywordSEOPage, NuggetsSEOPage,
+  PizzaOrderDeliverySEOPage, PizzeriaVolzhskSEOPage, PizzeriaLeninaSEOPage, WhereOrderPizzaSEOPage, FoodOrderSEOPage, DodoPizzaComparisonSEOPage,
+  PodslushanoVolzhskSEOPage, Volzhsk24SEOPage
+} from './pages/product-seo'
 // Импорты индивидуальных товарных страниц
 import { 
   PitstsaMargaritaSEOPage, GribnayaPitstsaSEOPage, GavayskayaPitstsaSEOPage, MyasnayaPitstsaSEOPage,
@@ -431,6 +435,112 @@ function WebApp() {
             <AppShell padding="md">
               <AppShell.Main style={{ paddingBottom: '120px' }}>
                 <NuggetsSEOPage />
+              </AppShell.Main>
+              <TelegramBottomNav />
+            </AppShell>
+          </ProtectedRoute>
+        } 
+      />
+
+      {/* Специфические SEO страницы для конкретных запросов */}
+      <Route 
+        path="/pitstsa-zakazat-s-dostavkoy" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <AppShell padding="md">
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
+                <PizzaOrderDeliverySEOPage />
+              </AppShell.Main>
+              <TelegramBottomNav />
+            </AppShell>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/pizzeriya-volzhsk" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <AppShell padding="md">
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
+                <PizzeriaVolzhskSEOPage />
+              </AppShell.Main>
+              <TelegramBottomNav />
+            </AppShell>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/pizzeriya-lenina" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <AppShell padding="md">
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
+                <PizzeriaLeninaSEOPage />
+              </AppShell.Main>
+              <TelegramBottomNav />
+            </AppShell>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/gde-zakazat-pitstsu" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <AppShell padding="md">
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
+                <WhereOrderPizzaSEOPage />
+              </AppShell.Main>
+              <TelegramBottomNav />
+            </AppShell>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/eda-na-zakaz" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <AppShell padding="md">
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
+                <FoodOrderSEOPage />
+              </AppShell.Main>
+              <TelegramBottomNav />
+            </AppShell>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/dodo-pizza-volzhsk" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <AppShell padding="md">
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
+                <DodoPizzaComparisonSEOPage />
+              </AppShell.Main>
+              <TelegramBottomNav />
+            </AppShell>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/podslushano-volzhsk" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <AppShell padding="md">
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
+                <PodslushanoVolzhskSEOPage />
+              </AppShell.Main>
+              <TelegramBottomNav />
+            </AppShell>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/volzhsk-24" 
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <AppShell padding="md">
+              <AppShell.Main style={{ paddingBottom: '120px' }}>
+                <Volzhsk24SEOPage />
               </AppShell.Main>
               <TelegramBottomNav />
             </AppShell>

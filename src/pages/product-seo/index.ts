@@ -14,3 +14,15 @@ export { FriesSEOPage } from './FriesSEOPage'
 export { FoodSEOPage } from './FoodSEOPage'
 export { ShortKeywordSEOPage } from './ShortKeywordSEOPage'
 export { NuggetsSEOPage } from './NuggetsSEOPage'
+
+// Новые специфические SEO-страницы
+export { PizzaOrderDeliverySEOPage } from './PizzaOrderDeliverySEOPage'
+export { PizzeriaVolzhskSEOPage } from './PizzeriaVolzhskSEOPage'
+export { PizzeriaLeninaSEOPage } from './PizzeriaLeninaSEOPage'
+export { WhereOrderPizzaSEOPage } from './WhereOrderPizzaSEOPage'
+export { FoodOrderSEOPage } from './FoodOrderSEOPage'
+export { DodoPizzaComparisonSEOPage } from './DodoPizzaComparisonSEOPage'
+
+// Локальные информационные SEO-страницы
+export { PodslushanoVolzhskSEOPage } from './PodslushanoVolzhskSEOPage'
+export { Volzhsk24SEOPage } from './Volzhsk24SEOPage'
