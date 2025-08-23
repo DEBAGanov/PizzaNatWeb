@@ -50,13 +50,13 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
     city: 'Волжск',
     address: 'ул. Шестакова, 1Б',
     phone: '+7(902)105-34-34',
-    workingHours: 'Ежедневно 10:00-20:00',
+    workingHours: 'Ежедневно 11:00-20:00',
     rating: '4.8',
     reviewsCount: '127',
     deliveryTime: '30-60 минут',
     deliveryZones: 'По всему Волжску',
-    minOrder: '800₽',
-    deliveryFree: 'Бесплатная доставка от 800₽'
+    minOrder: '1000₽',
+    deliveryFree: 'Бесплатная доставка в зависимости от района'
   }
 
   if (variant === 'minimal') {
@@ -168,7 +168,7 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
                 {localData.phone}
               </Anchor>
               <Text size="xs" c="dimmed">
-                Для заказов и справок
+                
               </Text>
             </Box>
           </Group>
@@ -218,7 +218,10 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
                     {localData.deliveryFree}
                   </Text>
                   <Text size="xs" c="dimmed">
-                    При заказе менее 800₽ - 150₽
+                  Дружба, Маяк, Горгаз, Центр - 150₽ (от 1000₽ бесплатно)
+                  Машинка, Заря - 200₽ (от 1500₽ бесплатно)
+                  Луговая, Мамасево - 250₽ (от 2000₽ бесплатно)
+                  Часовенная, Промзона, Волгарь - 300₽ (от 2500₽ бесплатно)
                   </Text>
                 </Box>
               </Group>
