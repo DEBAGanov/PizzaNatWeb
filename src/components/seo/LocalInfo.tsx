@@ -127,7 +127,7 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
               {localData.name} в {localData.city}
             </Title>
             <Text c="dimmed" size="sm">
-              Доставка пиццы, суши, бургеров
+              Доставка пиццы, бургеров, картошки фри, наггетсов, молочных коктейлей.
             </Text>
           </Box>
           
