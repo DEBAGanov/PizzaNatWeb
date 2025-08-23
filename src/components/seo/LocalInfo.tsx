@@ -279,7 +279,7 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
         )}
 
         {/* Call to Action */}
-        <Divider />
+        {/* <Divider />
         
         <Group justify="center">
           <Button 
@@ -291,7 +291,7 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
           >
             Позвонить и заказать
           </Button>
-        </Group>
+        </Group> */}
       </Stack>
     </Card>
   )
