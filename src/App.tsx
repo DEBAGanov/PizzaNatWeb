@@ -42,6 +42,20 @@ import {
   Krylya9ShtukSEOPage, ZakrytayaPitstsaKlassicheskayaSEOPage, ZakrytayaPitstsaOkhotnichyaSEOPage,
   ZakrytayaPitstsaKurinayaSEOPage, ZakrytayaPitstsaSyrnayaSEOPage, ZakrytayaPitstsaGavayskayaSEOPage
 } from './pages/product-seo/products'
+// Импорты детских SEO-страниц
+import { 
+  DetskiyDenRozhdeniyaKidsPage, DetskiyDenRozhdeniyaGdeKidsPage, GdeOtmetitDetskiyDenRozhdeniyaKidsPage,
+  DetskieAnimatoryNaDenRozhdeniyaKidsPage, MenyuNaDetskiyDenRozhdeniyaKidsPage, DetskiyPodarokNaDenRozhdeniyaKidsPage,
+  OtprazdnovatDetskiyDenRozhdeniyaKidsPage, GdeOtprazdnovatDetskiyDenRozhdeniyaKidsPage, GdeProvestiDetskiyDenRozhdeniyaKidsPage,
+  DetskiyKvestNaDenRozhdeniyaKidsPage, DetskiyDenRozhdeniyaLetKidsPage, PrazdnovanieDetskogoDnyaRozhdeniyaKidsPage,
+  OtmetitDetskiyDenRozhdeniyaKidsPage, EdaNaDetskomDneRozhdeniyaKidsPage, DetskiyDenRozhdeniyaGodKidsPage,
+  PrazdnikDlyaDeteyKidsPage, GdeOtmetitDrRebenkaKidsPage, PozdravlenieSRozhdeniemRebenkaKidsPage,
+  DetskiePodarkiKidsPage, ChtoPodaritRebenkuKidsPage, PodarokMalChikuKidsPage, PodarokDevochkeKidsPage,
+  PodarokDochkeKidsPage, PodarokPodrostkuKidsPage, AnimatoryNaDenRozhdeniyaKidsPage, DetskiyPrazdnikKidsPage,
+  PrazdnikiVDetskomSaduKidsPage, StsenariyDetskogoPrazdnikaKidsPage, OrganizatsiyaDetskihPrazdnikovKidsPage,
+  ProvedenieDetskihPrazdnikovKidsPage, OrganizatsiyaDetskihPrazdnikovVVolzhskeKidsPage, OrganizatsiyaPrazdnikovIMeropriyatiyVVolzhskeKidsPage,
+  DetskieAnimatoryVVolzhskeKidsPage, DetskieAnimatoryNaPrazdnikVolzhskKidsPage
+} from './pages/kids-seo'
 
 // Компонент для определения платформы (внутри Router и TelegramProvider)
 function PlatformRouter() {
@@ -547,6 +561,42 @@ function WebApp() {
           </ProtectedRoute>
         } 
       />
+
+      {/* Детские SEO страницы */}
+      <Route path="/detskiy-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskiyDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/detskiy-denь-rozhdeniya-gde" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskiyDenRozhdeniyaGdeKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/gde-otmetitь-detskiy-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><GdeOtmetitDetskiyDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/detskie-animatory-na-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskieAnimatoryNaDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/menyu-na-detskiy-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><MenyuNaDetskiyDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/detskiy-podarok-na-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskiyPodarokNaDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/otprazdnovatь-detskiy-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><OtprazdnovatDetskiyDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/gde-otprazdnovatь-detskiy-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><GdeOtprazdnovatDetskiyDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/gde-provesti-detskiy-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><GdeProvestiDetskiyDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/detskiy-kvest-na-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskiyKvestNaDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/detskiy-denь-rozhdeniya-let" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskiyDenRozhdeniyaLetKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/prazdnovanie-detskogo-dnya-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PrazdnovanieDetskogoDnyaRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/otmetitь-detskiy-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><OtmetitDetskiyDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/eda-na-detskom-dne-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><EdaNaDetskomDneRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/detskiy-denь-rozhdeniya-god" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskiyDenRozhdeniyaGodKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/prazdnik-dlya-detey" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PrazdnikDlyaDeteyKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/gde-otmetitь-dr-rebenka" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><GdeOtmetitDrRebenkaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/pozdravlenie-s-rozhdeniem-rebenka" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PozdravlenieSRozhdeniemRebenkaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/detskie-podarki" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskiePodarkiKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/chto-podaritь-rebenku" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ChtoPodaritRebenkuKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/podarok-malьchiku" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PodarokMalChikuKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/podarok-devochke" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PodarokDevochkeKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/podarok-dochke" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PodarokDochkeKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/podarok-podrostku" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PodarokPodrostkuKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/animatory-na-denь-rozhdeniya" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><AnimatoryNaDenRozhdeniyaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/detskiy-prazdnik" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskiyPrazdnikKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/prazdniki-v-detskom-sadu" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PrazdnikiVDetskomSaduKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/stsenariy-detskogo-prazdnika" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><StsenariyDetskogoPrazdnikaKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/organizatsiya-detskih-prazdnikov" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><OrganizatsiyaDetskihPrazdnikovKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/provedenie-detskih-prazdnikov" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ProvedenieDetskihPrazdnikovKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/organizatsiya-detskih-prazdnikov-v-volzhske" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><OrganizatsiyaDetskihPrazdnikovVVolzhskeKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/organizatsiya-prazdnikov-i-meropriyatiy-v-volzhske" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><OrganizatsiyaPrazdnikovIMeropriyatiyVVolzhskeKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/detskie-animatory-v-volzhske" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskieAnimatoryVVolzhskeKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/detskie-animatory-na-prazdnik-volzhsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DetskieAnimatoryNaPrazdnikVolzhskKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
 
       {/* Индивидуальные товарные SEO страницы */}
       <Route path="/pitstsa-margarita" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PitstsaMargaritaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />

@@ -1,0 +1,41 @@
+/**
+ * @file: index.ts
+ * @description: Экспорт всех детских SEO-страниц
+ * @dependencies: Все детские SEO компоненты
+ * @created: 2025-01-27
+ */
+
+export { DetskiyDenRozhdeniyaKidsPage } from './DetskiyDenRozhdeniyaKidsPage'
+export { DetskiyDenRozhdeniyaGdeKidsPage } from './DetskiyDenRozhdeniyaGdeKidsPage'
+export { GdeOtmetitDetskiyDenRozhdeniyaKidsPage } from './GdeOtmetitDetskiyDenRozhdeniyaKidsPage'
+export { DetskieAnimatoryNaDenRozhdeniyaKidsPage } from './DetskieAnimatoryNaDenRozhdeniyaKidsPage'
+export { MenyuNaDetskiyDenRozhdeniyaKidsPage } from './MenyuNaDetskiyDenRozhdeniyaKidsPage'
+export { DetskiyPodarokNaDenRozhdeniyaKidsPage } from './DetskiyPodarokNaDenRozhdeniyaKidsPage'
+export { OtprazdnovatDetskiyDenRozhdeniyaKidsPage } from './OtprazdnovatDetskiyDenRozhdeniyaKidsPage'
+export { GdeOtprazdnovatDetskiyDenRozhdeniyaKidsPage } from './GdeOtprazdnovatDetskiyDenRozhdeniyaKidsPage'
+export { GdeProvestiDetskiyDenRozhdeniyaKidsPage } from './GdeProvestiDetskiyDenRozhdeniyaKidsPage'
+export { DetskiyKvestNaDenRozhdeniyaKidsPage } from './DetskiyKvestNaDenRozhdeniyaKidsPage'
+export { DetskiyDenRozhdeniyaLetKidsPage } from './DetskiyDenRozhdeniyaLetKidsPage'
+export { PrazdnovanieDetskogoDnyaRozhdeniyaKidsPage } from './PrazdnovanieDetskogoDnyaRozhdeniyaKidsPage'
+export { OtmetitDetskiyDenRozhdeniyaKidsPage } from './OtmetitDetskiyDenRozhdeniyaKidsPage'
+export { EdaNaDetskomDneRozhdeniyaKidsPage } from './EdaNaDetskomDneRozhdeniyaKidsPage'
+export { DetskiyDenRozhdeniyaGodKidsPage } from './DetskiyDenRozhdeniyaGodKidsPage'
+export { PrazdnikDlyaDeteyKidsPage } from './PrazdnikDlyaDeteyKidsPage'
+export { GdeOtmetitDrRebenkaKidsPage } from './GdeOtmetitDrRebenkaKidsPage'
+export { PozdravlenieSRozhdeniemRebenkaKidsPage } from './PozdravlenieSRozhdeniemRebenkaKidsPage'
+export { DetskiePodarkiKidsPage } from './DetskiePodarkiKidsPage'
+export { ChtoPodaritRebenkuKidsPage } from './ChtoPodaritRebenkuKidsPage'
+export { PodarokMalChikuKidsPage } from './PodarokMalChikuKidsPage'
+export { PodarokDevochkeKidsPage } from './PodarokDevochkeKidsPage'
+export { PodarokDochkeKidsPage } from './PodarokDochkeKidsPage'
+export { PodarokPodrostkuKidsPage } from './PodarokPodrostkuKidsPage'
+export { AnimatoryNaDenRozhdeniyaKidsPage } from './AnimatoryNaDenRozhdeniyaKidsPage'
+export { DetskiyPrazdnikKidsPage } from './DetskiyPrazdnikKidsPage'
+export { PrazdnikiVDetskomSaduKidsPage } from './PrazdnikiVDetskomSaduKidsPage'
+export { StsenariyDetskogoPrazdnikaKidsPage } from './StsenariyDetskogoPrazdnikaKidsPage'
+export { OrganizatsiyaDetskihPrazdnikovKidsPage } from './OrganizatsiyaDetskihPrazdnikovKidsPage'
+export { ProvedenieDetskihPrazdnikovKidsPage } from './ProvedenieDetskihPrazdnikovKidsPage'
+export { OrganizatsiyaDetskihPrazdnikovVVolzhskeKidsPage } from './OrganizatsiyaDetskihPrazdnikovVVolzhskeKidsPage'
+export { OrganizatsiyaPrazdnikovIMeropriyatiyVVolzhskeKidsPage } from './OrganizatsiyaPrazdnikovIMeropriyatiyVVolzhskeKidsPage'
+export { DetskieAnimatoryVVolzhskeKidsPage } from './DetskieAnimatoryVVolzhskeKidsPage'
+export { DetskieAnimatoryNaPrazdnikVolzhskKidsPage } from './DetskieAnimatoryNaPrazdnikVolzhskKidsPage'
