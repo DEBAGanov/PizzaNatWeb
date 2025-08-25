@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест интеграции Яндекс Метрика E-commerce</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .log { background: #f8f9fa; padding: 10px; margin: 10px 0; border-left: 3px solid #007bff; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Тест электронной коммерции Яндекс Метрики</h1>
+    
+    <div class="test-section">
+        <h2>1. Инициализация</h2>
+        <button onclick="initYandexMetrika()">Инициализировать Яндекс.Метрику</button>
+        <div id="init-status" class="log">Статус: Не инициализирована</div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Просмотр товара</h2>
+        <button onclick="testProductView()">Просмотр пиццы Маргарита</button>
+        <div id="product-log" class="log">Ожидание теста...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Добавление в корзину</h2>
+        <button onclick="testAddToCart()">Добавить в корзину</button>
+        <div id="cart-add-log" class="log">Ожидание теста...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Удаление из корзины</h2>
+        <button onclick="testRemoveFromCart()">Удалить из корзины</button>
+        <div id="cart-remove-log" class="log">Ожидание теста...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>5. Покупка</h2>
+        <button onclick="testPurchase()">Тестовая покупка</button>
+        <div id="purchase-log" class="log">Ожидание теста...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>6. Проверка dataLayer</h2>
+        <button onclick="checkDataLayer()">Проверить содержимое dataLayer</button>
+        <div id="datalayer-log" class="log">Ожидание проверки...</div>
+    </div>
+
+    <script>
+        // Инициализация dataLayer
+        window.dataLayer = window.dataLayer || [];
+
+        function initYandexMetrika() {
+            // Имитация инициализации Яндекс.Метрики
+            const counterId = '103585127';
+            
+            const script = document.createElement('script');
+            script.innerHTML = `
+                (function(m,e,t,r,i,k,a){
+                    m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                    m[i].l=1*new Date();
+                    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+                    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+                })(window, document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+
+                ym(${counterId}, 'init', {
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true,
+                    ecommerce:"dataLayer"
+                });
+            `;
+            
+            document.head.appendChild(script);
+            document.getElementById('init-status').innerHTML = '✅ Яндекс.Метрика инициализирована с ecommerce: "dataLayer"';
+        }
+
+        function testProductView() {
+            const productData = {
+                ecommerce: {
+                    currencyCode: "RUB",
+                    detail: {
+                        products: [{
+                            id: "1",
+                            name: "Пицца Маргарита",
+                            price: 450,
+                            brand: "ДИМБО Пицца",
+                            category: "Пицца",
+                            list: "Каталог продукции",
+                            position: 1
+                        }]
+                    }
+                }
+            };
+
+            window.dataLayer.push(productData);
+            document.getElementById('product-log').innerHTML = '✅ Отправлен просмотр товара:<br><pre>' + JSON.stringify(productData, null, 2) + '</pre>';
+        }
+
+        function testAddToCart() {
+            const addToCartData = {
+                ecommerce: {
+                    currencyCode: "RUB",
+                    add: {
+                        products: [{
+                            id: "1",
+                            name: "Пицца Маргарита",
+                            price: 450,
+                            brand: "ДИМБО Пицца",
+                            category: "Пицца",
+                            quantity: 1,
+                            list: "Каталог продукции",
+                            position: 1
+                        }]
+                    }
+                }
+            };
+
+            window.dataLayer.push(addToCartData);
+            document.getElementById('cart-add-log').innerHTML = '✅ Отправлено добавление в корзину:<br><pre>' + JSON.stringify(addToCartData, null, 2) + '</pre>';
+        }
+
+        function testRemoveFromCart() {
+            const removeFromCartData = {
+                ecommerce: {
+                    currencyCode: "RUB",
+                    remove: {
+                        products: [{
+                            id: "1",
+                            name: "Пицца Маргарита",
+                            price: 450,
+                            brand: "ДИМБО Пицца",
+                            category: "Пицца",
+                            quantity: 1,
+                            list: "Корзина",
+                            position: 1
+                        }]
+                    }
+                }
+            };
+
+            window.dataLayer.push(removeFromCartData);
+            document.getElementById('cart-remove-log').innerHTML = '✅ Отправлено удаление из корзины:<br><pre>' + JSON.stringify(removeFromCartData, null, 2) + '</pre>';
+        }
+
+        function testPurchase() {
+            const purchaseData = {
+                ecommerce: {
+                    currencyCode: "RUB",
+                    purchase: {
+                        actionField: {
+                            id: "ORDER_123",
+                            affiliation: "ДИМБО Пицца - Доставка пиццы",
+                            revenue: 650,
+                            shipping: 200
+                        },
+                        products: [{
+                            id: "1",
+                            name: "Пицца Маргарита",
+                            price: 450,
+                            brand: "ДИМБО Пицца",
+                            category: "Пицца",
+                            quantity: 1
+                        }]
+                    }
+                }
+            };
+
+            window.dataLayer.push(purchaseData);
+            document.getElementById('purchase-log').innerHTML = '✅ Отправлена покупка:<br><pre>' + JSON.stringify(purchaseData, null, 2) + '</pre>';
+        }
+
+        function checkDataLayer() {
+            const dataLayerContent = window.dataLayer || [];
+            document.getElementById('datalayer-log').innerHTML = 
+                '<strong>Содержимое window.dataLayer (' + dataLayerContent.length + ' элементов):</strong><br><pre>' + 
+                JSON.stringify(dataLayerContent, null, 2) + '</pre>';
+        }
+    </script>
+
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/103585127" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+</body>
+</html>

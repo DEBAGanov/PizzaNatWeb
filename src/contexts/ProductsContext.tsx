@@ -8,6 +8,8 @@
 import { createContext, useContext, useReducer, useEffect, useCallback, type ReactNode } from 'react'
 import { notifications } from '@mantine/notifications'
 import { productsApi } from '../services/productsApi'
+import { useYandexMetrika } from '../components/analytics/YandexMetrika'
+import { cartItemToEcommerce, cartItemsToEcommerce } from '../utils/ecommerceHelpers'
 import type {
   Category,
   Product,
@@ -16,7 +18,8 @@ import type {
   ProductsListResponse,
   AddToCartRequest,
   UpdateCartItemRequest,
-  ProductFilters
+  ProductFilters,
+  CartItem
 } from '../types/products'
 
 // Типы состояния
@@ -251,6 +254,10 @@ interface ProductsProviderProps {
 
 export function ProductsProvider({ children }: ProductsProviderProps) {
   const [state, dispatch] = useReducer(productsReducer, initialState)
+
+  // Аналитика
+  const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '103585127'
+  const { trackRemoveFromCart } = useYandexMetrika(YANDEX_METRIKA_ID)
 
   // Загрузка категорий
   const loadCategories = useCallback(async () => {
@@ -532,6 +539,14 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
   // Удаление из корзины по productId
   const removeFromCart = async (productId: number) => {
     console.log('🗑️ removeFromCart: начинаем удаление по productId', { productId })
+    
+    // Отслеживаем удаление из корзины до API вызова
+    const cartItem = state.cart?.items.find(item => item.productId === productId)
+    if (cartItem) {
+      const ecommerceProduct = cartItemToEcommerce(cartItem, { list: "Корзина" })
+      trackRemoveFromCart(ecommerceProduct)
+    }
+    
     try {
       dispatch({ type: 'SET_CART_LOADING', payload: true })
       const cart = await productsApi.removeFromCart(productId)

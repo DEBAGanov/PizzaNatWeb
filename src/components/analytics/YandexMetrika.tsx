@@ -15,10 +15,45 @@ interface YandexMetrikaProps {
   accurateTrackBounce?: boolean
 }
 
-// Интерфейс для объекта ym
+// Интерфейсы для электронной коммерции согласно официальной документации Яндекса
+
+// Интерфейс товара для электронной торговли
+export interface EcommerceProduct {
+  id: string
+  name: string
+  category?: string
+  brand?: string
+  variant?: string
+  price: number
+  quantity?: number
+  position?: number
+  list?: string
+}
+
+interface EcommerceActionField {
+  id?: string
+  affiliation?: string
+  revenue?: number
+  tax?: number
+  shipping?: number
+  coupon?: string
+  list?: string
+  step?: number
+  option?: string
+}
+
+interface EcommerceData {
+  currencyCode: string
+  [actionType: string]: any
+}
+
+// Интерфейс для объекта ym и dataLayer
 declare global {
   interface Window {
     ym: (id: string, method: string, ...args: any[]) => void
+    dataLayer: Array<{
+      ecommerce?: EcommerceData
+    }>
   }
 }
 
@@ -30,8 +65,14 @@ export function YandexMetrika({
   accurateTrackBounce = true
 }: YandexMetrikaProps) {
   useEffect(() => {
-    // Проверяем, что мы в браузере и не в режиме разработки
-    if (typeof window === 'undefined' || import.meta.env.DEV) {
+    // Проверяем, что мы в браузере
+    if (typeof window === 'undefined') {
+      return
+    }
+    
+    // В development режиме показываем предупреждение
+    if (import.meta.env.DEV) {
+      console.log('🔍 Яндекс.Метрика: Development режим - аналитика отключена')
       return
     }
 
@@ -105,70 +146,157 @@ export const useYandexMetrika = (counterId: string) => {
     }
   }
 
-  // Отправка события электронной торговли
-  const ecommerce = (eventName: string, eventData: object) => {
+  // Базовая отправка события электронной торговли согласно документации Яндекса
+  const sendEcommerceEvent = (ecommerceData: EcommerceData) => {
     if (typeof window !== 'undefined' && window.dataLayer) {
-      window.dataLayer.push({
-        ecommerce: {
-          [eventName]: eventData
-        }
-      })
+      window.dataLayer.push({ ecommerce: ecommerceData })
+      console.log('📊 Yandex Ecommerce:', ecommerceData)
     }
   }
 
-  // События для пиццерии
-  const trackPizzaView = (pizzaId: string, pizzaName: string, category: string, price: number) => {
+  // Просмотр товара (detail view)
+  const trackProductView = (product: EcommerceProduct, list?: string) => {
+    // Цель в Яндекс Метрике
     reachGoal('PRODUCT_VIEW', {
-      product_id: pizzaId,
-      product_name: pizzaName,
-      category: category,
-      price: price
-    })
-  }
-
-  const trackAddToCart = (pizzaId: string, pizzaName: string, quantity: number, price: number) => {
-    reachGoal('ADD_TO_CART', {
-      product_id: pizzaId,
-      product_name: pizzaName,
-      quantity: quantity,
-      price: price
+      product_id: product.id,
+      product_name: product.name,
+      category: product.category,
+      price: product.price
     })
     
-    // Электронная торговля
-    ecommerce('add', {
-      items: [{
-        item_id: pizzaId,
-        item_name: pizzaName,
-        item_category: 'Пицца',
-        quantity: quantity,
-        price: price
-      }]
+    // Электронная торговля по стандарту Яндекса
+    sendEcommerceEvent({
+      currencyCode: "RUB",
+      detail: {
+        products: [{
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          brand: product.brand || "ДИМБО Пицца",
+          category: product.category || "Продукция",
+          variant: product.variant,
+          list: list || "Каталог продукции",
+          position: product.position || 1
+        }]
+      }
     })
   }
 
-  const trackOrderStart = () => {
-    reachGoal('ORDER_START')
+  // Добавление товара в корзину
+  const trackAddToCart = (product: EcommerceProduct, list?: string) => {
+    // Цель в Яндекс Метрике
+    reachGoal('ADD_TO_CART', {
+      product_id: product.id,
+      product_name: product.name,
+      quantity: product.quantity,
+      price: product.price
+    })
+    
+    // Электронная торговля по стандарту Яндекса
+    sendEcommerceEvent({
+      currencyCode: "RUB",
+      add: {
+        products: [{
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          brand: product.brand || "ДИМБО Пицца",
+          category: product.category || "Продукция",
+          variant: product.variant,
+          quantity: product.quantity || 1,
+          list: list || "Каталог продукции",
+          position: product.position || 1
+        }]
+      }
+    })
   }
 
-  const trackOrderComplete = (orderId: string, totalAmount: number, items: any[]) => {
+  // Удаление товара из корзины
+  const trackRemoveFromCart = (product: EcommerceProduct, list?: string) => {
+    // Цель в Яндекс Метрике
+    reachGoal('REMOVE_FROM_CART', {
+      product_id: product.id,
+      product_name: product.name,
+      quantity: product.quantity,
+      price: product.price
+    })
+    
+    // Электронная торговля по стандарту Яндекса
+    sendEcommerceEvent({
+      currencyCode: "RUB",
+      remove: {
+        products: [{
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          brand: product.brand || "ДИМБО Пицца",
+          category: product.category || "Продукция",
+          variant: product.variant,
+          quantity: product.quantity || 1,
+          list: list || "Корзина",
+          position: product.position || 1
+        }]
+      }
+    })
+  }
+
+  // Начало оформления заказа (checkout step)
+  const trackCheckoutStart = (products: EcommerceProduct[], step: number = 1) => {
+    reachGoal('CHECKOUT_START', {
+      items_count: products.length,
+      total_value: products.reduce((sum, p) => sum + (p.price * (p.quantity || 1)), 0)
+    })
+    
+    sendEcommerceEvent({
+      currencyCode: "RUB",
+      checkout: {
+        actionField: { step: step },
+        products: products.map(product => ({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          brand: product.brand || "ДИМБО Пицца",
+          category: product.category || "Продукция",
+          variant: product.variant,
+          quantity: product.quantity || 1
+        }))
+      }
+    })
+  }
+
+  // Завершение покупки
+  const trackPurchase = (orderId: string, products: EcommerceProduct[], actionField?: Partial<EcommerceActionField>) => {
+    const totalRevenue = actionField?.revenue || products.reduce((sum, p) => sum + (p.price * (p.quantity || 1)), 0)
+    
+    // Цель в Яндекс Метрике
     reachGoal('ORDER_COMPLETE', {
       order_id: orderId,
-      total_amount: totalAmount,
-      items_count: items.length
+      total_amount: totalRevenue,
+      items_count: products.length
     })
 
-    // Электронная торговля - покупка
-    ecommerce('purchase', {
-      transaction_id: orderId,
-      value: totalAmount,
-      currency: 'RUB',
-      items: items.map(item => ({
-        item_id: item.product_id,
-        item_name: item.product_name,
-        item_category: 'Пицца',
-        quantity: item.quantity,
-        price: item.price
-      }))
+    // Электронная торговля по стандарту Яндекса
+    sendEcommerceEvent({
+      currencyCode: "RUB",
+      purchase: {
+        actionField: {
+          id: orderId,
+          affiliation: actionField?.affiliation || "ДИМБО Пицца - Доставка пиццы",
+          revenue: totalRevenue,
+          tax: actionField?.tax,
+          shipping: actionField?.shipping,
+          coupon: actionField?.coupon
+        },
+        products: products.map(product => ({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          brand: product.brand || "ДИМБО Пицца",
+          category: product.category || "Продукция",
+          variant: product.variant,
+          quantity: product.quantity || 1
+        }))
+      }
     })
   }
 
@@ -187,16 +315,24 @@ export const useYandexMetrika = (counterId: string) => {
   }
 
   return {
+    // Базовые методы Яндекс Метрики
     reachGoal,
     params,
     userParams,
-    ecommerce,
-    trackPizzaView,
+    
+    // Методы электронной торговли (по документации Яндекса)
+    trackProductView,
     trackAddToCart,
-    trackOrderStart,
-    trackOrderComplete,
+    trackRemoveFromCart,
+    trackCheckoutStart,
+    trackPurchase,
+    
+    // Дополнительные события для пиццерии
     trackDeliveryCalculation,
-    trackPaymentMethod
+    trackPaymentMethod,
+    
+    // Низкоуровневая отправка ecommerce данных
+    sendEcommerceEvent
   }
 }
 

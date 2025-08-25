@@ -42,6 +42,8 @@ import { SEOPageWrapper } from '../components/SEOHead'
 import { AddToCartButton } from '../components/telegram/TelegramButton'
 import { useTelegramPage } from '../components/telegram/TelegramApp'
 import { ProductDetailImage } from '../components/common/OptimizedImage'
+import { useYandexMetrika } from '../components/analytics/YandexMetrika'
+import { productToEcommerce, getListForTracking } from '../utils/ecommerceHelpers'
 import type { Product } from '../types/products'
 
 export function ProductPage() {
@@ -58,6 +60,10 @@ export function ProductPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [quantity, setQuantity] = useState(1)
+
+  // Аналитика
+  const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '103585127'
+  const { trackProductView, trackAddToCart } = useYandexMetrika(YANDEX_METRIKA_ID)
 
   // Telegram интеграция
   useTelegramPage({
@@ -80,6 +86,13 @@ export function ProductPage() {
         setError(null)
         const productData = await productsApi.getProduct(parseInt(id))
         setProduct(productData)
+        
+        // Отслеживаем просмотр товара
+        const ecommerceProduct = productToEcommerce(productData, {
+          list: getListForTracking(window.location.pathname)
+        })
+        trackProductView(ecommerceProduct)
+        
       } catch (err: any) {
         console.error('Ошибка загрузки продукта:', err)
         setError('Не удалось загрузить информацию о продукте')
@@ -96,6 +109,13 @@ export function ProductPage() {
     if (!product) return
 
     try {
+      // Отслеживаем добавление в корзину
+      const ecommerceProduct = productToEcommerce(product, {
+        quantity,
+        list: getListForTracking(window.location.pathname)
+      })
+      trackAddToCart(ecommerceProduct)
+      
       await addToCart({
         productId: product.id,
         quantity: quantity

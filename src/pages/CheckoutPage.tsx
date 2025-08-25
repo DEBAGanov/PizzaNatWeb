@@ -50,6 +50,8 @@ import { useAuth } from '../contexts/AuthContext'
 import { notifications } from '@mantine/notifications'
 import { getAuthToken } from '../services/api'
 import { productsApi } from '../services/productsApi'
+import { useYandexMetrika } from '../components/analytics/YandexMetrika'
+import { cartItemsToEcommerce } from '../utils/ecommerceHelpers'
 import type { CartItem, AddressSuggestion, DeliveryEstimate as DeliveryEstimateType, CreateOrderRequest } from '../types/products'
 
 // Используем импортированный тип DeliveryEstimateType как DeliveryEstimate
@@ -68,6 +70,10 @@ export function CheckoutPage() {
   const navigate = useNavigate()
   const { user } = useAuth()
   const { state: { cart, cartLoading }, loadCart } = useProducts()
+
+  // Аналитика
+  const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '103585127'
+  const { trackCheckoutStart, trackPurchase, trackPaymentMethod } = useYandexMetrika(YANDEX_METRIKA_ID)
   
   const [activeStep, setActiveStep] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -99,6 +105,14 @@ export function CheckoutPage() {
   useEffect(() => {
     loadCart()
   }, [loadCart])
+
+  // Отслеживаем начало оформления заказа при загрузке корзины
+  useEffect(() => {
+    if (cart && cart.items.length > 0) {
+      const ecommerceProducts = cartItemsToEcommerce(cart.items, { list: "Оформление заказа" })
+      trackCheckoutStart(ecommerceProducts, 1)
+    }
+  }, [cart?.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Автоматический расчет доставки для сохраненного адреса
   useEffect(() => {
@@ -304,6 +318,9 @@ export function CheckoutPage() {
       return
     }
 
+    // Отслеживаем выбор метода оплаты
+    trackPaymentMethod(paymentMethod)
+    
     setLoading(true)
     try {
       const requestData = deliveryType === 'delivery' 
@@ -326,6 +343,15 @@ export function CheckoutPage() {
           }
 
       const order = await productsApi.createOrder(requestData as CreateOrderRequest)
+      
+      // Отслеживаем завершение покупки
+      const ecommerceProducts = cartItemsToEcommerce(cart.items, { list: "Оформление заказа" })
+      const deliveryCost = deliveryEstimate?.deliveryCost || 0
+      trackPurchase(order.id.toString(), ecommerceProducts, {
+        revenue: cart.totalAmount + deliveryCost,
+        shipping: deliveryCost,
+        affiliation: "ДИМБО Пицца - Доставка пиццы"
+      })
         
       if (paymentMethod === 'cash') {
         // Наличный заказ - сразу перенаправляем на страницу успеха
