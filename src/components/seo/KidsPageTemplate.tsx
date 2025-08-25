@@ -61,18 +61,23 @@ interface ImageGalleryProps {
 
 function ImageGallery({ images, onImageClick }: ImageGalleryProps) {
   return (
-    <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }} spacing="md">
+    <SimpleGrid cols={{ base: 2, sm: 3, md: 4, lg: 5 }} spacing="md">
       {images.map((image, index) => (
         <Box
           key={index}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', transition: 'transform 0.2s' }}
           onClick={() => onImageClick(images, index)}
+          sx={{
+            '&:hover': {
+              transform: 'scale(1.05)'
+            }
+          }}
         >
           <Image
             src={image.src}
             alt={image.alt}
             radius="md"
-            h={120}
+            h={140}
             style={{ objectFit: 'cover' }}
             fallbackSrc="/placeholder-food.jpg"
           />
@@ -100,8 +105,33 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, pag
     isOpen: false
   })
 
+  // Все изображения из папки kids
+  const allKidsImages = [
+    // Фотографии дней рождения
+    '/images/kids/birthday-1.jpg',
+    '/images/kids/birthday-2.jpg', 
+    '/images/kids/birthday-3.jpg',
+    '/images/kids/birthday-4.jpg',
+    '/images/kids/birthday-5.jpg',
+    '/images/kids/birthday-6.jpg',
+    '/images/kids/birthday-7.jpg',
+    '/images/kids/birthday-8.jpg',
+    '/images/kids/birthday-9.jpg',
+    '/images/kids/birthday-10.jpg',
+    '/images/kids/birthday-11.jpg',
+    // Фотографии мастер-классов
+    '/images/kids/masterclass-1.jpg',
+    '/images/kids/masterclass-2.jpg',
+    '/images/kids/masterclass-3.jpg',
+    '/images/kids/masterclass-4.jpg',
+    '/images/kids/masterclass-5.jpg',
+    '/images/kids/masterclass-6.jpg',
+    '/images/kids/masterclass-7.jpg',
+    '/images/kids/masterclass-8.jpg'
+  ]
+
   // Подготавливаем изображения с alt-текстами
-  const keywordImages = meta.images.map((src, index) => ({
+  const keywordImages = allKidsImages.map((src, index) => ({
     src,
     alt: `${keyword} в ДИМБО Пицца Волжск - фото ${index + 1}`
   }))
@@ -281,8 +311,19 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, pag
                 📸 {keyword.charAt(0).toUpperCase() + keyword.slice(1)} в ДИМБО
               </Title>
               <Text size="md" ta="center" c="dimmed">
-                Смотрите, как весело проходят наши мероприятия! Нажмите на любое фото для увеличения.
+                Более 19 фотографий наших детских праздников и мастер-классов! 
+                Смотрите, как весело проходят наши мероприятия. Нажмите на любое фото для увеличения.
               </Text>
+              <Group justify="center" gap="xl" mb="md">
+                <Group gap="xs">
+                  <IconCake size={20} color="pink" />
+                  <Text size="sm" c="dimmed">11 фото дней рождения</Text>
+                </Group>
+                <Group gap="xs">
+                  <IconChefHat size={20} color="orange" />
+                  <Text size="sm" c="dimmed">8 фото мастер-классов</Text>
+                </Group>
+              </Group>
               <ImageGallery images={keywordImages} onImageClick={handleImageClick} />
             </Stack>
           </Card>
