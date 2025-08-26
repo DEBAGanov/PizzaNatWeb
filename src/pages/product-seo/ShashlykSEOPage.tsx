@@ -48,7 +48,7 @@ export function ShashlykSEOPage() {
                       size="lg" 
                       color="red" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                     >
                       Заказать шашлык сейчас
                     </Button>
@@ -237,7 +237,7 @@ export function ShashlykSEOPage() {
                 size="xl" 
                 color="red"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
               >
                 Перейти в меню
               </Button>

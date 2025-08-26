@@ -48,7 +48,7 @@ export function SushiSEOPage() {
                       size="lg" 
                       color="blue" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                     >
                       Заказать суши сейчас
                     </Button>
@@ -265,7 +265,7 @@ export function SushiSEOPage() {
                 size="xl" 
                 color="blue"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
               >
                 Перейти в меню
               </Button>

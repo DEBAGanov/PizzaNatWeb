@@ -58,7 +58,7 @@ export function PizzeriaLeninaSEOPage() {
                       size="xl" 
                       color="blue" 
                       leftSection={<IconShoppingCart size={24} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                       style={{ fontSize: '18px' }}
                     >
                       Заказать на Ленина
@@ -182,7 +182,7 @@ export function PizzeriaLeninaSEOPage() {
                     <Text size="sm" c="dimmed">Самая популярная пицца среди жителей ул. Ленина - классический вкус</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">380 ₽</Text>
-                      <Button size="sm" color="blue" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="blue" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -202,7 +202,7 @@ export function PizzeriaLeninaSEOPage() {
                     <Text size="sm" c="dimmed">Вторая по популярности пицца на ул. Ленина - для любителей острого</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">450 ₽</Text>
-                      <Button size="sm" color="blue" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="blue" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -222,7 +222,7 @@ export function PizzeriaLeninaSEOPage() {
                     <Text size="sm" c="dimmed">Третья по популярности на ул. Ленина - для настоящих сырных гурманов</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">490 ₽</Text>
-                      <Button size="sm" color="blue" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="blue" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -342,7 +342,7 @@ export function PizzeriaLeninaSEOPage() {
                 size="xl" 
                 color="blue"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
                 style={{ fontSize: '18px' }}
               >
                 Заказать доставку

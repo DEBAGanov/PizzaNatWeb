@@ -49,7 +49,7 @@ export function FoodSEOPage() {
                       size="lg" 
                       color="orange" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                     >
                       Заказать еду сейчас
                     </Button>
@@ -324,7 +324,7 @@ export function FoodSEOPage() {
                 size="xl" 
                 color="orange"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
               >
                 Открыть меню
               </Button>

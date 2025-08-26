@@ -59,7 +59,7 @@ export function PizzeriaVolzhskSEOPage() {
                       size="xl" 
                       color="orange" 
                       leftSection={<IconShoppingCart size={24} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                       style={{ fontSize: '18px' }}
                     >
                       Посмотреть меню
@@ -144,7 +144,7 @@ export function PizzeriaVolzhskSEOPage() {
                     <Text size="sm" c="dimmed">Наша фирменная пицца с секретным соусом, тремя видами сыра и отборными ингредиентами</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">520 ₽</Text>
-                      <Button size="sm" color="orange" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -164,7 +164,7 @@ export function PizzeriaVolzhskSEOPage() {
                     <Text size="sm" c="dimmed">Классическая итальянская пицца с четырьмя видами начинки в каждом секторе</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">480 ₽</Text>
-                      <Button size="sm" color="orange" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -184,7 +184,7 @@ export function PizzeriaVolzhskSEOPage() {
                     <Text size="sm" c="dimmed">Классическая итальянская пицца с томатным соусом, моцареллой и базиликом</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">380 ₽</Text>
-                      <Button size="sm" color="orange" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -281,7 +281,7 @@ export function PizzeriaVolzhskSEOPage() {
                       Приходите к нам в гости! У нас уютный зал, дружелюбная атмосфера и всегда свежая пицца. 
                       Мы будем рады видеть вас в нашей семейной пиццерии!
                     </Text>
-                    <Button color="orange" onClick={() => navigate('/menu')}>
+                    <Button color="orange" onClick={() => navigate('/')}>
                       Забронировать столик
                     </Button>
                   </Stack>
@@ -371,7 +371,7 @@ export function PizzeriaVolzhskSEOPage() {
                 size="xl" 
                 color="orange"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
                 style={{ fontSize: '18px' }}
               >
                 Посмотреть меню

@@ -48,7 +48,7 @@ export function PizzaSEOPage() {
                       size="lg" 
                       color="orange" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                     >
                       Заказать пиццу сейчас
                     </Button>
@@ -265,7 +265,7 @@ export function PizzaSEOPage() {
                 size="xl" 
                 color="orange"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
               >
                 Перейти в меню
               </Button>

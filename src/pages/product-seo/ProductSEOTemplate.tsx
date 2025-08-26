@@ -116,7 +116,7 @@ export const ProductSEOTemplate: React.FC<ProductSEOTemplateProps> = ({ product,
                       size="lg" 
                       color={color} 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                     >
                       Заказать сейчас
                     </Button>
@@ -226,7 +226,7 @@ export const ProductSEOTemplate: React.FC<ProductSEOTemplateProps> = ({ product,
                 size="xl" 
                 color={color}
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
               >
                 Перейти в меню
               </Button>

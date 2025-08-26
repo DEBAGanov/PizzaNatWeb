@@ -48,7 +48,7 @@ export function NuggetsSEOPage() {
                       size="lg" 
                       color="orange" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                     >
                       Заказать нагетсы сейчас
                     </Button>
@@ -293,7 +293,7 @@ export function NuggetsSEOPage() {
                 size="xl" 
                 color="orange"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
               >
                 Перейти в меню
               </Button>

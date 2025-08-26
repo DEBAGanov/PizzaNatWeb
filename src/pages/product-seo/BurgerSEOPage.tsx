@@ -48,7 +48,7 @@ export function BurgerSEOPage() {
                       size="lg" 
                       color="yellow" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                     >
                       Заказать бургеры сейчас
                     </Button>
@@ -265,7 +265,7 @@ export function BurgerSEOPage() {
                 size="xl" 
                 color="yellow"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
               >
                 Перейти в меню
               </Button>

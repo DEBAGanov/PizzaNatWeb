@@ -48,7 +48,7 @@ export function FriesSEOPage() {
                       size="lg" 
                       color="yellow" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                     >
                       Заказать картофель фри сейчас
                     </Button>
@@ -300,7 +300,7 @@ export function FriesSEOPage() {
                 size="xl" 
                 color="yellow"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
               >
                 Перейти в меню
               </Button>

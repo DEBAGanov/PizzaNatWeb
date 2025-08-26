@@ -81,7 +81,7 @@ export const KidsMenu: React.FC<KidsMenuProps> = ({
   }
 
   const handleOrderClick = () => {
-    navigate('/menu')
+    navigate('/')
   }
 
   if (productsLoading) {

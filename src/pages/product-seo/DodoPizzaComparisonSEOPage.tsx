@@ -58,7 +58,7 @@ export function DodoPizzaComparisonSEOPage() {
                       size="xl" 
                       color="red" 
                       leftSection={<IconShoppingCart size={24} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                       style={{ fontSize: '18px' }}
                     >
                       Попробовать лучшую
@@ -285,7 +285,7 @@ export function DodoPizzaComparisonSEOPage() {
                       <List.Item>🧀 Сыр: <strong>Натуральная моцарелла</strong></List.Item>
                       <List.Item>🍅 Соус: <strong>Домашний томатный</strong></List.Item>
                     </List>
-                    <Button color="orange" onClick={() => navigate('/menu')}>
+                    <Button color="orange" onClick={() => navigate('/')}>
                       Заказать в ДИМБО
                     </Button>
                   </Stack>
@@ -369,7 +369,7 @@ export function DodoPizzaComparisonSEOPage() {
                 size="xl" 
                 color="red"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
                 style={{ fontSize: '18px' }}
               >
                 Заказать сейчас

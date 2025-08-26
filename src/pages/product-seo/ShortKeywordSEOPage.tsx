@@ -134,7 +134,7 @@ export function ShortKeywordSEOPage({ keyword }: ShortKeywordSEOPageProps) {
                       size="lg" 
                       color={data.color} 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                     >
                       Заказать сейчас
                     </Button>
@@ -182,7 +182,7 @@ export function ShortKeywordSEOPage({ keyword }: ShortKeywordSEOPageProps) {
                   <Stack align="center" gap="xs">
                     <Title order={5} ta="center" size="sm">{item.name}</Title>
                     <Text size="lg" fw={600} c={data.color}>{item.price}</Text>
-                    <Button size="xs" color={data.color} onClick={() => navigate('/menu')}>
+                    <Button size="xs" color={data.color} onClick={() => navigate('/')}>
                       Заказать
                     </Button>
                   </Stack>
@@ -253,7 +253,7 @@ export function ShortKeywordSEOPage({ keyword }: ShortKeywordSEOPageProps) {
                 size="xl" 
                 color={data.color}
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
               >
                 Открыть меню
               </Button>

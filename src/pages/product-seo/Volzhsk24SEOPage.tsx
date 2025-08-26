@@ -59,7 +59,7 @@ export function Volzhsk24SEOPage() {
                       size="xl" 
                       color="cyan" 
                       leftSection={<IconShoppingCart size={24} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                       style={{ fontSize: '18px' }}
                     >
                       Заказать сейчас
@@ -283,7 +283,7 @@ export function Volzhsk24SEOPage() {
                     <Text size="sm" c="dimmed">Утром жители Волжска заказывают легкие закуски и кофе</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">от 180 ₽</Text>
-                      <Button size="sm" color="cyan" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="cyan" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -303,7 +303,7 @@ export function Volzhsk24SEOPage() {
                     <Text size="sm" c="dimmed">Днем популярны бизнес-ланчи и комбо-наборы</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">от 450 ₽</Text>
-                      <Button size="sm" color="cyan" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="cyan" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -323,7 +323,7 @@ export function Volzhsk24SEOPage() {
                     <Text size="sm" c="dimmed">Вечером заказывают большие пиццы для всей семьи</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">от 680 ₽</Text>
-                      <Button size="sm" color="cyan" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="cyan" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -403,7 +403,7 @@ export function Volzhsk24SEOPage() {
                 size="xl" 
                 color="cyan"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
                 style={{ fontSize: '18px' }}
               >
                 Заказать сейчас

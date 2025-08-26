@@ -58,7 +58,7 @@ export function FoodOrderSEOPage() {
                       size="xl" 
                       color="teal" 
                       leftSection={<IconShoppingCart size={24} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                       style={{ fontSize: '18px' }}
                     >
                       Заказать еду сейчас
@@ -90,7 +90,7 @@ export function FoodOrderSEOPage() {
           <Box>
             <Title order={2} c="dark" mb="md">🍽️ Какую еду можно заказать?</Title>
             <SimpleGrid cols={{ base: 2, sm: 3, md: 5 }} spacing="md">
-              <Card shadow="sm" radius="md" withBorder p="md" style={{ cursor: 'pointer' }} onClick={() => navigate('/menu')}>
+              <Card shadow="sm" radius="md" withBorder p="md" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
                 <Stack align="center" gap="md">
                   <IconPizza size={48} color="orange" />
                   <Title order={4} ta="center">Пицца</Title>
@@ -99,7 +99,7 @@ export function FoodOrderSEOPage() {
                 </Stack>
               </Card>
 
-              <Card shadow="sm" radius="md" withBorder p="md" style={{ cursor: 'pointer' }} onClick={() => navigate('/menu')}>
+              <Card shadow="sm" radius="md" withBorder p="md" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
                 <Stack align="center" gap="md">
                   <IconBurger size={48} color="yellow" />
                   <Title order={4} ta="center">Бургеры</Title>
@@ -108,7 +108,7 @@ export function FoodOrderSEOPage() {
                 </Stack>
               </Card>
 
-              <Card shadow="sm" radius="md" withBorder p="md" style={{ cursor: 'pointer' }} onClick={() => navigate('/menu')}>
+              <Card shadow="sm" radius="md" withBorder p="md" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
                 <Stack align="center" gap="md">
                   <IconFish size={48} color="blue" />
                   <Title order={4} ta="center">Суши</Title>
@@ -117,7 +117,7 @@ export function FoodOrderSEOPage() {
                 </Stack>
               </Card>
 
-              <Card shadow="sm" radius="md" withBorder p="md" style={{ cursor: 'pointer' }} onClick={() => navigate('/menu')}>
+              <Card shadow="sm" radius="md" withBorder p="md" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
                 <Stack align="center" gap="md">
                   <IconMeat size={48} color="red" />
                   <Title order={4} ta="center">Шашлык</Title>
@@ -126,7 +126,7 @@ export function FoodOrderSEOPage() {
                 </Stack>
               </Card>
 
-              <Card shadow="sm" radius="md" withBorder p="md" style={{ cursor: 'pointer' }} onClick={() => navigate('/menu')}>
+              <Card shadow="sm" radius="md" withBorder p="md" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
                 <Stack align="center" gap="md">
                   <IconCarrot size={48} color="green" />
                   <Title order={4} ta="center">Закуски</Title>
@@ -155,7 +155,7 @@ export function FoodOrderSEOPage() {
                     <Text size="sm" c="dimmed">Самое популярное блюдо для заказа на дом в Волжске</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">380 ₽</Text>
-                      <Button size="sm" color="teal" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="teal" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -175,7 +175,7 @@ export function FoodOrderSEOPage() {
                     <Text size="sm" c="dimmed">Второе по популярности блюдо для заказа еды</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">350 ₽</Text>
-                      <Button size="sm" color="teal" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="teal" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -195,7 +195,7 @@ export function FoodOrderSEOPage() {
                     <Text size="sm" c="dimmed">Набирающее популярность блюдо для заказа</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">680 ₽</Text>
-                      <Button size="sm" color="teal" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="teal" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -321,7 +321,7 @@ export function FoodOrderSEOPage() {
                     <Text size="sm" c="dimmed">Две большие пиццы на выбор + 4 напитка</Text>
                     <Group justify="space-between" align="center">
                       <Text size="xl" fw={700} c="orange">890 ₽</Text>
-                      <Button color="orange" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button color="orange" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -335,7 +335,7 @@ export function FoodOrderSEOPage() {
                     <Text size="sm" c="dimmed">Сочный бургер с картофелем фри и газировкой</Text>
                     <Group justify="space-between" align="center">
                       <Text size="xl" fw={700} c="orange">450 ₽</Text>
-                      <Button color="yellow" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button color="yellow" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -349,7 +349,7 @@ export function FoodOrderSEOPage() {
                     <Text size="sm" c="dimmed">24 штуки суши + роллы + имбирь и васаби</Text>
                     <Group justify="space-between" align="center">
                       <Text size="xl" fw={700} c="orange">1290 ₽</Text>
-                      <Button color="blue" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button color="blue" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -381,7 +381,7 @@ export function FoodOrderSEOPage() {
                 size="xl" 
                 color="teal"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
                 style={{ fontSize: '18px' }}
               >
                 Посмотреть меню

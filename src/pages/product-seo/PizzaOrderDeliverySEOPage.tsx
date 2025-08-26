@@ -58,7 +58,7 @@ export function PizzaOrderDeliverySEOPage() {
                       size="xl" 
                       color="orange" 
                       leftSection={<IconShoppingCart size={24} />}
-                      onClick={() => navigate('/menu')}
+                      onClick={() => navigate('/')}
                       style={{ fontSize: '18px' }}
                     >
                       Заказать пиццу сейчас
@@ -104,7 +104,7 @@ export function PizzaOrderDeliverySEOPage() {
                     <Text size="sm" c="dimmed">Классическая итальянская пицца с томатным соусом, сыром "Моцарелла" и свежими помидорами</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">380 ₽</Text>
-                      <Button size="sm" color="orange" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -124,7 +124,7 @@ export function PizzaOrderDeliverySEOPage() {
                     <Text size="sm" c="dimmed">Острая пицца с пепперони, томатным соусом и сыром "Моцарелла"</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">450 ₽</Text>
-                      <Button size="sm" color="orange" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -144,7 +144,7 @@ export function PizzaOrderDeliverySEOPage() {
                     <Text size="sm" c="dimmed">Экзотическая пицца с ананасами, ветчиной и сыром "Моцарелла"</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">480 ₽</Text>
-                      <Button size="sm" color="orange" onClick={() => navigate('/menu')}>Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => navigate('/')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -285,7 +285,7 @@ export function PizzaOrderDeliverySEOPage() {
                 size="xl" 
                 color="orange"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/menu')}
+                onClick={() => navigate('/')}
                 style={{ fontSize: '18px' }}
               >
                 Перейти в меню
