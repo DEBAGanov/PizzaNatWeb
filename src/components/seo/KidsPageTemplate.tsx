@@ -50,7 +50,7 @@ import { KidsMenu } from './KidsMenu'
 
 interface KidsPageTemplateProps {
   keyword: string
-  page: string
+  city?: string
 }
 
 // Компонент галереи изображений
@@ -87,7 +87,7 @@ function ImageGallery({ images, onImageClick }: ImageGalleryProps) {
   )
 }
 
-export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, page }) => {
+export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, city = 'Волжск' }) => {
   const navigate = useNavigate()
   const meta = getKeywordMeta(keyword)
   const relatedKeywords = getRelatedKeywords(keyword)
@@ -133,7 +133,7 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, pag
   // Подготавливаем изображения с alt-текстами
   const keywordImages = allKidsImages.map((src, index) => ({
     src,
-    alt: `${keyword} в ДИМБО Пицца Волжск - фото ${index + 1}`
+    alt: `${keyword} в ДИМБО Пицца ${city} - фото ${index + 1}`
   }))
 
   const handleImageClick = (images: { src: string; alt: string }[], initialIndex: number) => {
@@ -200,9 +200,8 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, pag
   const seoData = {
     title: meta.title,
     description: meta.description,
-    keywords: [keyword, ...relatedKeywords, 'ДИМБО', 'пиццерия Волжск', 'детские мероприятия'],
-    imageUrl: meta.images[0],
-    page: page
+    keywords: [keyword, ...relatedKeywords, 'ДИМБО', `пиццерия ${city}`, 'детские мероприятия'],
+    imageUrl: meta.images[0]
   }
 
   return (
@@ -213,7 +212,7 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, pag
           <Card shadow="lg" radius="md" withBorder p="xl" bg="orange.0">
             <Stack gap="lg" ta="center">
               <Title order={1} size="h1" c="orange.7">
-                {meta.icon} {keyword.charAt(0).toUpperCase() + keyword.slice(1)} в ДИМБО Волжск
+                {meta.icon} {keyword.charAt(0).toUpperCase() + keyword.slice(1)} в ДИМБО {city}
               </Title>
               <Text size="xl" c="dark.6" maw={800}>
                 {meta.description}
@@ -438,8 +437,14 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, pag
                   </ThemeIcon>
                   <div>
                     <Text size="sm" c="dimmed">Адрес</Text>
-                    <Text size="sm">г. Волжск ул. Шестакова 1Б</Text>
-                    <Text size="sm">г. Волжск ул. Ленина 69</Text>
+                    {city === 'Волжск' ? (
+                      <>
+                        <Text size="sm">г. Волжск ул. Шестакова 1Б</Text>
+                        <Text size="sm">г. Волжск ул. Ленина 69</Text>
+                      </>
+                    ) : (
+                      <Text size="sm">г. {city} - доставка из Волжска</Text>
+                    )}
                   </div>
                 </Group>
 
