@@ -50,6 +50,7 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
     city: 'Волжск',
     address: 'ул. Шестакова, 1Б',
     phone: '+7(902)105-34-34',
+    phone2: '+7(906)138-28-68',
     workingHours: 'Ежедневно 11:00-20:00',
     rating: '4.8',
     reviewsCount: '127',
@@ -164,11 +165,16 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
             <IconPhone size={20} color="var(--mantine-color-green-6)" />
             <Box>
               <Text fw={500}>Телефон</Text>
-              <Anchor href={`tel:${localData.phone}`} size="sm">
-                {localData.phone}
-              </Anchor>
+              <Stack gap={2}>
+                <Anchor href={`tel:${localData.phone}`} size="sm">
+                  {localData.phone} - Пиццерия
+                </Anchor>
+                <Anchor href={`tel:${localData.phone2}`} size="sm">
+                  {localData.phone2} - Детская игровая (2 этаж)
+                </Anchor>
+              </Stack>
               <Text size="xs" c="dimmed">
-                
+                Прием заказов, бронирование
               </Text>
             </Box>
           </Group>

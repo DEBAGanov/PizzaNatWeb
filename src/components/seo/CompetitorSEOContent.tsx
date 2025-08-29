@@ -207,7 +207,7 @@ export function CompetitorComparisonSEO() {
         {/* SEO текст в конце */}
         <Paper p="md" radius="md" bg="gray.0">
           <Text size="sm" c="dimmed" ta="center">
-            <strong>ДИМБО Пицца в Волжске</strong> - ваша вкуснее всех альтернатива всем конкурентам на улице Ленина. 
+            <strong>ДИМБО Пицца в Волжске</strong> - наша пицца вкуснее на улице Ленина. 
             Мы превосходим Додо Пиццу по качеству, Pizza Time по цене, Pizza Express по скорости, 
             а Модерниссимо по вкусу. Закажите пиццу в ДИМБО и убедитесь сами!
           </Text>

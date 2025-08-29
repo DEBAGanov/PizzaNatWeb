@@ -449,9 +449,9 @@ export const TelegramAuthForm: React.FC<TelegramAuthFormProps> = ({ onBack, onSu
           >
             <Stack gap="xs">
               <Text size="sm">1. Нажмите кнопку "Открыть Telegram бот"</Text>
-              <Text size="sm">2. В открывшемся боте нажмите "Start" или отправьте /start</Text>
-              <Text size="sm">3. Поделитесь своим номером телефона с ботом</Text>
-              <Text size="sm">4. Дождитесь автоматического входа на сайт</Text>
+              {/* <Text size="sm">2. В открывшемся боте нажмите "Start" или отправьте /start</Text> */}
+              <Text size="sm">2. Поделитесь своим номером телефона с ботом</Text>
+              <Text size="sm">3. Дождитесь автоматического входа на сайт</Text>
             </Stack>
           </Alert>
         )}

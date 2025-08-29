@@ -257,9 +257,14 @@ export function HomePageSEOContent() {
                   <ThemeIcon size="sm" color="blue" variant="light">
                     <IconPhone size={14} />
                   </ThemeIcon>
-                  <Text size="sm">
-                    <strong>Телефон для заказов:</strong> +7 (902) 105-34-34
-                  </Text>
+                  <Stack gap={2}>
+                    <Text size="sm">
+                      <strong>Телефон для заказов:</strong> +7 (902) 105-34-34 - Пиццерия
+                    </Text>
+                    <Text size="sm">
+                      <strong>Детская игровая:</strong> +7 (906) 138-28-68 - детская игровая 2 этаж
+                    </Text>
+                  </Stack>
                 </Group>
                 
                 <Group>
