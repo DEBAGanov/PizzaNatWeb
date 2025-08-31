@@ -7,6 +7,7 @@
 
 import { Container, Title, Text, Stack, Paper, Divider, List, ThemeIcon, Box } from '@mantine/core'
 import { IconShield, IconLock, IconPhone, IconMail, IconBrandTelegram } from '@tabler/icons-react'
+import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 
 export default function PrivacyPolicyPage() {
   return (
@@ -354,6 +355,9 @@ export default function PrivacyPolicyPage() {
           </Paper>
         </Stack>
       </Paper>
+
+      {/* Виджет отзывов Яндекс Карт */}
+      <YandexReviewsWidget />
     </Container>
   )
 } 

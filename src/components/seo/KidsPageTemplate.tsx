@@ -47,6 +47,7 @@ import { useNavigate } from 'react-router-dom'
 import { SEOPageWrapper } from '../SEOHead'
 import { getKeywordMeta, getRelatedKeywords, getKeywordFAQ, shouldShowKidsMenuImproved } from '../../utils/kidsKeywords'
 import { KidsMenu } from './KidsMenu'
+import { YandexReviewsWidget } from '../common/YandexReviewsWidget'
 
 interface KidsPageTemplateProps {
   keyword: string
@@ -200,6 +201,7 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, cit
   const seoData = {
     title: meta.title,
     description: meta.description,
+    page: keyword.replace(/\s+/g, '-').toLowerCase(),
     keywords: [keyword, ...relatedKeywords, 'ДИМБО', `пиццерия ${city}`, 'детские мероприятия'],
     imageUrl: meta.images[0]
   }
@@ -503,6 +505,9 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, cit
             </Stack>
           </Paper>
         </Stack>
+
+        {/* Виджет отзывов Яндекс Карт */}
+        <YandexReviewsWidget title={`Отзывы о ${keyword} в ДИМБО ${city}`} />
       </Container>
 
       {/* Модальное окно-слайдер для просмотра изображений */}

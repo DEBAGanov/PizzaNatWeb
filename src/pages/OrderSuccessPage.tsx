@@ -27,6 +27,7 @@ import {
   IconHome
 } from '@tabler/icons-react'
 import { useAuth } from '../contexts/AuthContext'
+import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 import { productsApi } from '../services/productsApi'
 import type { Order } from '../types/products'
 
@@ -282,6 +283,9 @@ const OrderSuccessPage: React.FC = () => {
           На главную
         </Button>
       </Stack>
+
+      {/* Виджет отзывов Яндекс Карт */}
+      <YandexReviewsWidget />
     </Container>
   )
 }

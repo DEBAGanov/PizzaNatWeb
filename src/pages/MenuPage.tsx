@@ -25,6 +25,7 @@ import { useProducts } from '../contexts/ProductsContext'
 import { SEOPageWrapper } from '../components/SEOHead'
 import { useTelegramPage } from '../components/telegram/TelegramApp'
 import { CategoryImage } from '../components/common/OptimizedImage'
+import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 
 export function MenuPage() {
   const navigate = useNavigate()
@@ -139,6 +140,9 @@ export function MenuPage() {
               </Stack>
             </Card>
           )}
+
+          {/* Виджет отзывов Яндекс Карт */}
+          <YandexReviewsWidget />
         </Stack>
       </Container>
     </SEOPageWrapper>

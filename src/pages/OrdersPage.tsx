@@ -42,6 +42,7 @@ import {
   IconRefresh
 } from '@tabler/icons-react'
 import { useAuth } from '../contexts/AuthContext'
+import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 import { notifications } from '@mantine/notifications'
 import { getAuthToken } from '../services/api'
 
@@ -434,6 +435,9 @@ export function OrdersPage() {
           </Stack>
         )}
       </Stack>
+
+      {/* Виджет отзывов Яндекс Карт */}
+      <YandexReviewsWidget />
     </Container>
   )
 }

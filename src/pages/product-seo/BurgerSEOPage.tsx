@@ -12,6 +12,7 @@ import { SEOPageWrapper } from '../../components/SEOHead'
 import { ProductCardImage } from '../../components/common/OptimizedImage'
 import { RelatedProducts } from '../../components/seo/RelatedProducts'
 import { SchemaMarkup } from '../../components/seo/SchemaMarkup'
+import { YandexReviewsWidget } from '../../components/common/YandexReviewsWidget'
 
 export function BurgerSEOPage() {
   const navigate = useNavigate()
@@ -296,6 +297,9 @@ export function BurgerSEOPage() {
             </Text>
           </Box>
         </Stack>
+
+        {/* Виджет отзывов Яндекс Карт */}
+        <YandexReviewsWidget />
       </Container>
     </SEOPageWrapper>
   )

@@ -42,6 +42,7 @@ import {
   IconX
 } from '@tabler/icons-react'
 import { SEOPageWrapper } from '../components/SEOHead'
+import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 
 // Данные изображений для галерей
 const masterClassImages = [
@@ -564,6 +565,11 @@ export function DimboKidsPage() {
           </Box>
         )}
       </Modal>
+
+      {/* Виджет отзывов Яндекс Карт */}
+      <Container size="lg" mb="xl">
+        <YandexReviewsWidget />
+      </Container>
     </SEOPageWrapper>
   )
 }

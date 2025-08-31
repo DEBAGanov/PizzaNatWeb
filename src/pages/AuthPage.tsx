@@ -24,6 +24,7 @@ import { TelegramAuthForm } from '../components/auth/TelegramAuthForm'
 import { RegisterForm } from '../components/auth/RegisterForm'
 import { useAuth } from '../contexts/AuthContext'
 import { Navigate } from 'react-router-dom'
+import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 
 type AuthMethod = 'email' | 'sms' | 'telegram'
 type AuthMode = 'login' | 'register'
@@ -172,6 +173,9 @@ export const AuthPage: React.FC = () => {
             </Paper>
           </Center>
         </Stack>
+
+        {/* Виджет отзывов Яндекс Карт */}
+        <YandexReviewsWidget />
       </Center>
     </Container>
   )

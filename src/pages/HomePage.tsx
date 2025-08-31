@@ -31,6 +31,7 @@ import { AppInstallButtons } from '../components/AppInstallButtons'
 import { CategoryImage, ProductCardImage } from '../components/common/OptimizedImage'
 import { AllProductsLinks } from '../components/seo/RelatedProducts'
 import { LocalInfo } from '../components/seo/LocalInfo'
+import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 
 export function HomePage() {
   const navigate = useNavigate()
@@ -273,6 +274,9 @@ export function HomePage() {
 
           {/* Блок "О нас" */}
           <AboutUsSEOBlock />
+
+          {/* Виджет отзывов Яндекс Карт */}
+          <YandexReviewsWidget />
         </Stack>
       </Container>
     </SEOPageWrapper>

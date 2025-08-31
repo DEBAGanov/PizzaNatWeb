@@ -12,6 +12,7 @@ import { SEOPageWrapper } from '../../components/SEOHead'
 import { ProductCardImage } from '../../components/common/OptimizedImage'
 import { RelatedProducts } from '../../components/seo/RelatedProducts'
 import { SchemaMarkup, PIZZA_FAQ } from '../../components/seo/SchemaMarkup'
+import { YandexReviewsWidget } from '../../components/common/YandexReviewsWidget'
 
 export function PizzaSEOPage() {
   const navigate = useNavigate()
@@ -297,6 +298,9 @@ export function PizzaSEOPage() {
             </Text>
           </Box>
         </Stack>
+
+        {/* Виджет отзывов Яндекс Карт */}
+        <YandexReviewsWidget />
       </Container>
     </SEOPageWrapper>
   )

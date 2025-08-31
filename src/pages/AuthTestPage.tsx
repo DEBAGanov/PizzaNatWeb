@@ -21,6 +21,7 @@ import {
 } from '@mantine/core'
 import { IconInfoCircle, IconUser, IconLogout } from '@tabler/icons-react'
 import { LoginForm } from '../components/auth/LoginForm'
+import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 import { RegisterForm } from '../components/auth/RegisterForm'
 import { SmsAuthForm } from '../components/auth/SmsAuthForm'
 import { TelegramAuthForm } from '../components/auth/TelegramAuthForm'
@@ -131,6 +132,9 @@ export function AuthTestPage() {
             Для тестирования используйте реальные данные из PizzaNat backend
           </Text>
         </Paper>
+
+        {/* Виджет отзывов Яндекс Карт */}
+        <YandexReviewsWidget />
       </Stack>
     </Container>
   )

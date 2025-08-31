@@ -35,6 +35,7 @@ import {
   IconRefresh
 } from '@tabler/icons-react'
 import { useAuth } from '../contexts/AuthContext'
+import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 import { notifications } from '@mantine/notifications'
 import { productsApi } from '../services/productsApi'
 import type { Order } from '../types/products'
@@ -288,6 +289,9 @@ const ProfilePage: React.FC = () => {
           </Stack>
         </Paper>
       </Stack>
+
+      {/* Виджет отзывов Яндекс Карт */}
+      <YandexReviewsWidget />
     </Container>
   )
 }
