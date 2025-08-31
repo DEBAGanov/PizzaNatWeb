@@ -5,7 +5,7 @@
  * @created: 2025-01-27
  */
 
-import React from 'react'
+import React, { useState } from 'react'
 import { 
   Box, 
   Title, 
@@ -45,6 +45,8 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
   showDeliveryInfo = true,
   className 
 }) => {
+  const [showReviewsWidget, setShowReviewsWidget] = useState(false)
+  
   const localData = {
     name: 'ДИМБО Пицца',
     city: 'Волжск',
@@ -59,6 +61,60 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
     minOrder: '1000₽',
     deliveryFree: ''
   }
+
+  /**
+   * Компонент виджета отзывов Яндекс Карт
+   */
+  const YandexReviewsWidget = () => (
+    <Box 
+      mt="md"
+      style={{ 
+        width: '100%',
+        maxWidth: '560px',
+        height: '800px',
+        overflow: 'hidden',
+        position: 'relative',
+        margin: '0 auto'
+      }}
+    >
+      <iframe
+        style={{
+          width: '100%',
+          height: '100%',
+          border: '1px solid #e6e6e6',
+          borderRadius: '8px',
+          boxSizing: 'border-box'
+        }}
+        src="https://yandex.ru/maps-reviews-widget/188302222909?comments"
+        title="Отзывы ДИМБО Пицца на Яндекс Картах"
+        loading="lazy"
+      />
+      <Anchor
+        href="https://yandex.ru/maps/org/dimbo/188302222909/"
+        target="_blank"
+        style={{
+          boxSizing: 'border-box',
+          textDecoration: 'none',
+          color: '#b3b3b3',
+          fontSize: '10px',
+          fontFamily: 'YS Text, sans-serif',
+          padding: '0 16px',
+          position: 'absolute',
+          bottom: '8px',
+          width: '100%',
+          textAlign: 'center',
+          left: 0,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          display: 'block',
+          maxHeight: '14px',
+          whiteSpace: 'nowrap'
+        }}
+      >
+        Димбо на карте Волжска — Яндекс Карты
+      </Anchor>
+    </Box>
+  )
 
   if (variant === 'minimal') {
     return (
@@ -274,16 +330,20 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
                 size="sm"
                 color="orange"
                 onClick={() => {
-                  // Scroll to reviews section or open reviews modal
-                  const reviewsSection = document.getElementById('reviews-section')
-                  if (reviewsSection) {
-                    reviewsSection.scrollIntoView({ behavior: 'smooth' })
-                  }
+                  setShowReviewsWidget(!showReviewsWidget)
                 }}
               >
-                Читать отзывы
+                {showReviewsWidget ? 'Скрыть отзывы' : 'Читать отзывы'}
               </Button>
             </Group>
+
+            {/* Виджет отзывов Яндекс Карт */}
+            {showReviewsWidget && (
+              <>
+                <Divider />
+                <YandexReviewsWidget />
+              </>
+            )}
           </>
         )}
 
