@@ -40,7 +40,6 @@ import {
   IconAlertTriangle
 } from '@tabler/icons-react'
 import { useProducts } from '../contexts/ProductsContext'
-import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 import { SEOPageWrapper } from '../components/SEOHead'
 import { OrderButton } from '../components/telegram/TelegramButton'
 import { useTelegramPage } from '../components/telegram/TelegramApp'
@@ -385,9 +384,6 @@ export function CartPage() {
           </Stack>
         </SimpleGrid>
       </Stack>
-
-      {/* Виджет отзывов Яндекс Карт */}
-      <YandexReviewsWidget />
     </Container>
     </SEOPageWrapper>
   )

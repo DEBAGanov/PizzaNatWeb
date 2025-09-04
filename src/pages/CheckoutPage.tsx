@@ -46,7 +46,6 @@ import {
   IconBrandTelegram
 } from '@tabler/icons-react'
 import { useProducts } from '../contexts/ProductsContext'
-import { YandexReviewsWidget } from '../components/common/YandexReviewsWidget'
 import { useAuth } from '../contexts/AuthContext'
 import { notifications } from '@mantine/notifications'
 import { getAuthToken } from '../services/api'
@@ -765,9 +764,6 @@ export function CheckoutPage() {
           )}
         </SimpleGrid>
       </Stack>
-
-      {/* Виджет отзывов Яндекс Карт */}
-      <YandexReviewsWidget />
     </Container>
   )
 }
