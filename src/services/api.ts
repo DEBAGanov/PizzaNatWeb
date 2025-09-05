@@ -9,7 +9,7 @@ import axios from 'axios'
 import type { AxiosInstance, AxiosResponse } from 'axios'
 import type { ApiError } from '../types/api'
 import { getApiBaseUrl, API_CONFIG, logApiRequest, logApiResponse } from '../config/api'
-import { isPublicPage, isAuthPage } from '../utils/pageUtils'
+import { isPublicPage, isAuthPage, isSEOPage } from '../utils/pageUtils'
 
 // Создаем экземпляр axios
 const apiClient: AxiosInstance = axios.create({
@@ -85,15 +85,16 @@ apiClient.interceptors.response.use(
       localStorage.removeItem('pizzanat_tokens')
       localStorage.removeItem('pizzanat_user')
       
-      // НЕ ПЕРЕНАПРАВЛЯЕМ на авторизацию с публичных страниц (для SEO)
+      // НЕ ПЕРЕНАПРАВЛЯЕМ на авторизацию с публичных и SEO страниц
       const isPublic = isPublicPage()
       const isAuth = isAuthPage()
+      const isSEO = isSEOPage()
       
-      if (!isPublic && !isAuth) {
+      if (!isPublic && !isAuth && !isSEO) {
         console.log('🔄 Перенаправление на страницу авторизации')
         window.location.href = '/auth'
-      } else if (isPublic) {
-        console.log('🏠 Остаемся на публичной странице для SEO, ошибка авторизации игнорируется')
+      } else if (isPublic || isSEO) {
+        console.log('🏠 Остаемся на публичной/SEO странице, ошибка авторизации игнорируется')
       }
     }
 
