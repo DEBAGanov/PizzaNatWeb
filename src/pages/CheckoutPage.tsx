@@ -62,7 +62,7 @@ interface OrderData {
 
 export function CheckoutPage() {
   const navigate = useNavigate()
-  const { user } = useAuth()
+  // Не используем user data для автозаполнения полей (конфиденциальность)
   const { state: { cart, cartLoading }, loadCart } = useProducts()
 
   // Аналитика
@@ -82,7 +82,7 @@ export function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<'cash' | 'sbp'>('sbp')
 
   const [orderData, setOrderData] = useState<OrderData>({
-    contactName: user?.username || '', // Используем username вместо firstName
+    contactName: '', // Пользователь заполняет сам
     contactPhone: '', // Начинаем с пустого телефона для конфиденциальности
     deliveryAddress: '', // Начинаем с пустого адреса
     comment: ''
@@ -453,7 +453,7 @@ export function CheckoutPage() {
                     <Stack gap="md">
                       <TextInput
                         label="Адрес доставки"
-                        placeholder="г. Волжск, ул. Ленина, д. 1, кв. 10"
+                        placeholder="Ленина, д. 1, кв. 10"
                         value={orderData.deliveryAddress || ''}
                         onChange={handleAddressChange}
                         leftSection={<IconMapPin size={16} />}
