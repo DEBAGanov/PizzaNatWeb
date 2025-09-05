@@ -5,30 +5,25 @@
  * @created: 2025-01-24
  */
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Container,
   Stack,
   Title,
-  Card,
   Text,
   Group,
   Button,
   TextInput,
-  Autocomplete,
   Textarea,
   Radio,
   Stepper,
   Paper,
-  Badge,
   Alert,
   Loader,
   Center,
   Divider,
   ActionIcon,
-  Select,
-  ThemeIcon,
   SimpleGrid,
   Box
 } from '@mantine/core'
@@ -48,11 +43,10 @@ import {
 import { useProducts } from '../contexts/ProductsContext'
 import { useAuth } from '../contexts/AuthContext'
 import { notifications } from '@mantine/notifications'
-import { getAuthToken } from '../services/api'
 import { productsApi } from '../services/productsApi'
 import { useYandexMetrika } from '../components/analytics/YandexMetrika'
 import { cartItemsToEcommerce } from '../utils/ecommerceHelpers'
-import type { CartItem, AddressSuggestion, DeliveryEstimate as DeliveryEstimateType, CreateOrderRequest } from '../types/products'
+import type { CartItem, DeliveryEstimate as DeliveryEstimateType, CreateOrderRequest } from '../types/products'
 
 // Используем импортированный тип DeliveryEstimateType как DeliveryEstimate
 type DeliveryEstimate = DeliveryEstimateType
@@ -79,26 +73,18 @@ export function CheckoutPage() {
   const [loading, setLoading] = useState(false)
   const [deliveryEstimate, setDeliveryEstimate] = useState<DeliveryEstimate | null>(null)
   const [estimateLoading, setEstimateLoading] = useState(false)
-  const [addressSuggestions, setAddressSuggestions] = useState<AddressSuggestion[]>([])
-  const [addressLoading, setAddressLoading] = useState(false)
+  
+  // Ref для управления таймером расчета доставки
+  const deliveryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   
   // Данные формы
   const [deliveryType, setDeliveryType] = useState<'delivery' | 'pickup'>('delivery')
   const [paymentMethod, setPaymentMethod] = useState<'cash' | 'sbp'>('sbp')
-  // Загружаем сохраненный адрес пользователя
-  const getSavedAddress = () => {
-    try {
-      const savedAddress = localStorage.getItem(`user_address_${user?.id}`)
-      return savedAddress || ''
-    } catch {
-      return ''
-    }
-  }
 
   const [orderData, setOrderData] = useState<OrderData>({
-    contactName: user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : '',
-    contactPhone: user?.phone || '',
-    deliveryAddress: getSavedAddress(),
+    contactName: user?.username || '', // Используем username вместо firstName
+    contactPhone: '', // Начинаем с пустого телефона для конфиденциальности
+    deliveryAddress: '', // Начинаем с пустого адреса
     comment: ''
   })
 
@@ -114,14 +100,14 @@ export function CheckoutPage() {
     }
   }, [cart?.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Автоматический расчет доставки для сохраненного адреса
+  // Cleanup таймера при размонтировании компонента
   useEffect(() => {
-    const savedAddress = getSavedAddress()
-    if (savedAddress && cart && deliveryType === 'delivery') {
-      console.log('🏠 Найден сохраненный адрес, рассчитываем доставку:', savedAddress)
-      calculateDelivery(savedAddress)
+    return () => {
+      if (deliveryTimeoutRef.current) {
+        clearTimeout(deliveryTimeoutRef.current)
+      }
     }
-  }, [cart, deliveryType]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 
   // Расчет доставки
   const calculateDelivery = async (address: string) => {
@@ -140,57 +126,27 @@ export function CheckoutPage() {
     }
   }
 
-  // Получение подсказок адресов
-  const fetchAddressSuggestions = async (query: string) => {
-    if (!query.trim() || query.length < 3) {
-      setAddressSuggestions([])
-      return
-    }
 
-    setAddressLoading(true)
-    try {
-      const suggestions = await productsApi.getAddressSuggestions(query, 8)
-      
-      // Преобразуем ответ API в формат для Autocomplete
-      const formattedSuggestions: AddressSuggestion[] = Array.isArray(suggestions) 
-        ? suggestions.map((item: any) => {
-            const typeLabel = item.metadata === 'house' ? '🏠' : item.metadata === 'street' ? '🛣️' : '📍'
-            return {
-              value: item.shortAddress || item.address || String(item),
-              label: item.shortAddress || item.address || String(item),
-              district: `${typeLabel} ${item.metadata === 'house' ? 'дом' : item.metadata === 'street' ? 'улица' : 'место'}`,
-              city: item.city || 'Волжск',
-              fullAddress: item.address
-            }
-          })
-        : []
-      
-      setAddressSuggestions(formattedSuggestions)
-    } catch (error) {
-      console.error('Ошибка получения подсказок адресов:', error)
-      setAddressSuggestions([])
-    } finally {
-      setAddressLoading(false)
-    }
-  }
-
-  // Обработка изменения адреса
-  const handleAddressChange = (value: string) => {
+  // Обработка изменения адреса с реал-тайм расчетом доставки
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
     setOrderData(prev => ({ ...prev, deliveryAddress: value }))
     
-    // Получаем подсказки адресов
-    if (value.trim().length >= 3) {
-      const suggestionsTimeoutId = setTimeout(() => fetchAddressSuggestions(value), 300)
-      // Очищаем предыдущий таймер подсказок
-      return () => clearTimeout(suggestionsTimeoutId)
+    // Очищаем предыдущий таймер
+    if (deliveryTimeoutRef.current) {
+      clearTimeout(deliveryTimeoutRef.current)
     }
     
-    // Рассчитываем доставку с задержкой для полных адресов
-    if (value.trim().length > 10) {
-      const deliveryTimeoutId = setTimeout(() => calculateDelivery(value), 1000)
-      // Очищаем предыдущий таймер доставки
-      return () => clearTimeout(deliveryTimeoutId)
+    // Очищаем оценку доставки если адрес слишком короткий
+    if (value.trim().length < 5) {
+      setDeliveryEstimate(null)
+      return
     }
+    
+    // Рассчитываем доставку с короткой задержкой для лучшей производительности
+    deliveryTimeoutRef.current = setTimeout(() => {
+      calculateDelivery(value)
+    }, 800) // Короткая задержка для быстрого отклика
   }
 
   // Форматирование телефона
@@ -240,17 +196,6 @@ export function CheckoutPage() {
     return numbers.length === 11 && (numbers.startsWith('7') || numbers.startsWith('8'))
   }
 
-  // Сохранение адреса пользователя
-  const saveUserAddress = (address: string) => {
-    if (user?.id && address.trim()) {
-      try {
-        localStorage.setItem(`user_address_${user.id}`, address)
-        console.log('💾 Адрес сохранен:', address)
-      } catch (error) {
-        console.warn('Ошибка сохранения адреса:', error)
-      }
-    }
-  }
 
   // Обработчик изменения телефона
   const handlePhoneChange = (value: string) => {
@@ -258,19 +203,6 @@ export function CheckoutPage() {
     setOrderData(prev => ({ ...prev, contactPhone: formatted }))
   }
 
-  // Обработка выбора адреса из подсказок
-  const handleAddressSelect = (selectedAddress: string) => {
-    setOrderData(prev => ({ ...prev, deliveryAddress: selectedAddress }))
-    setAddressSuggestions([]) // Очищаем подсказки после выбора
-    
-    // Сохраняем выбранный адрес
-    saveUserAddress(selectedAddress)
-    
-    // Сразу рассчитываем доставку для выбранного адреса
-    if (selectedAddress.trim().length > 10) {
-      calculateDelivery(selectedAddress)
-    }
-  }
 
   // Преобразование телефона для API
   const getPhoneForApi = (formattedPhone: string) => {
@@ -509,7 +441,7 @@ export function CheckoutPage() {
                 <Stack gap="md">
                   <Radio.Group
                     value={deliveryType}
-                    onChange={(value: any) => setDeliveryType(value)}
+                    onChange={(value: 'delivery' | 'pickup') => setDeliveryType(value)}
                   >
                     <Group mt="xs">
                       <Radio value="delivery" label="Доставка курьером" />
@@ -519,28 +451,14 @@ export function CheckoutPage() {
 
                   {deliveryType === 'delivery' ? (
                     <Stack gap="md">
-                      <Autocomplete
+                      <TextInput
                         label="Адрес доставки"
                         placeholder="г. Волжск, ул. Ленина, д. 1, кв. 10"
-                        value={orderData.deliveryAddress}
+                        value={orderData.deliveryAddress || ''}
                         onChange={handleAddressChange}
-                        onOptionSubmit={handleAddressSelect}
-                        data={addressSuggestions.map(suggestion => ({
-                          value: suggestion.value,
-                          label: suggestion.district 
-                            ? `${suggestion.label} (${suggestion.district})`
-                            : suggestion.label
-                        }))}
                         leftSection={<IconMapPin size={16} />}
-                        rightSection={addressLoading ? <Loader size="xs" /> : null}
-                        comboboxProps={{ 
-                          shadow: 'md',
-                          position: 'bottom',
-                          middlewares: { flip: false, shift: false }
-                        }}
-                        limit={8}
-                        maxDropdownHeight={200}
                         required
+                        description="Введите полный адрес для расчета стоимости доставки"
                       />
                       
                       {estimateLoading && (
@@ -594,7 +512,7 @@ export function CheckoutPage() {
                         label="Имя"
                         placeholder="Введите ваше имя"
                         value={orderData.contactName}
-                        onChange={(e) => setOrderData(prev => ({ ...prev, contactName: e.target.value }))}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOrderData(prev => ({ ...prev, contactName: e.target.value }))}
                         leftSection={<IconUser size={16} />}
                         required
                       />
@@ -603,7 +521,7 @@ export function CheckoutPage() {
                         label="Телефон"
                         placeholder="+7 (900) 123-45-67"
                         value={orderData.contactPhone}
-                        onChange={(e) => handlePhoneChange(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlePhoneChange(e.target.value)}
                         leftSection={<IconPhone size={16} />}
                         error={orderData.contactPhone && !validatePhone(orderData.contactPhone) ? 'Неверный формат номера' : null}
                         required
@@ -613,7 +531,7 @@ export function CheckoutPage() {
                         label="Комментарий к заказу"
                         placeholder="Дополнительные пожелания (необязательно)"
                         value={orderData.comment}
-                        onChange={(e) => setOrderData(prev => ({ ...prev, comment: e.target.value }))}
+                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setOrderData(prev => ({ ...prev, comment: e.target.value }))}
                         minRows={3}
                       />
                     </Stack>
@@ -630,7 +548,7 @@ export function CheckoutPage() {
                 <Stack gap="md">
                   <Radio.Group
                     value={paymentMethod}
-                    onChange={(value: any) => setPaymentMethod(value)}
+                    onChange={(value: 'cash' | 'sbp') => setPaymentMethod(value)}
                   >
                     <Stack gap="sm">
                       <Radio 
