@@ -25,7 +25,8 @@ import {
   Divider,
   ActionIcon,
   SimpleGrid,
-  Box
+  Box,
+  Image
 } from '@mantine/core'
 import {
   IconArrowLeft,
@@ -38,7 +39,6 @@ import {
   IconInfoCircle,
   IconCheck,
   IconAlertTriangle,
-  IconBrandTelegram
 } from '@tabler/icons-react'
 import { useProducts } from '../contexts/ProductsContext'
 import { useAuth } from '../contexts/AuthContext'
@@ -79,7 +79,7 @@ export function CheckoutPage() {
   
   // Данные формы
   const [deliveryType, setDeliveryType] = useState<'delivery' | 'pickup'>('delivery')
-  const [paymentMethod, setPaymentMethod] = useState<'cash' | 'sbp'>('sbp')
+  const [paymentMethod, setPaymentMethod] = useState<'cash' | 'sbp'>('sbp') // По умолчанию СБП, наличные временно отключены
 
   const [orderData, setOrderData] = useState<OrderData>({
     contactName: '', // Пользователь заполняет сам
@@ -554,13 +554,20 @@ export function CheckoutPage() {
                       <Radio 
                         value="sbp" 
                         label={
-                          <Group gap="xs">
-                            <IconBrandTelegram size={16} />
-                            <Text>СБП (Система быстрых платежей)</Text>
+                          <Group gap="xs" align="center">
+                            <Image 
+                              src="/sbp-logo.png" 
+                              alt="СБП логотип" 
+                              h={24} 
+                              w="auto" 
+                              fit="contain"
+                            />
+                            <Text>Система быстрых платежей</Text>
                           </Group>
                         } 
                       />
-                      <Radio 
+                      {/* Временно отключено для тестирования только СБП */}
+                      {/* <Radio 
                         value="cash" 
                         label={
                           <Group gap="xs">
@@ -568,7 +575,7 @@ export function CheckoutPage() {
                             <Text>Наличными курьеру</Text>
                           </Group>
                         } 
-                      />
+                      /> */}
                     </Stack>
                   </Radio.Group>
 
