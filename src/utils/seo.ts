@@ -22,6 +22,7 @@ export const BASE_SEO = {
   defaultTitle: 'ДИМБО Пицца - Вкуснее всех в Волжске | Доставка 30-60 минут',
   defaultDescription: 'ДИМБО Пицца - вкуснее альтернатива Додо Пицца в Волжске! Свежие ингредиенты, итальянские рецепты, быстрая доставка. Дешевле конкурентов, вкуснее сетевых пиццерий.',
   baseUrl: 'https://dimbopizza.ru',
+  defaultOgImage: 'https://dimbopizza.ru/images/logo/dimbopizza1200x630.png',
   city: 'Волжск',
   region: 'Республика Марий Эл',
   phone: '+7 (906) 138-28-68',
@@ -192,60 +193,68 @@ export const LOCAL_KEYWORDS = [
 export const generatePageSeo = (page: string, data?: Partial<SeoData>): SeoData => {
   const baseKeywords = [...LOCAL_KEYWORDS]
   
+  const addBaseOpenGraph = (seoData: Partial<SeoData>): SeoData => ({
+    ...seoData,
+    ogImage: seoData.ogImage || data?.ogImage || BASE_SEO.defaultOgImage,
+    keywords: seoData.keywords || baseKeywords,
+    title: seoData.title || BASE_SEO.defaultTitle,
+    description: seoData.description || BASE_SEO.defaultDescription
+  } as SeoData)
+  
   switch (page) {
     case 'home':
-      return {
+      return addBaseOpenGraph({
         title: data?.title || BASE_SEO.defaultTitle,
         description: data?.description || BASE_SEO.defaultDescription,
         keywords: [...baseKeywords, 'главная', 'меню пиццы'],
         ogTitle: `${BASE_SEO.siteName} - Главная`,
         ogDescription: 'Вкуснее всех пицца в Волжске с доставкой на дом. Свежие ингредиенты, доступные цены, быстрая доставка.',
         canonical: BASE_SEO.baseUrl
-      }
+      })
       
     case 'menu':
-      return {
+      return addBaseOpenGraph({
         title: `Меню пиццы - ${BASE_SEO.siteName}`,
         description: 'Большой выбор вкусной пиццы в Волжске. Классические и авторские рецепты. Заказывайте онлайн с доставкой на дом.',
         keywords: [...baseKeywords, 'меню пиццы', 'виды пиццы', 'каталог'],
         ogTitle: 'Меню пиццы ДИМБО - Волжск',
         ogDescription: 'Посмотрите наше полное меню пиццы. Более 20 видов на любой вкус.',
         canonical: `${BASE_SEO.baseUrl}/menu`
-      }
+      })
       
     case 'cart':
-      return {
+      return addBaseOpenGraph({
         title: `Корзина - ${BASE_SEO.siteName}`,
         description: 'Оформите заказ пиццы в Волжске. Быстрое оформление, удобная оплата, доставка 30-60 минут.',
         keywords: [...baseKeywords, 'корзина', 'оформить заказ'],
         canonical: `${BASE_SEO.baseUrl}/cart`
-      }
+      })
       
     case 'checkout':
-      return {
+      return addBaseOpenGraph({
         title: `Оформление заказа - ${BASE_SEO.siteName}`,
         description: 'Завершите заказ пиццы в Волжске. Выберите адрес доставки и способ оплаты.',
         keywords: [...baseKeywords, 'оформление заказа', 'доставка'],
         canonical: `${BASE_SEO.baseUrl}/checkout`
-      }
+      })
       
     case 'kids':
-      return {
+      return addBaseOpenGraph({
         title: `ДИМБО детям - мастер-классы и дни рождения в пиццерии Волжск | ${BASE_SEO.siteName}`,
         description: 'Мастер-классы по приготовлению пиццы для детей от 4 лет в ДИМБО Пицца Волжск. Празднование дня рождения, игровые комнаты, раскраски и развивающие активности.',
         keywords: [...baseKeywords, 'мастер-класс пицца дети', 'день рождения пиццерия Волжск', 'ДИМБО дети', 'детские праздники Волжск', 'обучение готовке детей', 'игровая комната пиццерия'],
         ogTitle: 'ДИМБО детям - мастер-классы в пиццерии Волжск',
         ogDescription: 'Незабываемые мастер-классы и дни рождения для детей в ДИМБО Пицца. Обучение готовке, игры и развлечения.',
         canonical: `${BASE_SEO.baseUrl}/dimbokids`
-      }
+      })
       
     default:
-      return {
+      return addBaseOpenGraph({
         title: BASE_SEO.defaultTitle,
         description: BASE_SEO.defaultDescription,
         keywords: baseKeywords,
         canonical: BASE_SEO.baseUrl
-      }
+      })
   }
 }
 
@@ -261,6 +270,7 @@ export const generateCategorySeo = (categoryName: string, description?: string):
       `доставка ${categoryName.toLowerCase()}`
     ],
     ogTitle: `${categoryName} от ДИМБО Пицца`,
+    ogImage: BASE_SEO.defaultOgImage,
     canonical: `${BASE_SEO.baseUrl}/menu?category=${categoryName.toLowerCase()}`
   }
 }
@@ -278,7 +288,8 @@ export const generateProductSeo = (productName: string, price: number, descripti
       `${productName.toLowerCase()} Волжск`
     ],
     ogTitle: `${productName} - ${price}₽`,
-    ogDescription: `Попробуйте нашу ${productName.toLowerCase()} всего за ${price}₽. Заказ онлайн с доставкой по Волжску.`
+    ogDescription: `Попробуйте нашу ${productName.toLowerCase()} всего за ${price}₽. Заказ онлайн с доставкой по Волжску.`,
+    ogImage: BASE_SEO.defaultOgImage
   }
 }
 
@@ -400,6 +411,19 @@ export const setPageMeta = (seoData: SeoData) => {
     if (ogDescMeta) {
       ogDescMeta.setAttribute('content', seoData.ogDescription)
     }
+  }
+  
+  if (seoData.ogImage) {
+    const ogImageMeta = document.querySelector('meta[property="og:image"]')
+    if (ogImageMeta) {
+      ogImageMeta.setAttribute('content', seoData.ogImage)
+    }
+  }
+  
+  // Обновляем og:url для текущей страницы
+  const ogUrlMeta = document.querySelector('meta[property="og:url"]')
+  if (ogUrlMeta) {
+    ogUrlMeta.setAttribute('content', window.location.href)
   }
   
   // Canonical
