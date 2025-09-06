@@ -353,7 +353,7 @@ export function Volzhsk24SEOPage() {
                 <Card shadow="sm" radius="md" withBorder p="md" h="100%">
                   <Stack gap="sm">
                     <Badge color="blue" size="sm">Волжск Онлайн</Badge>
-                    <Title order={4}>"Лучшая пиццерия города"</Title>
+                    <Title order={4}>"Вкуснейшая пиццерия города"</Title>
                     <Text size="sm" c="dimmed">
                       Статья о том, почему жители Волжска выбирают ДИМБО Пицца вместо 
                       сетевых конкурентов.

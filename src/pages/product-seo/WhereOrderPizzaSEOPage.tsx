@@ -272,7 +272,7 @@ export function WhereOrderPizzaSEOPage() {
               <Grid.Col span={{ base: 12, md: 6 }}>
                 <ProductCardImage
                   src="https://api.dimbopizza.ru/images/dimbo-advantages.jpg"
-                  alt="Преимущества ДИМБО Пицца - лучшая пиццерия Волжска"
+                  alt="Преимущества ДИМБО Пицца - вкуснейшая пиццерия Волжска"
                 />
               </Grid.Col>
             </Grid>
@@ -286,7 +286,7 @@ export function WhereOrderPizzaSEOPage() {
                 <Accordion.Control>Какая пиццерия лучшая в Волжске?</Accordion.Control>
                 <Accordion.Panel>
                   <Text>
-                    По отзывам клиентов и рейтингам, ДИМБО Пицца признана лучшей пиццерией Волжска в 2024 году. 
+                    По отзывам клиентов и рейтингам, ДИМБО Пицца признана вкуснейшей пиццерией Волжска в 2024 году. 
                     Мы лидируем по качеству, скорости доставки и соотношению цена/качество.
                   </Text>
                 </Accordion.Panel>
