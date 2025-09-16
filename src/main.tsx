@@ -22,6 +22,7 @@ import '@mantine/notifications/styles.css'
 
 // Импорт кастомных стилей
 import './styles/images.css'
+import './styles/mobile.css'
 
 // Создаем клиент для React Query
 const queryClient = new QueryClient({

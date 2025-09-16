@@ -1,0 +1,304 @@
+/**
+ * @file: mobile.css
+ * @description: Мобильные стили для адаптивности компонентов
+ * @created: 2025-01-24
+ */
+
+/* Базовые Flexbox утилиты для мобильной адаптивности */
+.mobile-flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.mobile-flex-item {
+  flex: 1 1 calc(50% - 4px);
+  min-width: 140px;
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Адаптивные медиа-запросы для различных размеров экранов */
+
+/* Очень маленькие экраны (до 320px) */
+@media (max-width: 320px) {
+  .mobile-bottom-nav {
+    padding: 4px 2px !important;
+  }
+  
+  .mobile-bottom-nav-item {
+    padding: 4px 2px !important;
+    min-width: 60px;
+  }
+  
+  .mobile-bottom-nav-text {
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+  }
+  
+  .mobile-bottom-nav-icon {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  .mobile-flex-item {
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-bottom: 8px;
+  }
+}
+
+/* Маленькие экраны (321px - 480px) */
+@media (max-width: 480px) {
+  .mobile-bottom-nav {
+    padding: 6px 4px !important;
+  }
+  
+  .mobile-bottom-nav-item {
+    padding: 6px 3px !important;
+    min-width: 70px;
+  }
+  
+  .mobile-bottom-nav-text {
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+  }
+  
+  .mobile-bottom-nav-icon {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  
+  .mobile-delivery-blocks {
+    gap: 8px;
+  }
+  
+  .mobile-delivery-block {
+    padding: 8px !important;
+    min-height: 120px;
+  }
+  
+  .mobile-delivery-block-title {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+  }
+  
+  .mobile-delivery-block-text {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Средние экраны (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .mobile-flex-item {
+    flex: 1 1 calc(50% - 8px);
+  }
+  
+  .mobile-delivery-blocks {
+    gap: 12px;
+  }
+}
+
+/* Большие экраны (769px и выше) */
+@media (min-width: 769px) {
+  .mobile-flex-item {
+    flex: 1 1 calc(25% - 12px);
+    max-width: 250px;
+  }
+  
+  .mobile-delivery-blocks {
+    gap: 16px;
+  }
+}
+
+/* Улучшенная типографика для мобильных устройств */
+@media (max-width: 480px) {
+  /* Компактные заголовки */
+  .mobile-title-large {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .mobile-title-medium {
+    font-size: 1.2rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 6px !important;
+  }
+  
+  .mobile-title-small {
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 4px !important;
+  }
+  
+  /* Компактный текст */
+  .mobile-text-body {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+  }
+  
+  .mobile-text-small {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+  
+  .mobile-text-tiny {
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+  }
+}
+
+/* Optimized touch targets для мобильных устройств */
+@media (max-width: 768px) {
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mobile-button {
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    min-height: 44px;
+  }
+  
+  .mobile-button-small {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    min-height: 36px;
+  }
+}
+
+/* Flexbox утилиты для различных сценариев */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+/* Адаптивные отступы */
+.mobile-padding-xs {
+  padding: 4px;
+}
+
+.mobile-padding-sm {
+  padding: 8px;
+}
+
+.mobile-padding-md {
+  padding: 12px;
+}
+
+.mobile-margin-xs {
+  margin: 4px;
+}
+
+.mobile-margin-sm {
+  margin: 8px;
+}
+
+.mobile-margin-md {
+  margin: 12px;
+}
+
+/* Скрытие элементов на мобильных устройствах */
+@media (max-width: 480px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 481px) {
+  .show-mobile-only {
+    display: none !important;
+  }
+}
+
+/* Оптимизация для экранов с высокой плотностью пикселей */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .mobile-icon {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* Улучшения для экранов в альбомной ориентации на мобильных */
+@media (max-width: 768px) and (orientation: landscape) {
+  .mobile-bottom-nav {
+    padding: 4px 6px !important;
+  }
+  
+  .mobile-bottom-nav-item {
+    padding: 4px 6px !important;
+  }
+  
+  .mobile-bottom-nav-text {
+    font-size: 9px !important;
+  }
+}
+
+/* Accessibility improvements for mobile */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-animation {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .mobile-bottom-nav {
+    border-top: 2px solid !important;
+  }
+  
+  .mobile-delivery-block {
+    border: 2px solid !important;
+  }
+}

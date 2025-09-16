@@ -5,6 +5,7 @@
  * @created: 2025-01-27
  */
 
+import React from 'react'
 import { Card, Title, SimpleGrid, Button, Group, Text, Badge } from '@mantine/core'
 import { IconPizza, IconFish, IconGrill, IconBurger, IconMeat, IconCarrot } from '@tabler/icons-react'
 import { Link } from 'react-router-dom'
@@ -152,10 +153,10 @@ export function RelatedProducts({ currentProduct, variant = 'full' }: RelatedPro
               transition: 'transform 0.2s ease',
               cursor: 'pointer'
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
               e.currentTarget.style.transform = 'translateY(-2px)'
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
               e.currentTarget.style.transform = 'translateY(0)'
             }}
           >
@@ -246,60 +247,88 @@ export function AllProductsLinks() {
   ]
 
   return (
-    <Card shadow="sm" radius="md" withBorder p="xl" bg="blue.0">
-      <Title order={2} c="dark" mb="md" ta="center">
+    <Card shadow="sm" radius="md" withBorder p={{ base: 'md', sm: 'xl' }} bg="blue.0">
+      <Title order={2} c="dark" mb="md" ta="center" size={{ base: 'h3', sm: 'h2' }}>
         Доставка еды в Волжске
       </Title>
-      <Text size="lg" c="dimmed" ta="center" mb="xl">
+      <Text size={{ base: 'md', sm: 'lg' }} c="dimmed" ta="center" mb="xl">
         Заказать с доставкой на дом за 30-60 минут
       </Text>
       
-      <SimpleGrid cols={{ base: 2, md: 4 }} spacing="lg">
+      {/* Flexbox контейнер для адаптивного отображения */}
+      <div className="mobile-flex-container mobile-delivery-blocks">
         {allProducts.map((product) => (
           <Card
             key={product.id}
             shadow="xs"
             radius="md"
             withBorder
-            p="lg"
+            p={{ base: 'sm', sm: 'md' }}
             component={Link}
             to={product.url}
             bg="white"
+            className="mobile-flex-item mobile-delivery-block"
             style={{ 
               textDecoration: 'none',
               transition: 'all 0.2s ease',
               cursor: 'pointer'
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-4px)'
-              e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,0,0,0.15)'
+            onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
+              if (window.innerWidth > 768) {
+                e.currentTarget.style.transform = 'translateY(-4px)'
+                e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,0,0,0.15)'
+              }
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
               e.currentTarget.style.transform = 'translateY(0)'
               e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)'
             }}
           >
-            <Group justify="center" mb="md">
-              <div style={{ 
+            <div className="flex-column-center" style={{ height: '100%', gap: '8px' }}>
+              <div className="flex-center" style={{ 
                 color: `var(--mantine-color-${product.color}-6)`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                marginBottom: '8px'
               }}>
-                {product.icon}
+                {React.isValidElement(product.icon) 
+                  ? React.cloneElement(product.icon as React.ReactElement<any>, { 
+                      size: window.innerWidth < 480 ? 24 : 32 
+                    })
+                  : product.icon
+                }
               </div>
-            </Group>
-            
-            <Title order={4} ta="center" c={`${product.color}.7`} mb="xs">
-              {product.title}
-            </Title>
-            
-            <Text size="sm" ta="center" c="dimmed">
-              {product.description}
-            </Text>
+              
+              <Title 
+                order={4} 
+                ta="center" 
+                c={`${product.color}.7`} 
+                mb="xs"
+                size={{ base: 'sm', sm: 'md' }}
+                className="mobile-delivery-block-title"
+                style={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  maxWidth: '100%'
+                }}
+              >
+                {product.title}
+              </Title>
+              
+              <Text 
+                size={{ base: 'xs', sm: 'sm' }} 
+                ta="center" 
+                c="dimmed"
+                className="mobile-delivery-block-text"
+              >
+                {window.innerWidth < 480 ? 
+                  product.description.replace('Доставка ', '') : 
+                  product.description
+                }
+              </Text>
+            </div>
           </Card>
         ))}
-      </SimpleGrid>
+      </div>
     </Card>
   )
 }

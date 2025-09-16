@@ -12,7 +12,6 @@ import {
   Group,
   UnstyledButton,
   Text,
-  Stack,
   ActionIcon,
   Badge,
   Paper,
@@ -161,54 +160,71 @@ export const TelegramBottomNav: React.FC = () => {
       }}
       p="xs"
     >
-      <Container size="lg">
-        <Group justify="space-around" align="center">
+      <Container size="lg" px="xs" className="mobile-bottom-nav">
+        <div className="flex-between flex-nowrap" style={{
+          gap: '4px',
+          minHeight: '60px'
+        }}>
           {navItems.map((item) => (
             <UnstyledButton
               key={item.path}
               onClick={() => handleNavigation(item.path, item.disabled)}
+              className="mobile-bottom-nav-item mobile-touch-target"
               style={{
-                padding: '8px 12px',
+                flex: '1 1 0',
+                minWidth: '0',
+                padding: '6px 4px',
                 borderRadius: '12px',
                 backgroundColor: item.active ? 'var(--mantine-color-orange-0)' : 'transparent',
                 opacity: item.disabled ? 0.5 : 1,
                 cursor: item.disabled ? 'not-allowed' : 'pointer'
               }}
             >
-              <Stack gap="xs" align="center">
-                <div style={{ position: 'relative' }}>
-                  <item.icon
-                    size={20}
-                    color={item.active ? 'var(--mantine-color-orange-7)' : 'var(--mantine-color-gray-6)'}
-                  />
-                  {item.badge && item.badge > 0 && (
-                    <Badge
-                      size="xs"
-                      color="red"
-                      style={{
-                        position: 'absolute',
-                        top: -8,
-                        right: -8,
-                        minWidth: 16,
-                        height: 16,
-                        padding: 0
-                      }}
-                    >
-                      {item.badge > 99 ? '99+' : item.badge}
-                    </Badge>
-                  )}
-                </div>
-                <Text
-                  size="xs"
-                  fw={item.active ? 600 : 400}
-                  c={item.active ? 'orange.7' : 'gray.6'}
-                >
-                  {item.label}
-                </Text>
-              </Stack>
+              <div className="flex-center" style={{ 
+                position: 'relative',
+                marginBottom: '4px'
+              }}>
+                <item.icon
+                  className="mobile-bottom-nav-icon"
+                  size={18}
+                  color={item.active ? 'var(--mantine-color-orange-7)' : 'var(--mantine-color-gray-6)'}
+                />
+                {item.badge && item.badge > 0 && (
+                  <Badge
+                    size="xs"
+                    color="red"
+                    style={{
+                      position: 'absolute',
+                      top: -8,
+                      right: -8,
+                      minWidth: 14,
+                      height: 14,
+                      padding: 0,
+                      fontSize: '9px'
+                    }}
+                  >
+                    {item.badge > 99 ? '99+' : item.badge}
+                  </Badge>
+                )}
+              </div>
+              <Text
+                className="mobile-bottom-nav-text"
+                size="10px"
+                fw={item.active ? 600 : 400}
+                c={item.active ? 'orange.7' : 'gray.6'}
+                style={{
+                  textAlign: 'center',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  maxWidth: '100%'
+                }}
+              >
+                {item.label}
+              </Text>
             </UnstyledButton>
           ))}
-        </Group>
+        </div>
       </Container>
     </Paper>
   )
