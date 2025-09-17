@@ -31,7 +31,6 @@ import {
 import {
   IconArrowLeft,
   IconCreditCard,
-  IconCash,
   IconTruck,
   IconMapPin,
   IconPhone,
@@ -41,10 +40,10 @@ import {
   IconAlertTriangle,
 } from '@tabler/icons-react'
 import { useProducts } from '../contexts/ProductsContext'
-import { useAuth } from '../contexts/AuthContext'
 import { notifications } from '@mantine/notifications'
 import { productsApi } from '../services/productsApi'
 import { useYandexMetrika } from '../components/analytics/YandexMetrika'
+import { useVKPixel, cartItemsToVKEcommerce } from '../components/analytics/VKPixel'
 import { cartItemsToEcommerce } from '../utils/ecommerceHelpers'
 import type { CartItem, DeliveryEstimate as DeliveryEstimateType, CreateOrderRequest } from '../types/products'
 
@@ -67,7 +66,14 @@ export function CheckoutPage() {
 
   // Аналитика
   const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '103585127'
+  const VK_PIXEL_ID = import.meta.env.VITE_VK_PIXEL_ID || '3695469'
+  
   const { trackCheckoutStart, trackPurchase, trackPaymentMethod } = useYandexMetrika(YANDEX_METRIKA_ID)
+  const { 
+    trackCheckoutStart: trackVKCheckoutStart, 
+    trackPurchase: trackVKPurchase, 
+    trackPaymentMethodSelected: trackVKPaymentMethod 
+  } = useVKPixel(VK_PIXEL_ID)
   
   const [activeStep, setActiveStep] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -97,6 +103,10 @@ export function CheckoutPage() {
     if (cart && cart.items.length > 0) {
       const ecommerceProducts = cartItemsToEcommerce(cart.items, { list: "Оформление заказа" })
       trackCheckoutStart(ecommerceProducts, 1)
+      
+      // VK Пиксель - отслеживание начала оформления заказа
+      const vkProducts = cartItemsToVKEcommerce(cart.items)
+      trackVKCheckoutStart(vkProducts)
     }
   }, [cart?.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -253,6 +263,9 @@ export function CheckoutPage() {
     // Отслеживаем выбор метода оплаты
     trackPaymentMethod(paymentMethod)
     
+    // VK Пиксель - отслеживание выбора способа оплаты
+    trackVKPaymentMethod(paymentMethod)
+    
     setLoading(true)
     try {
       const requestData = deliveryType === 'delivery' 
@@ -284,6 +297,10 @@ export function CheckoutPage() {
         shipping: deliveryCost,
         affiliation: "ДИМБО Пицца - Доставка пиццы"
       })
+      
+      // VK Пиксель - отслеживание завершения покупки
+      const vkProducts = cartItemsToVKEcommerce(cart.items)
+      trackVKPurchase(vkProducts, order.id.toString())
         
       if (paymentMethod === 'cash') {
         // Наличный заказ - сразу перенаправляем на страницу успеха

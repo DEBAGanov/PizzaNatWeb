@@ -9,6 +9,7 @@ import { createContext, useContext, useReducer, useEffect, useCallback, type Rea
 import { notifications } from '@mantine/notifications'
 import { productsApi } from '../services/productsApi'
 import { useYandexMetrika } from '../components/analytics/YandexMetrika'
+import { useVKPixel, cartItemToVKEcommerce } from '../components/analytics/VKPixel'
 import { cartItemToEcommerce, cartItemsToEcommerce } from '../utils/ecommerceHelpers'
 import type {
   Category,
@@ -257,7 +258,10 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
 
   // Аналитика
   const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '103585127'
+  const VK_PIXEL_ID = import.meta.env.VITE_VK_PIXEL_ID || '3695469'
+  
   const { trackRemoveFromCart } = useYandexMetrika(YANDEX_METRIKA_ID)
+  const { trackRemoveFromCart: trackVKRemoveFromCart } = useVKPixel(VK_PIXEL_ID)
 
   // Загрузка категорий
   const loadCategories = useCallback(async () => {
@@ -545,6 +549,10 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
     if (cartItem) {
       const ecommerceProduct = cartItemToEcommerce(cartItem, { list: "Корзина" })
       trackRemoveFromCart(ecommerceProduct)
+      
+      // VK Пиксель - отслеживание удаления из корзины
+      const vkProduct = cartItemToVKEcommerce(cartItem)
+      trackVKRemoveFromCart(vkProduct)
     }
     
     try {

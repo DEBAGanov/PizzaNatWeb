@@ -36,6 +36,7 @@ services:
       
       # Analytics
       - VITE_YANDEX_METRIKA_ID=${VITE_YANDEX_METRIKA_ID}
+      - VITE_VK_PIXEL_ID=${VITE_VK_PIXEL_ID}
       - VITE_GOOGLE_ANALYTICS_ID=${VITE_GOOGLE_ANALYTICS_ID}
       
       # Telegram Web App

@@ -15,7 +15,6 @@ import {
   Card,
   Badge,
   Button,
-  Image,
   Text,
   Group,
   Center,
@@ -28,10 +27,8 @@ import {
   Anchor
 } from '@mantine/core'
 import {
-  IconPizza,
   IconHeart,
   IconHeartFilled,
-  IconShoppingCart,
   IconArrowLeft,
   IconInfoCircle,
   IconAlertTriangle
@@ -44,6 +41,7 @@ import { AddToCartButton } from '../components/telegram/TelegramButton'
 import { useTelegramPage } from '../components/telegram/TelegramApp'
 import { ProductDetailImage } from '../components/common/OptimizedImage'
 import { useYandexMetrika } from '../components/analytics/YandexMetrika'
+import { useVKPixel, productToVKEcommerce } from '../components/analytics/VKPixel'
 import { productToEcommerce, getListForTracking } from '../utils/ecommerceHelpers'
 import type { Product } from '../types/products'
 
@@ -64,7 +62,13 @@ export function ProductPage() {
 
   // Аналитика
   const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '103585127'
+  const VK_PIXEL_ID = import.meta.env.VITE_VK_PIXEL_ID || '3695469'
+  
   const { trackProductView, trackAddToCart } = useYandexMetrika(YANDEX_METRIKA_ID)
+  const { 
+    trackProductView: trackVKProductView, 
+    trackAddToCart: trackVKAddToCart 
+  } = useVKPixel(VK_PIXEL_ID)
 
   // Telegram интеграция
   useTelegramPage({
@@ -94,6 +98,10 @@ export function ProductPage() {
         })
         trackProductView(ecommerceProduct)
         
+        // VK Пиксель - отслеживание просмотра товара
+        const vkProduct = productToVKEcommerce(productData)
+        trackVKProductView(vkProduct)
+        
       } catch (err: any) {
         console.error('Ошибка загрузки продукта:', err)
         setError('Не удалось загрузить информацию о продукте')
@@ -116,6 +124,10 @@ export function ProductPage() {
         list: getListForTracking(window.location.pathname)
       })
       trackAddToCart(ecommerceProduct)
+      
+      // VK Пиксель - отслеживание добавления в корзину
+      const vkProduct = productToVKEcommerce(product, { quantity })
+      trackVKAddToCart(vkProduct)
       
       await addToCart({
         productId: product.id,

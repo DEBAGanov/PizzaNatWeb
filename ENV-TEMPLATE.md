@@ -50,6 +50,18 @@ VITE_TELEGRAM_ENABLED=true
 VITE_YANDEX_MAPS_API_KEY=your_real_yandex_maps_api_key
 ```
 
+### 📊 **Analytics Configuration**
+```bash
+# Яндекс.Метрика ID для веб-аналитики
+VITE_YANDEX_METRIKA_ID=103585127
+
+# VK Пиксель (Top.Mail.Ru) для ретаргетинга в VK Ads
+VITE_VK_PIXEL_ID=3695469
+
+# Google Analytics ID (опционально)
+VITE_GOOGLE_ANALYTICS_ID=your_google_analytics_id
+```
+
 ---
 
 ## 🗺️ **ЗОНАЛЬНАЯ ДОСТАВКА (работает отлично!)**

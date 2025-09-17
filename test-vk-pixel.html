@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест VK Пикселя - ДИМБО Пицца</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .status {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeb3b;
+            color: #f57c00;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .error {
+            background: #ffebee;
+            border: 1px solid #f44336;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .test-section {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .test-header {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+        
+        .test-content {
+            padding: 15px;
+        }
+        
+        .test-button {
+            background: #ff8c00;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        
+        .test-button:hover {
+            background: #e67c00;
+        }
+        
+        .log-container {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 2px 0;
+        }
+        
+        .log-vk {
+            color: #1976d2;
+        }
+        
+        .log-error {
+            color: #d32f2f;
+        }
+        
+        .log-success {
+            color: #388e3c;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1976d2;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- VK Pixel (Top.Mail.Ru counter) -->
+    <script type="text/javascript">
+    var _tmr = window._tmr || (window._tmr = []);
+    _tmr.push({id: "3695469", type: "pageView", start: (new Date()).getTime()});
+    (function (d, w, id) {
+      if (d.getElementById(id)) return;
+      var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+      ts.src = "https://top-fwz1.mail.ru/js/code.js";
+      var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+      if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+    })(document, window, "tmr-code");
+    </script>
+    <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3695469;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+    <!-- /VK Pixel -->
+
+    <div class="test-container">
+        <h1>🎯 Тест VK Пикселя (Top.Mail.Ru) - ДИМБО Пицца</h1>
+        
+        <div class="status">
+            ✅ <strong>VK Пиксель инициализирован</strong><br>
+            ID: 3695469 | Источник: Top.Mail.Ru<br>
+            Статус скрипта: <span id="script-status">Проверяется...</span>
+        </div>
+
+        <div class="warning">
+            ⚠️ <strong>Внимание:</strong> Это тестовая страница для проверки интеграции VK пикселя с электронной коммерцией.
+            События отправляются в реальный VK пиксель для отладки.
+        </div>
+
+        <!-- Статистика событий -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="view-count">0</div>
+                <div class="stat-label">Просмотры товаров</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="cart-count">0</div>
+                <div class="stat-label">Добавления в корзину</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="checkout-count">0</div>
+                <div class="stat-label">Начало оформления</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="purchase-count">0</div>
+                <div class="stat-label">Покупки</div>
+            </div>
+        </div>
+
+        <!-- Тест 1: Просмотр товара -->
+        <div class="test-section">
+            <div class="test-header">
+                1. 👁️ Тест события "Просмотр товара" (view_item)
+            </div>
+            <div class="test-content">
+                <p>Тестирует отправку события просмотра карточки товара в VK пиксель</p>
+                <button class="test-button" onclick="testProductView()">
+                    Просмотреть Пиццу Маргарита
+                </button>
+                <button class="test-button" onclick="testProductView('burger')">
+                    Просмотреть Чизбургер
+                </button>
+                <button class="test-button" onclick="testProductView('sushi')">
+                    Просмотреть Суши сет
+                </button>
+            </div>
+        </div>
+
+        <!-- Тест 2: Добавление в корзину -->
+        <div class="test-section">
+            <div class="test-header">
+                2. ➕ Тест события "Добавление в корзину" (add_to_cart)
+            </div>
+            <div class="test-content">
+                <p>Тестирует отправку события добавления товара в корзину</p>
+                <button class="test-button" onclick="testAddToCart()">
+                    Добавить пиццу в корзину
+                </button>
+                <button class="test-button" onclick="testAddToCart('multiple')">
+                    Добавить несколько товаров
+                </button>
+            </div>
+        </div>
+
+        <!-- Тест 3: Удаление из корзины -->
+        <div class="test-section">
+            <div class="test-header">
+                3. ➖ Тест события "Удаление из корзины" (remove_from_cart)
+            </div>
+            <div class="test-content">
+                <p>Тестирует отправку события удаления товара из корзины</p>
+                <button class="test-button" onclick="testRemoveFromCart()">
+                    Удалить из корзины
+                </button>
+            </div>
+        </div>
+
+        <!-- Тест 4: Начало оформления -->
+        <div class="test-section">
+            <div class="test-header">
+                4. 🏁 Тест события "Начало оформления" (initiate_checkout)
+            </div>
+            <div class="test-content">
+                <p>Тестирует отправку события начала оформления заказа</p>
+                <button class="test-button" onclick="testCheckoutStart()">
+                    Начать оформление заказа
+                </button>
+            </div>
+        </div>
+
+        <!-- Тест 5: Покупка -->
+        <div class="test-section">
+            <div class="test-header">
+                5. 💳 Тест события "Покупка" (purchase)
+            </div>
+            <div class="test-content">
+                <p>Тестирует отправку события завершения покупки</p>
+                <button class="test-button" onclick="testPurchase()">
+                    Завершить покупку
+                </button>
+                <button class="test-button" onclick="testPurchase('large')">
+                    Крупная покупка
+                </button>
+            </div>
+        </div>
+
+        <!-- Тест 6: Дополнительные события -->
+        <div class="test-section">
+            <div class="test-header">
+                6. 🎯 Дополнительные события
+            </div>
+            <div class="test-content">
+                <p>Тестирует специализированные события для пиццерии</p>
+                <button class="test-button" onclick="testPaymentMethod('sbp')">
+                    Выбрать СБП
+                </button>
+                <button class="test-button" onclick="testPaymentMethod('cash')">
+                    Выбрать наличные
+                </button>
+                <button class="test-button" onclick="testSearch()">
+                    Поиск товаров
+                </button>
+            </div>
+        </div>
+
+        <!-- Лог событий -->
+        <div class="test-section">
+            <div class="test-header">
+                📋 Лог отправленных событий VK
+            </div>
+            <div class="test-content">
+                <button class="test-button" onclick="clearLog()">Очистить лог</button>
+                <button class="test-button" onclick="showVKEvents()">Показать _tmr события</button>
+                <div class="log-container" id="log-container">
+                    <div class="log-entry log-success">Готов к тестированию VK пикселя...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Счетчики событий
+        let eventCounts = {
+            view: 0,
+            cart: 0,
+            checkout: 0,
+            purchase: 0
+        };
+
+        // Вспомогательные функции
+        function log(message, type = 'info') {
+            const container = document.getElementById('log-container');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            container.appendChild(entry);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function updateStats() {
+            document.getElementById('view-count').textContent = eventCounts.view;
+            document.getElementById('cart-count').textContent = eventCounts.cart;
+            document.getElementById('checkout-count').textContent = eventCounts.checkout;
+            document.getElementById('purchase-count').textContent = eventCounts.purchase;
+        }
+
+        function sendVKEvent(goal, params = {}) {
+            if (typeof window._tmr !== 'undefined') {
+                window._tmr.push({
+                    type: "reachGoal",
+                    id: "3695469",
+                    goal: goal,
+                    params: params
+                });
+                log(`✅ VK событие отправлено: ${goal}`, 'vk');
+                log(`📊 Параметры: ${JSON.stringify(params)}`, 'vk');
+                return true;
+            } else {
+                log(`❌ VK пиксель не инициализирован`, 'error');
+                return false;
+            }
+        }
+
+        // Тестовые функции
+
+        function testProductView(type = 'pizza') {
+            const products = {
+                pizza: { id: '1', name: 'Пицца Маргарита', price: 450, category: 'Пицца' },
+                burger: { id: '2', name: 'Чизбургер', price: 280, category: 'Бургеры' },
+                sushi: { id: '3', name: 'Суши сет', price: 890, category: 'Суши' }
+            };
+            
+            const product = products[type];
+            
+            if (sendVKEvent('view_item', {
+                product_id: product.id,
+                value: product.price,
+                content_type: 'product',
+                content_name: product.name,
+                content_category: product.category
+            })) {
+                eventCounts.view++;
+                updateStats();
+                log(`👁️ Просмотр товара: ${product.name}`, 'success');
+            }
+        }
+
+        function testAddToCart(type = 'single') {
+            if (type === 'multiple') {
+                // Несколько товаров
+                const products = [
+                    { id: '1', name: 'Пицца Маргарита', price: 450, quantity: 2 },
+                    { id: '4', name: 'Кола', price: 120, quantity: 1 }
+                ];
+                
+                products.forEach(product => {
+                    sendVKEvent('add_to_cart', {
+                        product_id: product.id,
+                        value: product.price * product.quantity,
+                        content_name: product.name,
+                        quantity: product.quantity
+                    });
+                });
+                
+                eventCounts.cart += products.length;
+                log(`➕ Добавлено ${products.length} товаров в корзину`, 'success');
+            } else {
+                // Один товар
+                if (sendVKEvent('add_to_cart', {
+                    product_id: '1',
+                    value: 450,
+                    content_name: 'Пицца Маргарита',
+                    content_category: 'Пицца',
+                    quantity: 1
+                })) {
+                    eventCounts.cart++;
+                    log(`➕ Товар добавлен в корзину`, 'success');
+                }
+            }
+            updateStats();
+        }
+
+        function testRemoveFromCart() {
+            if (sendVKEvent('remove_from_cart', {
+                product_id: '1',
+                value: 450,
+                content_name: 'Пицца Маргарита',
+                quantity: 1
+            })) {
+                log(`➖ Товар удален из корзины`, 'success');
+            }
+        }
+
+        function testCheckoutStart() {
+            if (sendVKEvent('initiate_checkout', {
+                product_id: ['1', '2'],
+                value: 730,
+                num_items: 2,
+                content_ids: ['1', '2']
+            })) {
+                eventCounts.checkout++;
+                updateStats();
+                log(`🏁 Начало оформления заказа`, 'success');
+            }
+        }
+
+        function testPurchase(type = 'normal') {
+            const orders = {
+                normal: {
+                    product_id: ['1', '4'],
+                    value: 570,
+                    order_id: 'ORDER_' + Date.now(),
+                    num_items: 2
+                },
+                large: {
+                    product_id: ['1', '2', '3', '4'],
+                    value: 1740,
+                    order_id: 'ORDER_' + Date.now(),
+                    num_items: 4
+                }
+            };
+            
+            const order = orders[type];
+            
+            if (sendVKEvent('purchase', order)) {
+                eventCounts.purchase++;
+                updateStats();
+                log(`💳 Покупка завершена: ${order.order_id} (${order.value}₽)`, 'success');
+            }
+        }
+
+        function testPaymentMethod(method) {
+            if (sendVKEvent('payment_method_selected', {
+                payment_method: method,
+                payment_type: method === 'cash' ? 'offline' : 'online'
+            })) {
+                log(`💰 Выбран способ оплаты: ${method}`, 'success');
+            }
+        }
+
+        function testSearch() {
+            if (sendVKEvent('search', {
+                search_string: 'пицца маргарита',
+                content_type: 'product'
+            })) {
+                log(`🔍 Поиск: пицца маргарита`, 'success');
+            }
+        }
+
+        function clearLog() {
+            document.getElementById('log-container').innerHTML = 
+                '<div class="log-entry log-success">Лог очищен...</div>';
+        }
+
+        function showVKEvents() {
+            if (typeof window._tmr !== 'undefined') {
+                const vkEvents = window._tmr.filter(event => event.goal);
+                log(`📊 Всего VK событий: ${vkEvents.length}`, 'vk');
+                vkEvents.forEach((event, index) => {
+                    log(`${index + 1}. ${event.goal}: ${JSON.stringify(event.params)}`, 'vk');
+                });
+            } else {
+                log(`❌ _tmr массив не найден`, 'error');
+            }
+        }
+
+        // Проверка загрузки VK скрипта
+        function checkScriptStatus() {
+            const script = document.getElementById('tmr-code');
+            const statusEl = document.getElementById('script-status');
+            
+            if (script) {
+                statusEl.textContent = '✅ Загружен';
+                statusEl.style.color = '#4caf50';
+                log(`✅ VK скрипт успешно загружен`, 'success');
+            } else {
+                statusEl.textContent = '❌ Не загружен';
+                statusEl.style.color = '#f44336';
+                log(`❌ VK скрипт не найден`, 'error');
+            }
+            
+            // Проверка _tmr массива
+            if (typeof window._tmr !== 'undefined') {
+                log(`✅ _tmr массив инициализирован: ${window._tmr.length} событий`, 'success');
+            } else {
+                log(`❌ _tmr массив не найден`, 'error');
+            }
+        }
+
+        // Автозапуск проверки через 2 секунды
+        setTimeout(checkScriptStatus, 2000);
+        
+        // Начальная инициализация
+        updateStats();
+        log(`🎯 VK Pixel тестер готов! ID: 3695469`, 'success');
+        log(`📋 Доступные события: view_item, add_to_cart, remove_from_cart, initiate_checkout, purchase`, 'vk');
+    </script>
+</body>
+</html>

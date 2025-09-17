@@ -13,6 +13,7 @@ import { useProducts } from './contexts/ProductsContext'
 import { TelegramProvider, useIsTelegram } from './contexts/TelegramContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { YandexMetrikaProvider } from './components/analytics/YandexMetrika'
+import { VKPixelProvider } from './components/analytics/VKPixel'
 import { TelegramApp } from './components/telegram/TelegramApp'
 import { TelegramBottomNav } from './components/telegram/TelegramNavigation'
 import { AuthPage } from './pages/AuthPage'
@@ -726,13 +727,18 @@ const App: React.FC = () => {
   // ID счетчика Яндекс.Метрики
   const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '103585127'
   
+  // ID VK Пикселя (Top.Mail.Ru)
+  const VK_PIXEL_ID = import.meta.env.VITE_VK_PIXEL_ID || '3695469'
+  
   return (
     <YandexMetrikaProvider counterId={YANDEX_METRIKA_ID}>
-      <Router>
-        <TelegramProvider>
-          <PlatformRouter />
-        </TelegramProvider>
-      </Router>
+      <VKPixelProvider pixelId={VK_PIXEL_ID} enableEcommerce={true}>
+        <Router>
+          <TelegramProvider>
+            <PlatformRouter />
+          </TelegramProvider>
+        </Router>
+      </VKPixelProvider>
     </YandexMetrikaProvider>
   )
 }
