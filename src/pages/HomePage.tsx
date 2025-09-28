@@ -60,7 +60,7 @@ export function HomePage() {
   const handleActionWithAuth = (action: () => void) => {
     if (!user) {
       // Перенаправляем на внешнюю страницу авторизации
-      window.location.href = 'https://dimbopizza.ru/auth'
+      window.location.href = 'https://t.me/DIMBOpizzaBot/menu'
       return
     }
     

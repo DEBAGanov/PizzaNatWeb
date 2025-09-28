@@ -100,7 +100,7 @@
 - **Реализация**: Создана функция `handleActionWithAuth()` в `HomePage.tsx`
 - **Поведение**: 
   - Авторизованные пользователи - обычная работа
-  - Неавторизованные - редирект на `https://dimbopizza.ru/auth` при клике
+  - Неавторизованные - редирект на `https://t.me/DIMBOpizzaBot/menu` при клике
 - **Файлы**: `src/pages/HomePage.tsx` - добавлена проверка авторизации
 
 #### 3. Обновление API интерсептора
@@ -132,7 +132,7 @@
 const handleActionWithAuth = (action: () => void) => {
   if (!user) {
     // Редирект на внешнюю авторизацию
-    window.location.href = 'https://dimbopizza.ru/auth'
+    window.location.href = 'https://t.me/DIMBOpizzaBot/menu'
     return
   }
   action() // Выполнение для авторизованных
