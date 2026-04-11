@@ -80,8 +80,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 RUN echo '{"status":"ok","service":"dimbopizza-web","version":"1.0.0"}' > ./dist/health
 
 # Настройка прав доступа и создание временных директорий для nginx
-RUN mkdir -p /var/log/nginx /tmp/nginx_client_temp /tmp/nginx_proxy_temp /tmp/nginx_fastcgi_temp /tmp/nginx_uwsgi_temp /tmp/nginx_scgi_temp && \
-    chown -R dimbopizza:dimbopizza /app /var/log/nginx /var/run/nginx /tmp/nginx_* && \
+RUN mkdir -p /var/log/nginx /var/lib/nginx/logs /tmp/nginx_client_temp /tmp/nginx_proxy_temp /tmp/nginx_fastcgi_temp /tmp/nginx_uwsgi_temp /tmp/nginx_scgi_temp && \
+    chown -R dimbopizza:dimbopizza /app /var/log/nginx /var/lib/nginx /var/run/nginx /tmp/nginx_* && \
     chmod -R 755 /app/dist
 
 # Переключение на непривилегированного пользователя
