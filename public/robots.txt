@@ -47,6 +47,24 @@ Allow: /zakazat-edu-volzhsk
 Allow: /dostavka-nagetcov
 Allow: /zakazat-nagetsy
 
+# Zelenodolsk delivery SEO pages
+Allow: /dostavka-pizzy-zelenodolsk
+Allow: /zakazat-pizzu-zelenodolsk
+Allow: /dostavka-shashlyka-zelenodolsk
+Allow: /zakazat-shashlyk-zelenodolsk
+Allow: /dostavka-sushi-zelenodolsk
+Allow: /zakazat-sushi-zelenodolsk
+Allow: /dostavka-burgerov-zelenodolsk
+Allow: /zakazat-burgery-zelenodolsk
+Allow: /dostavka-krylyshek-zelenodolsk
+Allow: /zakazat-krylyshki-zelenodolsk
+Allow: /dostavka-kartoshki-fri-zelenodolsk
+Allow: /zakazat-kartoshku-fri-zelenodolsk
+Allow: /dostavka-edy-zelenodolsk
+Allow: /zakazat-edu-zelenodolsk
+Allow: /dostavka-nagetsov-zelenodolsk
+Allow: /zakazat-nagetsy-zelenodolsk
+
 # High-frequency keyword pages (Cyrillic URLs)
 Allow: /пицца
 Allow: /суши

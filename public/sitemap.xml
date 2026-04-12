@@ -9,7 +9,7 @@
   <!-- Главная страница - высокий приоритет -->
   <url>
     <loc>https://dimbopizza.ru/</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -17,7 +17,7 @@
   <!-- Меню - высокий приоритет -->
   <url>
     <loc>https://dimbopizza.ru/menu</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -25,7 +25,7 @@
   <!-- Авторизация -->
   <url>
     <loc>https://t.me/DIMBOpizzaBot/menu</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -33,7 +33,7 @@
   <!-- ДИМБО детям - мастер-классы и дни рождения -->
   <url>
     <loc>https://dimbopizza.ru/dimbokids</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -41,7 +41,7 @@
   <!-- Политика конфиденциальности -->
   <url>
     <loc>https://dimbopizza.ru/privacy</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -49,21 +49,21 @@
   <!-- Категории товаров (примеры) -->
   <url>
     <loc>https://dimbopizza.ru/menu?category=1</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/menu?category=2</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/menu?category=3</loc>
-    <lastmod>2025-01-26</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -73,14 +73,14 @@
   <!-- Пицца -->
   <url>
     <loc>https://dimbopizza.ru/dostavka-pizzy</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/zakazat-pizzu</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -88,14 +88,14 @@
   <!-- Шашлык -->
   <url>
     <loc>https://dimbopizza.ru/dostavka-shashlyka</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/zakazat-shashlyk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -103,14 +103,14 @@
   <!-- Суши -->
   <url>
     <loc>https://dimbopizza.ru/dostavka-sushi</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/zakazat-sushi</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -118,14 +118,14 @@
   <!-- Бургеры -->
   <url>
     <loc>https://dimbopizza.ru/dostavka-burgerov</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/zakazat-burgery</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -133,14 +133,14 @@
   <!-- Крылышки -->
   <url>
     <loc>https://dimbopizza.ru/dostavka-krylyshek</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/zakazat-krylyshki</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -148,14 +148,14 @@
   <!-- Картофель фри -->
   <url>
     <loc>https://dimbopizza.ru/dostavka-kartoshki-fri</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/zakazat-kartoshku-fri</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -163,14 +163,14 @@
   <!-- Еда в Волжске -->
   <url>
     <loc>https://dimbopizza.ru/dostavka-edy-volzhsk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/zakazat-edu-volzhsk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -178,49 +178,49 @@
   <!-- Короткие высокочастотные запросы (ТОП-3 цель) -->
   <url>
     <loc>https://dimbopizza.ru/пицца</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/суши</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/роллы</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/бургеры</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/шашлык</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/картошка-фри</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/закрытая-пицца</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -228,21 +228,21 @@
   <!-- Нагетсы -->
   <url>
     <loc>https://dimbopizza.ru/нагетсы</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/доставка-нагетсов</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/заказать-нагетсы</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -250,21 +250,21 @@
   <!-- Популярные товары (примеры) -->
   <url>
     <loc>https://dimbopizza.ru/product/1</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/product/2</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://dimbopizza.ru/product/3</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -272,157 +272,157 @@
   <!-- Индивидуальные товарные SEO страницы -->
   <url>
     <loc>https://dimbopizza.ru/pitstsa-margarita</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gribnaya-pitstsa</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gavayskaya-pitstsa</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/myasnaya-pitstsa</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/pitstsa-morskaya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/pitstsa-salyami</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/pitstsa-pepperoni</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/pitstsa-tsezar</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/domashnyaya-pitstsa</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/syrnaya-pitstsa</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/burger-dimburger</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/burger-chikenburger</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/burger-chizburger</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/burger-dzhunior</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/kartofel-fri-100-gr</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/kartofel-fri-150-gr</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/nagetsy-6-shtuk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/nagetsy-9-shtuk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/nagetsy-12-shtuk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/krylya-6-shtuk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/krylya-9-shtuk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/zakrytaya-pitstsa-klassicheskaya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/zakrytaya-pitstsa-okhotnichya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/zakrytaya-pitstsa-kurinaya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/zakrytaya-pitstsa-syrnaya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/zakrytaya-pitstsa-gavayskaya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -430,37 +430,37 @@
   <!-- Специфические SEO страницы для конкретных запросов -->
   <url>
     <loc>https://dimbopizza.ru/pitstsa-zakazat-s-dostavkoy</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/pizzeriya-volzhsk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/pizzeriya-lenina</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gde-zakazat-pitstsu</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/eda-na-zakaz</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/dodo-pizza-volzhsk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -468,13 +468,13 @@
   <!-- Локальные информационные SEO страницы -->
   <url>
     <loc>https://dimbopizza.ru/podslushano-volzhsk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/volzhsk-24</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -482,109 +482,109 @@
   <!-- Детские SEO страницы -->
   <url>
     <loc>https://dimbopizza.ru/detskiy-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-denь-rozhdeniya-gde</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gde-otmetitь-detskiy-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskie-animatory-na-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/menyu-na-detskiy-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-podarok-na-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/otprazdnovatь-detskiy-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gde-otprazdnovatь-detskiy-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gde-provesti-detskiy-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-kvest-na-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-denь-rozhdeniya-let</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/prazdnovanie-detskogo-dnya-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/otmetitь-detskiy-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/eda-na-detskom-dne-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-denь-rozhdeniya-god</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/prazdnik-dlya-detey</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gde-otmetitь-dr-rebenka</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/pozdravlenie-s-rozhdeniem-rebenka</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -592,303 +592,401 @@
   <!-- Зеленодольские детские SEO страницы -->
   <url>
     <loc>https://dimbopizza.ru/detskiy-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-den-rozhdeniya-gde-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gde-otmetit-detskiy-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/otprazdnovat-detskiy-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gde-otprazdnovat-detskiy-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gde-provesti-detskiy-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/prazdnovanie-detskogo-dnya-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/otmetit-detskiy-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskie-animatory-na-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/animatory-na-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskie-animatory-ve-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskie-animatory-na-prazdnik-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/menyu-na-detskiy-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/eda-na-detskom-dne-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-podarok-na-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskie-podarki-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/chto-podarit-rebenku-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/podarok-malchiku-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/podarok-devochke-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/podarok-dochke-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/podarok-podrostku-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-kvest-na-den-rozhdeniya-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/prazdnik-dlya-detey-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-prazdnik-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-den-rozhdeniya-let-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-den-rozhdeniya-god-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/gde-otmetit-dr-rebenka-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/organizatsiya-detskikh-prazdnikov-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/provedenie-detskikh-prazdnikov-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/organizatsiya-detskikh-prazdnikov-ve-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/organizatsiya-prazdnikov-i-meropriyatiy-ve-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/prazdniki-v-detskom-sadu-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/stsenariy-detskogo-prazdnika-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/pozdravlenie-s-rozhdeniem-rebenka-zelenodolsk</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskie-podarki</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/chto-podaritь-rebenku</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/podarok-malьchiku</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/podarok-devochke</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/podarok-dochke</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/podarok-podrostku</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/animatory-na-denь-rozhdeniya</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskiy-prazdnik</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/prazdniki-v-detskom-sadu</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/stsenariy-detskogo-prazdnika</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/organizatsiya-detskih-prazdnikov</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/provedenie-detskih-prazdnikov</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/organizatsiya-detskih-prazdnikov-v-volzhske</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/organizatsiya-prazdnikov-i-meropriyatiy-v-volzhske</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskie-animatory-v-volzhske</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dimbopizza.ru/detskie-animatory-na-prazdnik-volzhsk</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
+  <!-- Зеленодольск — доставка еды из Волжска -->
+  <url>
+    <loc>https://dimbopizza.ru/dostavka-pizzy-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/zakazat-pizzu-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/dostavka-shashlyka-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/zakazat-shashlyk-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/dostavka-sushi-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/zakazat-sushi-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/dostavka-burgerov-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/zakazat-burgery-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/dostavka-krylyshek-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/zakazat-krylyshki-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/dostavka-kartoshki-fri-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/zakazat-kartoshku-fri-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/dostavka-edy-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/zakazat-edu-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/dostavka-nagetsov-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dimbopizza.ru/zakazat-nagetsy-zelenodolsk</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

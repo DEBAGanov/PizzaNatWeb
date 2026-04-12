@@ -17,6 +17,7 @@ interface OptimizedImageProps {
   radius?: string | number
   fallbackIcon?: React.ReactNode
   objectFit?: 'cover' | 'contain' | 'fill' | 'scale-down' | 'none'
+  loading?: 'lazy' | 'eager'
 }
 
 export function OptimizedImage({
@@ -27,7 +28,8 @@ export function OptimizedImage({
   height,
   radius = 'md',
   fallbackIcon = <IconPizza size={48} color="#ff8000" />,
-  objectFit = 'cover'
+  objectFit = 'cover',
+  loading = 'lazy',
 }: OptimizedImageProps) {
   const containerStyles = {
     position: 'relative' as const,
@@ -64,6 +66,7 @@ export function OptimizedImage({
       <Image
         src={src}
         alt={alt}
+        loading={loading}
         className="optimized-image"
         style={{
           width: '100%',

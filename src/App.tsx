@@ -5,7 +5,7 @@
  * @created: 2024-12-19
  */
 
-import React, { useEffect } from 'react'
+import React, { useEffect, Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Routes, Route, useSearchParams } from 'react-router-dom'
 import { AppShell } from '@mantine/core'
 import { useAuth } from './contexts/AuthContext'
@@ -28,50 +28,149 @@ import OrderSuccessPage from './pages/OrderSuccessPage'
 import { AuthTestPage } from './pages/AuthTestPage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import { DimboKidsPage } from './pages/DimboKidsPage'
-import { 
-  PizzaSEOPage, ShashlykSEOPage, SushiSEOPage, BurgerSEOPage, WingsSEOPage, FriesSEOPage, FoodSEOPage, ShortKeywordSEOPage, NuggetsSEOPage,
-  PizzaOrderDeliverySEOPage, PizzeriaVolzhskSEOPage, PizzeriaLeninaSEOPage, WhereOrderPizzaSEOPage, FoodOrderSEOPage, DodoPizzaComparisonSEOPage,
-  PodslushanoVolzhskSEOPage, Volzhsk24SEOPage
-} from './pages/product-seo'
-// Импорты индивидуальных товарных страниц
-import { 
-  PitstsaMargaritaSEOPage, GribnayaPitstsaSEOPage, GavayskayaPitstsaSEOPage, MyasnayaPitstsaSEOPage,
-  PitstsaMorskayaSEOPage, PitstsaSalyamiSEOPage, PitstsaPepperoniSEOPage, PitstsaTsezarSEOPage,
-  DomashnyayaPitstsaSEOPage, SyrnayaPitstsaSEOPage, BurgerDimburgerSEOPage, BurgerChikenburgerSEOPage,
-  BurgerChizburgerSEOPage, BurgerDzhuniorSEOPage, KartofelFri100GrSEOPage, KartofelFri150GrSEOPage,
-  Nagetsy6ShtukSEOPage, Nagetsy9ShtukSEOPage, Nagetsy12ShtukSEOPage, Krylya6ShtukSEOPage,
-  Krylya9ShtukSEOPage, ZakrytayaPitstsaKlassicheskayaSEOPage, ZakrytayaPitstsaOkhotnichyaSEOPage,
-  ZakrytayaPitstsaKurinayaSEOPage, ZakrytayaPitstsaSyrnayaSEOPage, ZakrytayaPitstsaGavayskayaSEOPage
-} from './pages/product-seo/products'
-// Импорты детских SEO-страниц
-import { 
-  DetskiyDenRozhdeniyaKidsPage, DetskiyDenRozhdeniyaGdeKidsPage, GdeOtmetitDetskiyDenRozhdeniyaKidsPage,
-  DetskieAnimatoryNaDenRozhdeniyaKidsPage, MenyuNaDetskiyDenRozhdeniyaKidsPage, DetskiyPodarokNaDenRozhdeniyaKidsPage,
-  OtprazdnovatDetskiyDenRozhdeniyaKidsPage, GdeOtprazdnovatDetskiyDenRozhdeniyaKidsPage, GdeProvestiDetskiyDenRozhdeniyaKidsPage,
-  DetskiyKvestNaDenRozhdeniyaKidsPage, DetskiyDenRozhdeniyaLetKidsPage, PrazdnovanieDetskogoDnyaRozhdeniyaKidsPage,
-  OtmetitDetskiyDenRozhdeniyaKidsPage, EdaNaDetskomDneRozhdeniyaKidsPage, DetskiyDenRozhdeniyaGodKidsPage,
-  PrazdnikDlyaDeteyKidsPage, GdeOtmetitDrRebenkaKidsPage, PozdravlenieSRozhdeniemRebenkaKidsPage,
-  DetskiePodarkiKidsPage, ChtoPodaritRebenkuKidsPage, PodarokMalChikuKidsPage, PodarokDevochkeKidsPage,
-  PodarokDochkeKidsPage, PodarokPodrostkuKidsPage, AnimatoryNaDenRozhdeniyaKidsPage, DetskiyPrazdnikKidsPage,
-  PrazdnikiVDetskomSaduKidsPage, StsenariyDetskogoPrazdnikaKidsPage, OrganizatsiyaDetskihPrazdnikovKidsPage,
-  ProvedenieDetskihPrazdnikovKidsPage, OrganizatsiyaDetskihPrazdnikovVVolzhskeKidsPage, OrganizatsiyaPrazdnikovIMeropriyatiyVVolzhskeKidsPage,
-  DetskieAnimatoryVVolzhskeKidsPage, DetskieAnimatoryNaPrazdnikVolzhskKidsPage
-} from './pages/kids-seo'
+// SEO-страницы — lazy loading для code splitting
+const PizzaSEOPage = lazy(() => import('./pages/product-seo/PizzaSEOPage').then(m => ({ default: m.PizzaSEOPage })))
+const ShashlykSEOPage = lazy(() => import('./pages/product-seo/ShashlykSEOPage').then(m => ({ default: m.ShashlykSEOPage })))
+const SushiSEOPage = lazy(() => import('./pages/product-seo/SushiSEOPage').then(m => ({ default: m.SushiSEOPage })))
+const BurgerSEOPage = lazy(() => import('./pages/product-seo/BurgerSEOPage').then(m => ({ default: m.BurgerSEOPage })))
+const WingsSEOPage = lazy(() => import('./pages/product-seo/WingsSEOPage').then(m => ({ default: m.WingsSEOPage })))
+const FriesSEOPage = lazy(() => import('./pages/product-seo/FriesSEOPage').then(m => ({ default: m.FriesSEOPage })))
+const FoodSEOPage = lazy(() => import('./pages/product-seo/FoodSEOPage').then(m => ({ default: m.FoodSEOPage })))
+const ShortKeywordSEOPage = lazy(() => import('./pages/product-seo/ShortKeywordSEOPage').then(m => ({ default: m.ShortKeywordSEOPage })))
+const NuggetsSEOPage = lazy(() => import('./pages/product-seo/NuggetsSEOPage').then(m => ({ default: m.NuggetsSEOPage })))
+const PizzaOrderDeliverySEOPage = lazy(() => import('./pages/product-seo/PizzaOrderDeliverySEOPage').then(m => ({ default: m.PizzaOrderDeliverySEOPage })))
+const PizzeriaVolzhskSEOPage = lazy(() => import('./pages/product-seo/PizzeriaVolzhskSEOPage').then(m => ({ default: m.PizzeriaVolzhskSEOPage })))
+const PizzeriaLeninaSEOPage = lazy(() => import('./pages/product-seo/PizzeriaLeninaSEOPage').then(m => ({ default: m.PizzeriaLeninaSEOPage })))
+const WhereOrderPizzaSEOPage = lazy(() => import('./pages/product-seo/WhereOrderPizzaSEOPage').then(m => ({ default: m.WhereOrderPizzaSEOPage })))
+const FoodOrderSEOPage = lazy(() => import('./pages/product-seo/FoodOrderSEOPage').then(m => ({ default: m.FoodOrderSEOPage })))
+const DodoPizzaComparisonSEOPage = lazy(() => import('./pages/product-seo/DodoPizzaComparisonSEOPage').then(m => ({ default: m.DodoPizzaComparisonSEOPage })))
+const PodslushanoVolzhskSEOPage = lazy(() => import('./pages/product-seo/PodslushanoVolzhskSEOPage').then(m => ({ default: m.PodslushanoVolzhskSEOPage })))
+const Volzhsk24SEOPage = lazy(() => import('./pages/product-seo/Volzhsk24SEOPage').then(m => ({ default: m.Volzhsk24SEOPage })))
+// Индивидуальные товарные SEO-страницы — lazy
+const PitstsaMargaritaSEOPage = lazy(() => import('./pages/product-seo/products/PitstsaMargaritaSEOPage').then(m => ({ default: m.PitstsaMargaritaSEOPage })))
+const GribnayaPitstsaSEOPage = lazy(() => import('./pages/product-seo/products/GribnayaPitstsaSEOPage').then(m => ({ default: m.GribnayaPitstsaSEOPage })))
+const GavayskayaPitstsaSEOPage = lazy(() => import('./pages/product-seo/products/GavayskayaPitstsaSEOPage').then(m => ({ default: m.GavayskayaPitstsaSEOPage })))
+const MyasnayaPitstsaSEOPage = lazy(() => import('./pages/product-seo/products/MyasnayaPitstsaSEOPage').then(m => ({ default: m.MyasnayaPitstsaSEOPage })))
+const PitstsaMorskayaSEOPage = lazy(() => import('./pages/product-seo/products/PitstsaMorskayaSEOPage').then(m => ({ default: m.PitstsaMorskayaSEOPage })))
+const PitstsaSalyamiSEOPage = lazy(() => import('./pages/product-seo/products/PitstsaSalyamiSEOPage').then(m => ({ default: m.PitstsaSalyamiSEOPage })))
+const PitstsaPepperoniSEOPage = lazy(() => import('./pages/product-seo/products/PitstsaPepperoniSEOPage').then(m => ({ default: m.PitstsaPepperoniSEOPage })))
+const PitstsaTsezarSEOPage = lazy(() => import('./pages/product-seo/products/PitstsaTsezarSEOPage').then(m => ({ default: m.PitstsaTsezarSEOPage })))
+const DomashnyayaPitstsaSEOPage = lazy(() => import('./pages/product-seo/products/DomashnyayaPitstsaSEOPage').then(m => ({ default: m.DomashnyayaPitstsaSEOPage })))
+const SyrnayaPitstsaSEOPage = lazy(() => import('./pages/product-seo/products/SyrnayaPitstsaSEOPage').then(m => ({ default: m.SyrnayaPitstsaSEOPage })))
+const BurgerDimburgerSEOPage = lazy(() => import('./pages/product-seo/products/BurgerDimburgerSEOPage').then(m => ({ default: m.BurgerDimburgerSEOPage })))
+const BurgerChikenburgerSEOPage = lazy(() => import('./pages/product-seo/products/BurgerChikenburgerSEOPage').then(m => ({ default: m.BurgerChikenburgerSEOPage })))
+const BurgerChizburgerSEOPage = lazy(() => import('./pages/product-seo/products/BurgerChizburgerSEOPage').then(m => ({ default: m.BurgerChizburgerSEOPage })))
+const BurgerDzhuniorSEOPage = lazy(() => import('./pages/product-seo/products/BurgerDzhuniorSEOPage').then(m => ({ default: m.BurgerDzhuniorSEOPage })))
+const KartofelFri100GrSEOPage = lazy(() => import('./pages/product-seo/products/KartofelFri100GrSEOPage').then(m => ({ default: m.KartofelFri100GrSEOPage })))
+const KartofelFri150GrSEOPage = lazy(() => import('./pages/product-seo/products/KartofelFri150GrSEOPage').then(m => ({ default: m.KartofelFri150GrSEOPage })))
+const Nagetsy6ShtukSEOPage = lazy(() => import('./pages/product-seo/products/Nagetsy6ShtukSEOPage').then(m => ({ default: m.Nagetsy6ShtukSEOPage })))
+const Nagetsy9ShtukSEOPage = lazy(() => import('./pages/product-seo/products/Nagetsy9ShtukSEOPage').then(m => ({ default: m.Nagetsy9ShtukSEOPage })))
+const Nagetsy12ShtukSEOPage = lazy(() => import('./pages/product-seo/products/Nagetsy12ShtukSEOPage').then(m => ({ default: m.Nagetsy12ShtukSEOPage })))
+const Krylya6ShtukSEOPage = lazy(() => import('./pages/product-seo/products/Krylya6ShtukSEOPage').then(m => ({ default: m.Krylya6ShtukSEOPage })))
+const Krylya9ShtukSEOPage = lazy(() => import('./pages/product-seo/products/Krylya9ShtukSEOPage').then(m => ({ default: m.Krylya9ShtukSEOPage })))
+const ZakrytayaPitstsaKlassicheskayaSEOPage = lazy(() => import('./pages/product-seo/products/ZakrytayaPitstsaKlassicheskayaSEOPage').then(m => ({ default: m.ZakrytayaPitstsaKlassicheskayaSEOPage })))
+const ZakrytayaPitstsaOkhotnichyaSEOPage = lazy(() => import('./pages/product-seo/products/ZakrytayaPitstsaOkhotnichyaSEOPage').then(m => ({ default: m.ZakrytayaPitstsaOkhotnichyaSEOPage })))
+const ZakrytayaPitstsaKurinayaSEOPage = lazy(() => import('./pages/product-seo/products/ZakrytayaPitstsaKurinayaSEOPage').then(m => ({ default: m.ZakrytayaPitstsaKurinayaSEOPage })))
+const ZakrytayaPitstsaSyrnayaSEOPage = lazy(() => import('./pages/product-seo/products/ZakrytayaPitstsaSyrnayaSEOPage').then(m => ({ default: m.ZakrytayaPitstsaSyrnayaSEOPage })))
+const ZakrytayaPitstsaGavayskayaSEOPage = lazy(() => import('./pages/product-seo/products/ZakrytayaPitstsaGavayskayaSEOPage').then(m => ({ default: m.ZakrytayaPitstsaGavayskayaSEOPage })))
+// Детские SEO-страницы Волжск — lazy
+const DetskiyDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskiyDenRozhdeniyaKidsPage })))
+const DetskiyDenRozhdeniyaGdeKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskiyDenRozhdeniyaGdeKidsPage })))
+const GdeOtmetitDetskiyDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.GdeOtmetitDetskiyDenRozhdeniyaKidsPage })))
+const DetskieAnimatoryNaDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskieAnimatoryNaDenRozhdeniyaKidsPage })))
+const MenyuNaDetskiyDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.MenyuNaDetskiyDenRozhdeniyaKidsPage })))
+const DetskiyPodarokNaDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskiyPodarokNaDenRozhdeniyaKidsPage })))
+const OtprazdnovatDetskiyDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.OtprazdnovatDetskiyDenRozhdeniyaKidsPage })))
+const GdeOtprazdnovatDetskiyDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.GdeOtprazdnovatDetskiyDenRozhdeniyaKidsPage })))
+const GdeProvestiDetskiyDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.GdeProvestiDetskiyDenRozhdeniyaKidsPage })))
+const DetskiyKvestNaDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskiyKvestNaDenRozhdeniyaKidsPage })))
+const DetskiyDenRozhdeniyaLetKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskiyDenRozhdeniyaLetKidsPage })))
+const PrazdnovanieDetskogoDnyaRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.PrazdnovanieDetskogoDnyaRozhdeniyaKidsPage })))
+const OtmetitDetskiyDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.OtmetitDetskiyDenRozhdeniyaKidsPage })))
+const EdaNaDetskomDneRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.EdaNaDetskomDneRozhdeniyaKidsPage })))
+const DetskiyDenRozhdeniyaGodKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskiyDenRozhdeniyaGodKidsPage })))
+const PrazdnikDlyaDeteyKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.PrazdnikDlyaDeteyKidsPage })))
+const GdeOtmetitDrRebenkaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.GdeOtmetitDrRebenkaKidsPage })))
+const PozdravlenieSRozhdeniemRebenkaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.PozdravlenieSRozhdeniemRebenkaKidsPage })))
+const DetskiePodarkiKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskiePodarkiKidsPage })))
+const ChtoPodaritRebenkuKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.ChtoPodaritRebenkuKidsPage })))
+const PodarokMalChikuKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.PodarokMalChikuKidsPage })))
+const PodarokDevochkeKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.PodarokDevochkeKidsPage })))
+const PodarokDochkeKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.PodarokDochkeKidsPage })))
+const PodarokPodrostkuKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.PodarokPodrostkuKidsPage })))
+const AnimatoryNaDenRozhdeniyaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.AnimatoryNaDenRozhdeniyaKidsPage })))
+const DetskiyPrazdnikKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskiyPrazdnikKidsPage })))
+const PrazdnikiVDetskomSaduKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.PrazdnikiVDetskomSaduKidsPage })))
+const StsenariyDetskogoPrazdnikaKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.StsenariyDetskogoPrazdnikaKidsPage })))
+const OrganizatsiyaDetskihPrazdnikovKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.OrganizatsiyaDetskihPrazdnikovKidsPage })))
+const ProvedenieDetskihPrazdnikovKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.ProvedenieDetskihPrazdnikovKidsPage })))
+const OrganizatsiyaDetskihPrazdnikovVVolzhskeKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.OrganizatsiyaDetskihPrazdnikovVVolzhskeKidsPage })))
+const OrganizatsiyaPrazdnikovIMeropriyatiyVVolzhskeKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.OrganizatsiyaPrazdnikovIMeropriyatiyVVolzhskeKidsPage })))
+const DetskieAnimatoryVVolzhskeKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskieAnimatoryVVolzhskeKidsPage })))
+const DetskieAnimatoryNaPrazdnikVolzhskKidsPage = lazy(() => import('./pages/kids-seo').then(m => ({ default: m.DetskieAnimatoryNaPrazdnikVolzhskKidsPage })))
 
-// Импорты Зеленодольских детских SEO-страниц
-import {
-  DetskiyDenRozhdeniyaZelenodolskKidsPage, DetskiyDenRozhdeniyaGdeZelenodolskKidsPage, GdeOtmetitDetskiyDenRozhdeniyaZelenodolskKidsPage,
-  OtprazdnovatDetskiyDenRozhdeniyaZelenodolskKidsPage, GdeOtprazdnovatDetskiyDenRozhdeniyaZelenodolskKidsPage, GdeProvestiDetskiyDenRozhdeniyaZelenodolskKidsPage,
-  PrazdnovanieDetskogoDnyaRozhdeniyaZelenodolskKidsPage, OtmetitDetskiyDenRozhdeniyaZelenodolskKidsPage, DetskieAnimatoryNaDenRozhdeniyaZelenodolskKidsPage,
-  AnimatoryNaDenRozhdeniyaZelenodolskKidsPage, DetskieAnimatoryVeZelenodolskKidsPage, DetskieAnimatoryNaPrazdnikZelenodolskKidsPage,
-  MenyuNaDetskiyDenRozhdeniyaZelenodolskKidsPage, EdaNaDetskomDneRozhdeniyaZelenodolskKidsPage, DetskiyPodarokNaDenRozhdeniyaZelenodolskKidsPage,
-  DetskiePodarkiZelenodolskKidsPage, ChtoPodaritRebenkuZelenodolskKidsPage, PodarokMalChikuZelenodolskKidsPage, PodarokDevochkeZelenodolskKidsPage,
-  PodarokDochkeZelenodolskKidsPage, PodarokPodrostkuZelenodolskKidsPage, DetskiyKvestNaDenRozhdeniyaZelenodolskKidsPage, PrazdnikDlyaDeteyZelenodolskKidsPage,
-  DetskiyPrazdnikZelenodolskKidsPage, DetskiyDenRozhdeniyaLetZelenodolskKidsPage, DetskiyDenRozhdeniyaGodZelenodolskKidsPage, GdeOtmetitDrRebenkaZelenodolskKidsPage,
-  OrganizatsiyaDetskikhPrazdnikovZelenodolskKidsPage, ProvedenieDetskikhPrazdnikovZelenodolskKidsPage, OrganizatsiyaDetskikhPrazdnikovVeZelenodolskKidsPage,
-  OrganizatsiyaPrazdnikovIMeropriyatiyVeZelenodolskKidsPage, PrazdnikiVDetskomSaduZelenodolskKidsPage, StsenariyDetskogoPrazdnikaZelenodolskKidsPage,
-  PozdravlenieSRozhdeniemRebenkaZelenodolskKidsPage
-} from './pages/zelenodolsk-kids-seo'
+// Зеленодольские детские SEO-страницы — lazy
+const DetskiyDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskiyDenRozhdeniyaZelenodolskKidsPage })))
+const DetskiyDenRozhdeniyaGdeZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskiyDenRozhdeniyaGdeZelenodolskKidsPage })))
+const GdeOtmetitDetskiyDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.GdeOtmetitDetskiyDenRozhdeniyaZelenodolskKidsPage })))
+const OtprazdnovatDetskiyDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.OtprazdnovatDetskiyDenRozhdeniyaZelenodolskKidsPage })))
+const GdeOtprazdnovatDetskiyDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.GdeOtprazdnovatDetskiyDenRozhdeniyaZelenodolskKidsPage })))
+const GdeProvestiDetskiyDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.GdeProvestiDetskiyDenRozhdeniyaZelenodolskKidsPage })))
+const PrazdnovanieDetskogoDnyaRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.PrazdnovanieDetskogoDnyaRozhdeniyaZelenodolskKidsPage })))
+const OtmetitDetskiyDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.OtmetitDetskiyDenRozhdeniyaZelenodolskKidsPage })))
+const DetskieAnimatoryNaDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskieAnimatoryNaDenRozhdeniyaZelenodolskKidsPage })))
+const AnimatoryNaDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.AnimatoryNaDenRozhdeniyaZelenodolskKidsPage })))
+const DetskieAnimatoryVeZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskieAnimatoryVeZelenodolskKidsPage })))
+const DetskieAnimatoryNaPrazdnikZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskieAnimatoryNaPrazdnikZelenodolskKidsPage })))
+const MenyuNaDetskiyDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.MenyuNaDetskiyDenRozhdeniyaZelenodolskKidsPage })))
+const EdaNaDetskomDneRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.EdaNaDetskomDneRozhdeniyaZelenodolskKidsPage })))
+const DetskiyPodarokNaDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskiyPodarokNaDenRozhdeniyaZelenodolskKidsPage })))
+const DetskiePodarkiZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskiePodarkiZelenodolskKidsPage })))
+const ChtoPodaritRebenkuZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.ChtoPodaritRebenkuZelenodolskKidsPage })))
+const PodarokMalChikuZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.PodarokMalChikuZelenodolskKidsPage })))
+const PodarokDevochkeZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.PodarokDevochkeZelenodolskKidsPage })))
+const PodarokDochkeZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.PodarokDochkeZelenodolskKidsPage })))
+const PodarokPodrostkuZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.PodarokPodrostkuZelenodolskKidsPage })))
+const DetskiyKvestNaDenRozhdeniyaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskiyKvestNaDenRozhdeniyaZelenodolskKidsPage })))
+const PrazdnikDlyaDeteyZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.PrazdnikDlyaDeteyZelenodolskKidsPage })))
+const DetskiyPrazdnikZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskiyPrazdnikZelenodolskKidsPage })))
+const DetskiyDenRozhdeniyaLetZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskiyDenRozhdeniyaLetZelenodolskKidsPage })))
+const DetskiyDenRozhdeniyaGodZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.DetskiyDenRozhdeniyaGodZelenodolskKidsPage })))
+const GdeOtmetitDrRebenkaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.GdeOtmetitDrRebenkaZelenodolskKidsPage })))
+const OrganizatsiyaDetskikhPrazdnikovZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.OrganizatsiyaDetskikhPrazdnikovZelenodolskKidsPage })))
+const ProvedenieDetskikhPrazdnikovZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.ProvedenieDetskikhPrazdnikovZelenodolskKidsPage })))
+const OrganizatsiyaDetskikhPrazdnikovVeZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.OrganizatsiyaDetskikhPrazdnikovVeZelenodolskKidsPage })))
+const OrganizatsiyaPrazdnikovIMeropriyatiyVeZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.OrganizatsiyaPrazdnikovIMeropriyatiyVeZelenodolskKidsPage })))
+const PrazdnikiVDetskomSaduZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.PrazdnikiVDetskomSaduZelenodolskKidsPage })))
+const StsenariyDetskogoPrazdnikaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.StsenariyDetskogoPrazdnikaZelenodolskKidsPage })))
+const PozdravlenieSRozhdeniemRebenkaZelenodolskKidsPage = lazy(() => import('./pages/zelenodolsk-kids-seo').then(m => ({ default: m.PozdravlenieSRozhdeniemRebenkaZelenodolskKidsPage })))
+
+// Зеленодольские SEO-страницы доставки — lazy
+const DostavkaPizzyZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/DostavkaPizzyZelenodolskPage').then(m => ({ default: m.DostavkaPizzyZelenodolskPage })))
+const ZakazatPizzuZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/ZakazatPizzuZelenodolskPage').then(m => ({ default: m.ZakazatPizzuZelenodolskPage })))
+const DostavkaShashlykaZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/DostavkaShashlykaZelenodolskPage').then(m => ({ default: m.DostavkaShashlykaZelenodolskPage })))
+const ZakazatShashlykZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/ZakazatShashlykZelenodolskPage').then(m => ({ default: m.ZakazatShashlykZelenodolskPage })))
+const DostavkaSushiZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/DostavkaSushiZelenodolskPage').then(m => ({ default: m.DostavkaSushiZelenodolskPage })))
+const ZakazatSushiZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/ZakazatSushiZelenodolskPage').then(m => ({ default: m.ZakazatSushiZelenodolskPage })))
+const DostavkaBurgerovZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/DostavkaBurgerovZelenodolskPage').then(m => ({ default: m.DostavkaBurgerovZelenodolskPage })))
+const ZakazatBurgeryZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/ZakazatBurgeryZelenodolskPage').then(m => ({ default: m.ZakazatBurgeryZelenodolskPage })))
+const DostavkaKrylyshekZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/DostavkaKrylyshekZelenodolskPage').then(m => ({ default: m.DostavkaKrylyshekZelenodolskPage })))
+const ZakazatKrylyshkiZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/ZakazatKrylyshkiZelenodolskPage').then(m => ({ default: m.ZakazatKrylyshkiZelenodolskPage })))
+const DostavkaKartoshkiFriZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/DostavkaKartoshkiFriZelenodolskPage').then(m => ({ default: m.DostavkaKartoshkiFriZelenodolskPage })))
+const ZakazatKartoshkuFriZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/ZakazatKartoshkuFriZelenodolskPage').then(m => ({ default: m.ZakazatKartoshkuFriZelenodolskPage })))
+const DostavkaEdyZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/DostavkaEdyZelenodolskPage').then(m => ({ default: m.DostavkaEdyZelenodolskPage })))
+const ZakazatEduZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/ZakazatEduZelenodolskPage').then(m => ({ default: m.ZakazatEduZelenodolskPage })))
+const DostavkaNagetsovZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/DostavkaNagetsovZelenodolskPage').then(m => ({ default: m.DostavkaNagetsovZelenodolskPage })))
+const ZakazatNagetsyZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/ZakazatNagetsyZelenodolskPage').then(m => ({ default: m.ZakazatNagetsyZelenodolskPage })))
+
+// Suspense fallback для lazy-компонентов
+function SEOLoadingFallback() {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
+      <p style={{ color: '#888' }}>Загрузка...</p>
+    </div>
+  )
+}
 
 // Компонент для определения платформы (внутри Router и TelegramProvider)
 function PlatformRouter() {
@@ -122,6 +221,7 @@ function WebApp() {
 
 
   return (
+    <Suspense fallback={<SEOLoadingFallback />}>
     <Routes>
       {/* Публичные маршруты */}
       <Route 
@@ -650,6 +750,24 @@ function WebApp() {
       <Route path="/stsenariy-detskogo-prazdnika-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><StsenariyDetskogoPrazdnikaZelenodolskKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
       <Route path="/pozdravlenie-s-rozhdeniem-rebenka-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PozdravlenieSRozhdeniemRebenkaZelenodolskKidsPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
 
+      {/* Зеленодольск — доставка еды */}
+      <Route path="/dostavka-pizzy-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DostavkaPizzyZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakazat-pizzu-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatPizzuZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/dostavka-shashlyka-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DostavkaShashlykaZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakazat-shashlyk-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatShashlykZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/dostavka-sushi-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DostavkaSushiZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakazat-sushi-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatSushiZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/dostavka-burgerov-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DostavkaBurgerovZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakazat-burgery-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatBurgeryZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/dostavka-krylyshek-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DostavkaKrylyshekZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakazat-krylyshki-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatKrylyshkiZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/dostavka-kartoshki-fri-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DostavkaKartoshkiFriZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakazat-kartoshku-fri-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatKartoshkuFriZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/dostavka-edy-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DostavkaEdyZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakazat-edu-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatEduZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/dostavka-nagetsov-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DostavkaNagetsovZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+      <Route path="/zakazat-nagetsy-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatNagetsyZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+
       {/* Индивидуальные товарные SEO страницы */}
       <Route path="/pitstsa-margarita" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PitstsaMargaritaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
       <Route path="/gribnaya-pitstsa" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><GribnayaPitstsaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
@@ -720,6 +838,7 @@ function WebApp() {
         } 
       />
     </Routes>
+    </Suspense>
   )
 }
 
