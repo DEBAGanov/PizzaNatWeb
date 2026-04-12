@@ -2,6 +2,8 @@
 
 > Последнее обновление: 12.04.2026
 > Сайт: https://dimbopizza.ru (9 месяцев)
+> Sitemap: https://dimbopizza.ru/sitemap.xml
+> Robots: https://dimbopizza.ru/robots.txt
 
 ---
 
@@ -33,7 +35,7 @@
 | manifest.json → брендовый | `index.html` | DONE |
 | Координаты Волжска 56.1194/47.8681 | `schemaOrg.ts` | DONE |
 | loading="lazy" на все картинки | `OptimizedImage.tsx` | DONE |
-| Даты в sitemap.xml обновлены | `public/sitemap.xml` | DONE |
+| Даты в sitemap.xml обновлены | `sitemap.xml` | DONE |
 | Dockerfile nginx permissions | `Dockerfile` | DONE |
 
 ### 1.3 Code Splitting (12.04.2026)
@@ -74,6 +76,201 @@
 - **Требует**: Chrome/Puppeteer на сервере сборки
 - Для активации: раскомментировать блок в `vite.config.ts`
 
+### 1.6 Масштабирование SEO — 113 новых страниц (12.04.2026)
+
+**Реализовано**: 113 SEO-страниц в 6 категориях с data-driven архитектурой.
+
+#### Архитектура
+
+| Компонент | Файл | Описание |
+|-----------|------|----------|
+| Генератор маршрутов | `src/utils/routeGenerator.tsx` | `generateSEORoutes()` — заменяет боилерплейт |
+| Шаблон блога | `src/components/seo/BlogArticleTemplate.tsx` | Статьи с FAQ, похожими статьями, Schema.org Article |
+| Шаблон сезонных | `src/components/seo/SeasonalPageTemplate.tsx` | Мероприятия с меню, мастер-классами, Schema.org Event |
+| Шаблон продукт×город | `src/components/seo/ProductCityTemplate.tsx` | 26 товаров × 2 города, городская специфика |
+| Шаблон кейтеринга | `src/components/seo/CateringTemplate.tsx` | B2B пакеты меню с ценами, Schema.org Service |
+| Шаблон отзывов | `src/components/seo/ReviewsPageTemplate.tsx` | Рейтинги, бейдж награды «Хорошее место 2026» |
+| FAQ данные | `src/data/faqData.ts` | Бургеры, нагетсы, кейтеринг, отзывы, мастер-классы |
+
+#### Блог — 30 статей
+
+**Данные**: `src/data/blogData.ts`
+**Страницы**: `src/pages/blog/Blog0.tsx` — `Blog29.tsx`
+**Маршруты**: `src/routes/blogRoutes.ts`
+**Шаблон**: BlogArticleTemplate (Hero + статья + FAQ + похожие статьи + CTA)
+
+| # | Категория | Статья | Slug |
+|---|-----------|--------|------|
+| 1 | Рецепты | Как приготовить пиццу дома | /kak-prigotovit-pitstsu-doma |
+| 2 | Рецепты | Рецепт бургера как в ресторане | /retsept-burgera-kak-v-restorane |
+| 3 | Рецепты | Суши дома — проще чем кажется | /sushi-doma-proshche-chem-kazhetsya |
+| 4 | Рецепты | Домашняя пицца на тонком тесте | /domashnyaya-pitstsa-na-tonkom-teste |
+| 5 | Рецепты | Идеальный шашлык — секреты маринада | /idealnyy-shashlyk-sekrety-marinada |
+| 6 | Рецепты | Роллы Филадельфия дома | /rolly-filadelfiya-doma |
+| 7 | Рецепты | Картошка фри как в ресторане | /kartoshka-fri-kak-v-restorane |
+| 8 | Советы | Как правильно разогреть пиццу | /kak-pravilno-razogret-pitstsu |
+| 9 | Советы | Как выбрать пиццерию для доставки | /kak-vybrat-pitstseriyu-dlya-dostavki |
+| 10 | Советы | Сколько пиццы заказать на компанию | /skolko-pitstsy-zakazat-na-kompaniyu |
+| 11 | Советы | Еда для вечеринки — что заказать | /eda-dlya-vecherinki-chto-zakazat |
+| 12 | Гайды | Виды итальянской пиццы — полный гид | /vidy-italyanskoy-pitstsy-polnyy-gid |
+| 13 | Гайды | Лучшие начинки для пиццы — топ-10 | /luchshie-nachinki-dlya-pitstsy-top-10 |
+| 14 | Гайды | Шашлык из свинины vs курицы | /shashlyk-iz-svininy-vs-kuritsy |
+| 15 | Гайды | Бургеры — какие бывают виды | /burgery-kakie-byvayut-vidy |
+| 16 | Ресторан | История ДИМБО Пицца | /istoriya-dimbo-pitstsa |
+| 17 | Ресторан | Мастер-классы ДИМБО | /master-klassy-dimbo |
+| 18 | Ресторан | Наши ингредиенты — качество | /nashi-ingrediyenty-kachestvo |
+| 19 | Локальное | Еда в Волжске — гастрономический гид | /eda-v-volzhske-gastronomicheskiy-gid |
+| 20 | Локальное | Кухня народов Марий Эл | /kuhnya-narodov-mariy-el |
+| 21 | Локальное | Где поесть в Волжске — обзор | /gde-poest-v-volzhske-obzor |
+| 22 | Сезонное | Летнее меню — что заказать в жару | /letnee-menyu-chto-zakazat-v-zharu |
+| 23 | Сезонное | Зимняя еда — согревающие блюда | /zimnyaya-eda-sogrevayushchie-blyuda |
+| 24 | Сезонное | Праздничный стол — что заказать | /prazdnichnyy-stol-chto-zakazat |
+| 25 | Сравнения | Пицца vs бургер — что выбрать | /pitstsa-vs-burger-chto-vybrat |
+| 26 | Сравнения | Доставка еды vs поход в ресторан | /dostavka-edy-vs-pohod-v-restoran |
+| 27 | Сравнения | Домашняя пицца vs доставка | /domashnyaya-pitstsa-vs-dostavka |
+| 28 | Здоровье | Калории в популярных блюдах | /kalorii-v-populyarnyh-blyudah |
+| 29 | Здоровье | Сбалансированный обед с доставкой | /sbalansirovannyy-obed-s-dostavkoy |
+| 30 | Здоровье | Вегетарианская пицца — польза и вкус | /vegetarianskaya-pitstsa-polza-i-vkus |
+
+#### Сезонные страницы — 15 мероприятий
+
+**Данные**: `src/data/seasonalData.ts`
+**Страницы**: `src/pages/seasonal/Seasonal0.tsx` — `Seasonal14.tsx`
+**Маршруты**: `src/routes/seasonalRoutes.ts`
+**Шаблон**: SeasonalPageTemplate (Hero + контент + меню + промо мастер-классов + FAQ + CTA)
+
+| # | Мероприятие | Slug |
+|---|-------------|------|
+| 1 | Новогодний стол — доставка | /novogodniy-stol-dostavka |
+| 2 | Заказать еду на Новый год | /zakazat-edy-na-novyy-god |
+| 3 | Доставка еды на 8 Марта | /dostavka-edy-na-8-marta |
+| 4 | Доставка еды на день рождения | /dostavka-edy-na-den-rozhdeniya |
+| 5 | Корпоративная доставка еды | /korporativnaya-dostavka-edy |
+| 6 | Доставка еды на пикник | /dostavka-edy-na-piknik |
+| 7 | Свадебная доставка еды | /svadebnaya-dostavka-edy |
+| 8 | Доставка еды на выпускной | /dostavka-edy-na-vypusknoy |
+| 9 | Доставка еды 1 сентября | /dostavka-edy-1-sentyabrya |
+| 10 | Доставка еды на День России | /dostavka-edy-na-den-rossii |
+| 11 | Доставка еды День Победы | /dostavka-edy-den-pobedy |
+| 12 | Рождественский стол — доставка | /rozhdestvenskiy-stol-dostavka |
+| 13 | Доставка еды День матери | /dostavka-edy-den-materi |
+| 14 | Масленица — доставка еды | /maslenitsa-dostavka-edy |
+| 15 | Доставка еды на дом | /dostavka-edy-na-dom |
+
+#### Мастер-классы — 2 страницы
+
+**Страницы**: `src/pages/masterclass/`
+**Маршруты**: `src/routes/masterclassRoutes.ts`
+**Шаблон**: SeasonalPageTemplate (с masterclassInfo + фото)
+
+| Slug | Название |
+|------|----------|
+| /master-klass-po-prigotovleniyu-pitstsy | Мастер-класс по приготовлению пиццы |
+| /master-klass-po-prigotovleniyu-burgerov | Мастер-класс по приготовлению бургеров |
+
+Фото: `/images/kids/masterclass-1..8.jpg`
+Частота: 1-2 раза в месяц
+
+#### Продукт × Город — 52 страницы
+
+**Данные**: `src/data/productCityData.ts` (генерируется из PRODUCTS_DATA)
+**Страницы**: `src/pages/product-city/ProductVolzhsk0-25.tsx`, `ProductZelenodolsk0-25.tsx`
+**Маршруты**: `src/routes/productCityRoutes.ts`
+**Шаблон**: ProductCityTemplate (с городской спецификой доставки)
+
+26 товаров × 2 города = 52 страницы. Slug формат: `/product-volzhsk-{id}`, `/product-zelenodolsk-{id}`
+
+Для Зеленодольска: «доставка из Волжска», от 1200₽, 60-90 мин
+Для Волжска: стандартная доставка, от 800₽, 30-60 мин
+
+Товары: пиццы (Мargarita, Грибная, Гавайская, Мясная, Морская, Салями, Пепперони, Цезарь, Домашняя, Сырная), бургеры (ДИМБО, Чикенбургер, Чизбургер, Джуниор), картофель фри (100г, 150г), нагетсы (6/9/12 шт), крылышки (6/9 шт), закрытые пиццы (5 видов)
+
+#### Кейтеринг — 10 страниц B2B
+
+**Данные**: `src/data/cateringData.ts`
+**Страницы**: `src/pages/catering/` (10 файлов)
+**Маршруты**: `src/routes/cateringRoutes.ts`
+**Шаблон**: CateringTemplate (пакеты меню с ценами + шаги заказа + FAQ)
+
+| Slug | Название |
+|------|----------|
+| /ketering-dlya-ofisa | Кейтеринг для офиса |
+| /korporativnoe-pitanie | Корпоративное питание |
+| /banketnoe-menyu | Банкетное меню |
+| /svadebnyy-ketering | Свадебный кейтеринг |
+| /piknik-dostavka | Пикник — доставка |
+| /furshetnaya-dostavka | Фуршетная доставка |
+| /detskiy-prazdnik-ketering | Детский праздник — кейтеринг |
+| /dostavka-obedov-v-ofis | Доставка обедов в офис |
+| /ketering-volzhsk | Кейтеринг Волжск |
+| /ketering-zelenodolsk | Кейтеринг Зеленодольск |
+
+#### Отзывы — 4 страницы
+
+**Данные**: `src/data/reviewsData.ts`
+**Страницы**: `src/pages/reviews/` (4 файла)
+**Маршруты**: `src/routes/reviewRoutes.ts`
+**Шаблон**: ReviewsPageTemplate (рейтинг + бейдж награды + виджет Яндекс Карт)
+
+| Slug | Название | Награда |
+|------|----------|---------|
+| /otzyvy-dimbo-pizza-volzhsk | Отзывы ДИМБО Пицца Волжск | «Хорошее место 2026» |
+| /otzyvy-dimbo-pizza-zelenodolsk | Отзывы ДИМБО Пицца Зеленодольск | — |
+| /reyting-pitstserii-volzhsk | Рейтинг пиццерии Волжск | — |
+| /luchshie-otzyvy-dimbo | Лучшие отзывы ДИМБО | — |
+
+Отзывы на Яндекс Картах: https://yandex.ru/maps/org/dimbo/188302222909/reviews/
+
+#### Schema.org обновления
+
+**Файл**: `src/utils/schemaOrg.ts`
+
+| Добавлено | Описание |
+|-----------|----------|
+| `generateArticleSchema()` | Для блог-статей |
+| `generateEventSchema()` | Для сезонных страниц и мастер-классов |
+| `generateServiceSchema()` | Для кейтеринга |
+| `award` в Restaurant | «Хорошее место 2026 — Яндекс Карты» |
+| `pageType: 'nuggets'` | Для страниц нагетсов |
+
+#### Обновлённые SEO-файлы
+
+| Файл | URL | Было | Стало |
+|------|-----|------|-------|
+| sitemap.xml | https://dimbopizza.ru/sitemap.xml | 153 URL, 991 строка | **266 URL, 1684 строки** |
+| robots.txt | https://dimbopizza.ru/robots.txt | 111 Allow | **172 Allow (+61)** |
+
+Новые Allow-директивы в robots.txt:
+- Блог: 30 записей
+- Сезонные: 15 записей
+- Мастер-классы: 2 записи
+- Кейтеринг: 10 записей
+- Отзывы: 4 записи
+- Продукт×город: покрываются `Allow: /`
+
+#### Интеграция в App.tsx
+
+Все 113 маршрутов подключены через `generateSEORoutes()`:
+```tsx
+import { generateSEORoutes } from './utils/routeGenerator'
+import { blogRoutes } from './routes/blogRoutes'
+import { seasonalRoutes } from './routes/seasonalRoutes'
+import { productCityRoutes } from './routes/productCityRoutes'
+import { cateringRoutes } from './routes/cateringRoutes'
+import { reviewRoutes } from './routes/reviewRoutes'
+import { masterclassRoutes } from './routes/masterclassRoutes'
+
+// В Routes:
+{...generateSEORoutes(blogRoutes)}
+{...generateSEORoutes(seasonalRoutes)}
+{...generateSEORoutes(productCityRoutes)}
+{...generateSEORoutes(cateringRoutes)}
+{...generateSEORoutes(reviewRoutes)}
+{...generateSEORoutes(masterclassRoutes)}
+```
+
+Все страницы загружаются через `React.lazy()` — код не входит в основной бандл.
+
 ---
 
 ## 2. Текущее покрытие страницами
@@ -87,16 +284,44 @@
 | Специфические запросы | 8 | /pizzeriya-volzhsk, /dodo-pizza-volzhsk... |
 | Продукты (индивидуальные) | 26 | /pitstsa-margarita, /burger-dimburger... |
 | Kids | 34 | /detskiy-den-rozhdeniya... |
-| **Итого Волжск** | **~101** | |
+| Блог | 30 | /kak-prigotovit-pitstsu-doma... |
+| Сезонные | 15 | /novogodniy-stol-dostavka... |
+| Мастер-классы | 2 | /master-klass-po-prigotovleniyu-pitstsy... |
+| Продукт×город (Волжск) | 26 | /product-volzhsk-1... |
+| Кейтеринг (Волжск) | 1 | /ketering-volzhsk |
+| Отзывы (Волжск) | 2 | /otzyvy-dimbo-pizza-volzhsk, /reyting-pitstserii-volzhsk |
+| **Итого Волжск** | **~177** | |
 
 ### Зеленодольск
 | Тип | Кол-во | Примеры URL |
 |-----|--------|-------------|
 | Kids | 34 | /detskiy-den-rozhdeniya-zelenodolsk... |
 | Доставка еды | 16 | /dostavka-pizzy-zelenodolsk... |
-| **Итого Зеленодольск** | **~50** | |
+| Продукт×город (Зеленодольск) | 26 | /product-zelenodolsk-1... |
+| Кейтеринг (Зеленодольск) | 1 | /ketering-zelenodolsk |
+| Отзывы (Зеленодольск) | 1 | /otzyvy-dimbo-pizza-zelenodolsk |
+| **Итого Зеленодольск** | **~78** | |
 
-### Общий итог: ~150+ URL
+### Общий кейтеринг
+| Тип | Кол-во |
+|-----|--------|
+| Общие страницы | 8 |
+
+### Общий отзывы/рейтинг
+| Тип | Кол-во |
+|-----|--------|
+| Общие страницы | 1 |
+
+### Общий итог: ~266 URL (266 в sitemap)
+
+### Бандл после масштабирования
+
+| Метрика | Значение |
+|---------|----------|
+| Основной бандл | 652 KB |
+| Время сборки | 7.4 сек |
+| Всего чанков | 50+ |
+| SEO-страницы | lazy-loaded, 1-19 KB каждая |
 
 ---
 
@@ -235,7 +460,7 @@
 | `/shashlyk-zelenodolsk` | Шашлык в Зеленодольске |
 | `/shashlyk-na-dom` | Шашлык на дом |
 | `/shashlyk-na-uglyakh` | Шашлык на углях |
-| `/shashlyk-iz-svininy-dostavka` | Шашlyк из свинины с доставкой |
+| `/shashlyk-iz-svininy-dostavka` | Шашлык из свинины с доставкой |
 | `/shashlyk-iz-kuritsy-dostavka` | Шашлык из курицы с доставкой |
 | `/shashlyk-nedorogo-volzhsk` | Шашлык недорого Волжск |
 | `/shashlyk-zelenodolsk-dostavka` | Шашлык Зеленодольск доставка |
@@ -356,6 +581,20 @@
 
 ## 4. ИТОГО ПЛАН МАСШТАБИРОВАНИЯ
 
+### Выполнено (12.04.2026):
+
+| Категория | Страниц | Статус |
+|-----------|---------|--------|
+| Блог | 30 | DONE |
+| Сезонные мероприятия | 15 | DONE |
+| Мастер-классы | 2 | DONE |
+| Продукт × Город | 52 | DONE |
+| Кейтеринг B2B | 10 | DONE |
+| Отзывы | 4 | DONE |
+| **ИТОГО выполнено** | **113** | **DONE** |
+
+### Запланировано (направления А-И):
+
 | Направление | Новых страниц |
 |-------------|---------------|
 | А. Пиццерия | ~20 |
@@ -367,15 +606,15 @@
 | Ж. Районы Зеленодольск | ~10 |
 | З. Конкурентные | ~8 |
 | И. Информационные | ~10 |
-| **ИТОГО** | **~113 новых страниц** |
+| **ИТОГО запланировано** | **~113 новых страниц** |
 
-### После масштабирования:
+### После выполнения всех направлений:
 
 | Метрика | Сейчас | После |
 |---------|--------|-------|
-| Всего URL | ~150 | **~260+** |
-| Волжск страницы | ~101 | ~170 |
-| Зеленодольск страницы | ~50 | ~95 |
+| Всего URL | ~266 | **~380+** |
+| Волжск страницы | ~177 | ~262 |
+| Зеленодольск страницы | ~78 | ~118 |
 | Покрытие ключевых слов | ~190 | ~500+ |
 
 ---
@@ -389,16 +628,26 @@
 3. **Google Search Console** — подключить реальный verification код
 4. **Google Analytics 4** — подключить аналитику
 
-### 5.2 Архитектура для 260+ страниц
+### 5.2 Архитектура для 380+ страниц
 
-Для 113 новых страниц используем параметризованные шаблоны (как `CityDeliverySEOTemplate`):
+Существующая data-driven архитектура (использована для 113 страниц):
 
+| Шаблон | Для чего |
+|--------|----------|
+| `BlogArticleTemplate` | Блог-статьи |
+| `SeasonalPageTemplate` | Мероприятия + мастер-классы |
+| `ProductCityTemplate` | Товары × город |
+| `CateringTemplate` | B2B кейтеринг |
+| `ReviewsPageTemplate` | Отзывы и рейтинги |
+| `CityDeliverySEOTemplate` | Доставка по городам (существует) |
+
+Нужные дополнительные шаблоны:
 - `PizzeriaSEOTemplate` — для страниц «пиццерия [город/район]»
 - `ComparisonSEOPage` — для конкурентных страниц
 - `AreaDeliveryTemplate` — для районных страниц
 - `InfoSEOPage` — для информационных страниц
 
-Каждый шаблон + дата-файл = минимум нового кода.
+Каждый шаблон + дата-файл + `generateSEORoutes()` = минимум нового кода.
 
 ### 5.3 Порядок реализации по приоритету
 
@@ -420,7 +669,7 @@
 ## 6. Ожидаемые результаты масштабирования
 
 ### Через 3 месяца после реализации + prerendering:
-- 260+ страниц в индексе Яндекса и Google
+- 380+ страниц в индексе Яндекса и Google
 - ТОП-10 по 70% целевых запросов
 - ТОП-5 по 40% целевых запросов
 - 1000-2000 органических визитов/мес
@@ -436,6 +685,54 @@
 - ТОП-5 по 50% запросов Зеленодольск
 - 5000-8000 органических визитов/мес
 - 200+ заказов/мес из поиска
+
+---
+
+## 7. Ключевые файлы проекта
+
+### Инфраструктура
+| Файл | Назначение |
+|------|-----------|
+| `src/utils/routeGenerator.tsx` | Генератор маршрутов из SEORouteConfig[] |
+| `src/utils/schemaOrg.ts` | Schema.org генераторы (Restaurant, Article, Event, Service) |
+| `src/utils/seo.ts` | SEO конфигурация, 190+ ключевых слов |
+| `src/components/seo/SchemaMarkup.tsx` | Schema.org разметка компонентов |
+
+### Шаблоны SEO-страниц
+| Файл | Тип страниц |
+|------|------------|
+| `src/components/seo/BlogArticleTemplate.tsx` | Блог-статьи (30) |
+| `src/components/seo/SeasonalPageTemplate.tsx` | Сезонные + мастер-классы (17) |
+| `src/components/seo/ProductCityTemplate.tsx` | Продукт × город (52) |
+| `src/components/seo/CateringTemplate.tsx` | Кейтеринг B2B (10) |
+| `src/components/seo/ReviewsPageTemplate.tsx` | Отзывы и рейтинги (4) |
+| `src/components/seo/CityDeliverySEOTemplate.tsx` | Доставка по городам (16) |
+
+### Данные
+| Файл | Записей |
+|------|---------|
+| `src/data/blogData.ts` | 30 статей |
+| `src/data/seasonalData.ts` | 15 мероприятий |
+| `src/data/productCityData.ts` | 52 товар×город |
+| `src/data/cateringData.ts` | 10 услуг кейтеринга |
+| `src/data/reviewsData.ts` | 4 страницы отзывов |
+| `src/data/faqData.ts` | FAQ по 5 категориям |
+
+### Маршруты
+| Файл | Маршрутов |
+|------|-----------|
+| `src/routes/blogRoutes.ts` | 30 |
+| `src/routes/seasonalRoutes.ts` | 15 |
+| `src/routes/productCityRoutes.ts` | 52 |
+| `src/routes/cateringRoutes.ts` | 10 |
+| `src/routes/reviewRoutes.ts` | 4 |
+| `src/routes/masterclassRoutes.ts` | 2 |
+
+### SEO-файлы
+| Файл | URL | Содержание |
+|------|-----|-----------|
+| sitemap.xml | https://dimbopizza.ru/sitemap.xml | 266 URL |
+| robots.txt | https://dimbopizza.ru/robots.txt | 172 Allow-директивы |
 
 ---
 
