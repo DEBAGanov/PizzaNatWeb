@@ -163,8 +163,8 @@ const ZakazatEduZelenodolskPage = lazy(() => import('./pages/zelenodolsk-deliver
 const DostavkaNagetsovZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/DostavkaNagetsovZelenodolskPage').then(m => ({ default: m.DostavkaNagetsovZelenodolskPage })))
 const ZakazatNagetsyZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/ZakazatNagetsyZelenodolskPage').then(m => ({ default: m.ZakazatNagetsyZelenodolskPage })))
 
-// Новые SEO-маршруты через генератор
-import { generateSEORoutes } from './utils/routeGenerator'
+// Новые SEO-маршруты через useRoutes hook
+import { useSEORoutes } from './utils/routeGenerator'
 import { blogRoutes } from './routes/blogRoutes'
 import { seasonalRoutes } from './routes/seasonalRoutes'
 import { productCityRoutes } from './routes/productCityRoutes'
@@ -213,6 +213,9 @@ function WebApp() {
   const { user } = useAuth()
   const { loadCategories, loadCart } = useProducts()
 
+  // SEO-маршруты через useRoutes (работает надёжнее чем spread внутри <Routes>)
+  const seoElement = useSEORoutes([blogRoutes, seasonalRoutes, productCityRoutes, cateringRoutes, reviewRoutes, masterclassRoutes])
+
   // Загружаем категории только один раз
   useEffect(() => {
     console.log('🔄 Загружаем категории...')
@@ -226,6 +229,9 @@ function WebApp() {
       loadCart()
     }
   }, [user?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Если SEO-маршрут совпал — рендерим его (requireAuth=false)
+  if (seoElement) return <Suspense fallback={<SEOLoadingFallback />}>{seoElement}</Suspense>
 
 
 
@@ -776,14 +782,6 @@ function WebApp() {
       <Route path="/zakazat-edu-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatEduZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
       <Route path="/dostavka-nagetsov-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DostavkaNagetsovZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
       <Route path="/zakazat-nagetsy-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatNagetsyZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
-
-      {/* === НОВЫЕ SEO-СТРАНИЦЫ (113+ страниц) === */}
-      {...generateSEORoutes(blogRoutes)}
-      {...generateSEORoutes(seasonalRoutes)}
-      {...generateSEORoutes(productCityRoutes)}
-      {...generateSEORoutes(cateringRoutes)}
-      {...generateSEORoutes(reviewRoutes)}
-      {...generateSEORoutes(masterclassRoutes)}
 
       {/* Индивидуальные товарные SEO страницы */}
       <Route path="/pitstsa-margarita" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PitstsaMargaritaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />

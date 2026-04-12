@@ -1,5 +1,5 @@
-import React, { type LazyExoticComponent, type ComponentType } from 'react'
-import { Route } from 'react-router-dom'
+import { type LazyExoticComponent, type ComponentType } from 'react'
+import { useRoutes } from 'react-router-dom'
 import { AppShell } from '@mantine/core'
 import { ProtectedRoute } from '../components/ProtectedRoute'
 import { TelegramBottomNav } from '../components/telegram/TelegramNavigation'
@@ -23,12 +23,10 @@ function seoRouteElement(Component: SEORouteConfig['component'], props?: Record<
   )
 }
 
-export function generateSEORoutes(routes: SEORouteConfig[]): React.ReactElement[] {
-  return routes.map(route => (
-    <Route
-      key={route.path}
-      path={route.path}
-      element={seoRouteElement(route.component, route.props)}
-    />
-  ))
+export function useSEORoutes(routeArrays: SEORouteConfig[][]) {
+  const allRoutes = routeArrays.flat().map(route => ({
+    path: route.path,
+    element: seoRouteElement(route.component, route.props),
+  }))
+  return useRoutes(allRoutes)
 }
