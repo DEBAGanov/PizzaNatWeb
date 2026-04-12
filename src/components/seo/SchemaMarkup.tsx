@@ -14,7 +14,7 @@ import {
 } from '../../utils/schemaOrg'
 
 interface SchemaMarkupProps {
-  pageType?: 'pizza' | 'sushi' | 'shashlyk' | 'burgers' | 'wings' | 'fries' | 'food'
+  pageType?: 'pizza' | 'sushi' | 'shashlyk' | 'burgers' | 'wings' | 'fries' | 'food' | 'nuggets'
   customSchema?: object[]
   includeFAQ?: boolean
   faqData?: Array<{question: string, answer: string}>

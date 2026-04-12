@@ -147,7 +147,8 @@ export function generateRestaurantSchema(): RestaurantSchema {
       "@type": "AggregateRating",
       ratingValue: 4.8,
       reviewCount: 127
-    }
+    },
+    award: "Хорошее место 2026 — Яндекс Карты"
   }
 }
 
@@ -358,9 +359,104 @@ export function insertSchemaMarkup(schema: object): void {
 }
 
 /**
+ * Генерирует Schema.org разметку для статьи блога
+ */
+export function generateArticleSchema(config: {
+  title: string
+  description: string
+  imageUrl: string
+  datePublished: string
+  dateModified?: string
+  author?: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: config.title,
+    description: config.description,
+    image: config.imageUrl,
+    datePublished: config.datePublished,
+    dateModified: config.dateModified || config.datePublished,
+    author: {
+      "@type": "Organization",
+      name: config.author || "ДИМБО Пицца"
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "ДИМБО Пицца",
+      url: "https://dimbopizza.ru"
+    }
+  }
+}
+
+/**
+ * Генерирует Schema.org разметку для мероприятия
+ */
+export function generateEventSchema(config: {
+  name: string
+  description: string
+  startDate: string
+  endDate?: string
+  location?: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: config.name,
+    description: config.description,
+    startDate: config.startDate,
+    endDate: config.endDate || config.startDate,
+    location: {
+      "@type": "Place",
+      name: config.location || "ДИМБО Пицца",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "ул. Шестакова, д.1Б",
+        addressLocality: "Волжск",
+        addressRegion: "Республика Марий Эл",
+        addressCountry: "RU"
+      }
+    },
+    organizer: {
+      "@type": "Organization",
+      name: "ДИМБО Пицца",
+      url: "https://dimbopizza.ru"
+    }
+  }
+}
+
+/**
+ * Генерирует Schema.org разметку для услуги кейтеринга
+ */
+export function generateServiceSchema(config: {
+  serviceType: string
+  name: string
+  description: string
+  areaServed?: string[]
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: config.serviceType,
+    name: config.name,
+    description: config.description,
+    provider: {
+      "@type": "Restaurant",
+      name: "ДИМБО Пицца",
+      telephone: "+7(902)105-34-34",
+      url: "https://dimbopizza.ru"
+    },
+    areaServed: (config.areaServed || ["Волжск", "Зеленодольск"]).map(city => ({
+      "@type": "City",
+      name: city
+    }))
+  }
+}
+
+/**
  * Генерирует комплексную Schema.org разметку для SEO-страниц
  */
-export function generateSEOPageSchema(pageType: 'pizza' | 'sushi' | 'shashlyk' | 'burgers' | 'wings' | 'fries' | 'food') {
+export function generateSEOPageSchema(pageType: 'pizza' | 'sushi' | 'shashlyk' | 'burgers' | 'wings' | 'fries' | 'food' | 'nuggets') {
   const baseSchema = generateRestaurantSchema()
   const localBusinessSchema = generateLocalBusinessSchema()
   

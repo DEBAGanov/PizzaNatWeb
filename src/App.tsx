@@ -163,6 +163,15 @@ const ZakazatEduZelenodolskPage = lazy(() => import('./pages/zelenodolsk-deliver
 const DostavkaNagetsovZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/DostavkaNagetsovZelenodolskPage').then(m => ({ default: m.DostavkaNagetsovZelenodolskPage })))
 const ZakazatNagetsyZelenodolskPage = lazy(() => import('./pages/zelenodolsk-delivery-seo/ZakazatNagetsyZelenodolskPage').then(m => ({ default: m.ZakazatNagetsyZelenodolskPage })))
 
+// Новые SEO-маршруты через генератор
+import { generateSEORoutes } from './utils/routeGenerator'
+import { blogRoutes } from './routes/blogRoutes'
+import { seasonalRoutes } from './routes/seasonalRoutes'
+import { productCityRoutes } from './routes/productCityRoutes'
+import { cateringRoutes } from './routes/cateringRoutes'
+import { reviewRoutes } from './routes/reviewRoutes'
+import { masterclassRoutes } from './routes/masterclassRoutes'
+
 // Suspense fallback для lazy-компонентов
 function SEOLoadingFallback() {
   return (
@@ -767,6 +776,14 @@ function WebApp() {
       <Route path="/zakazat-edu-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatEduZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
       <Route path="/dostavka-nagetsov-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><DostavkaNagetsovZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
       <Route path="/zakazat-nagetsy-zelenodolsk" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><ZakazatNagetsyZelenodolskPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />
+
+      {/* === НОВЫЕ SEO-СТРАНИЦЫ (113+ страниц) === */}
+      {...generateSEORoutes(blogRoutes)}
+      {...generateSEORoutes(seasonalRoutes)}
+      {...generateSEORoutes(productCityRoutes)}
+      {...generateSEORoutes(cateringRoutes)}
+      {...generateSEORoutes(reviewRoutes)}
+      {...generateSEORoutes(masterclassRoutes)}
 
       {/* Индивидуальные товарные SEO страницы */}
       <Route path="/pitstsa-margarita" element={<ProtectedRoute requireAuth={false}><AppShell padding="md"><AppShell.Main style={{ paddingBottom: '120px' }}><PitstsaMargaritaSEOPage /></AppShell.Main><TelegramBottomNav /></AppShell></ProtectedRoute>} />

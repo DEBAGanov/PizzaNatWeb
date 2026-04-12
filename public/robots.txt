@@ -146,3 +146,74 @@ Allow: /organizatsiya-prazdnikov-i-meropriyatiy-ve-zelenodolsk
 Allow: /prazdniki-v-detskom-sadu-zelenodolsk
 Allow: /stsenariy-detskogo-prazdnika-zelenodolsk
 Allow: /pozdravlenie-s-rozhdeniem-rebenka-zelenodolsk
+
+# Blog articles
+Allow: /kak-prigotovit-pitstsu-doma
+Allow: /retsept-burgera-kak-v-restorane
+Allow: /sushi-doma-proshche-chem-kazhetsya
+Allow: /domashnyaya-pitstsa-na-tonkom-teste
+Allow: /idealnyy-shashlyk-sekrety-marinada
+Allow: /rolly-filadelfiya-doma
+Allow: /kartoshka-fri-kak-v-restorane
+Allow: /kak-pravilno-razogret-pitstsu
+Allow: /kak-vybrat-pitstseriyu-dlya-dostavki
+Allow: /skolko-pitstsy-zakazat-na-kompaniyu
+Allow: /eda-dlya-vecherinki-chto-zakazat
+Allow: /vidy-italyanskoy-pitstsy-polnyy-gid
+Allow: /luchshie-nachinki-dlya-pitstsy-top-10
+Allow: /shashlyk-iz-svininy-vs-kuritsy
+Allow: /burgery-kakie-byvayut-vidy
+Allow: /istoriya-dimbo-pitstsa
+Allow: /master-klassy-dimbo
+Allow: /nashi-ingrediyenty-kachestvo
+Allow: /eda-v-volzhske-gastronomicheskiy-gid
+Allow: /kuhnya-narodov-mariy-el
+Allow: /gde-poest-v-volzhske-obzor
+Allow: /letnee-menyu-chto-zakazat-v-zharu
+Allow: /zimnyaya-eda-sogrevayushchie-blyuda
+Allow: /prazdnichnyy-stol-chto-zakazat
+Allow: /pitstsa-vs-burger-chto-vybrat
+Allow: /dostavka-edy-vs-pohod-v-restoran
+Allow: /domashnyaya-pitstsa-vs-dostavka
+Allow: /kalorii-v-populyarnyh-blyudah
+Allow: /sbalansirovannyy-obed-s-dostavkoy
+Allow: /vegetarianskaya-pitstsa-polza-i-vkus
+
+# Seasonal pages
+Allow: /novogodniy-stol-dostavka
+Allow: /zakazat-edy-na-novyy-god
+Allow: /dostavka-edy-na-8-marta
+Allow: /dostavka-edy-na-den-rozhdeniya
+Allow: /korporativnaya-dostavka-edy
+Allow: /dostavka-edy-na-piknik
+Allow: /svadebnaya-dostavka-edy
+Allow: /dostavka-edy-na-vypusknoy
+Allow: /dostavka-edy-1-sentyabrya
+Allow: /dostavka-edy-na-den-rossii
+Allow: /dostavka-edy-den-pobedy
+Allow: /rozhdestvenskiy-stol-dostavka
+Allow: /dostavka-edy-den-materi
+Allow: /maslenitsa-dostavka-edy
+Allow: /dostavka-edy-na-dom
+
+# Masterclass pages
+Allow: /master-klass-po-prigotovleniyu-pitstsy
+Allow: /master-klass-po-prigotovleniyu-burgerov
+
+# Catering pages
+Allow: /ketering-dlya-ofisa
+Allow: /korporativnoe-pitanie
+Allow: /banketnoe-menyu
+Allow: /svadebnyy-ketering
+Allow: /piknik-dostavka
+Allow: /furshetnaya-dostavka
+Allow: /detskiy-prazdnik-ketering
+Allow: /dostavka-obedov-v-ofis
+Allow: /ketering-volzhsk
+Allow: /ketering-zelenodolsk
+
+# Reviews pages
+Allow: /otzyvy-dimbo-pizza-volzhsk
+Allow: /otzyvy-dimbo-pizza-zelenodolsk
+Allow: /reyting-pitstserii-volzhsk
+Allow: /luchshie-otzyvy-dimbo
