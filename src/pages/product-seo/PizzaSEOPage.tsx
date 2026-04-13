@@ -266,7 +266,7 @@ export function PizzaSEOPage() {
                 size="xl" 
                 color="orange"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/')}
+                onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
               >
                 Перейти в меню
               </Button>

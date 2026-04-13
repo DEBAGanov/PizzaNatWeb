@@ -323,7 +323,7 @@ export function OrdersPage() {
                 : 'Перейдите в меню и оформите свой первый заказ'
               }
             </Text>
-            <Button color="orange" onClick={() => navigate('/menu')}>
+            <Button color="orange" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>
               Перейти в меню
             </Button>
           </Paper>

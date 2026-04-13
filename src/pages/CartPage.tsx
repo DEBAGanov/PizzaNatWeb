@@ -122,7 +122,7 @@ export function CartPage() {
 
   // Возврат к меню
   const handleBackToMenu = () => {
-    navigate('/menu')
+    window.open('https://max.ru/id121603899498_bot', '_blank')
   }
 
   if (cartLoading && !cart) {

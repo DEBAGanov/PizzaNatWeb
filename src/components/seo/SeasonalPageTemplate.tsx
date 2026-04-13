@@ -342,7 +342,7 @@ export const SeasonalPageTemplate: React.FC<SeasonalPageTemplateProps> = ({ conf
                   variant="outline"
                   color="orange"
                   rightSection={<IconChevronRight size={24} />}
-                  onClick={() => navigate('/')}
+                  onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                 >
                   Перейти в меню
                 </Button>

@@ -407,7 +407,7 @@ export function CheckoutPage() {
         >
           Добавьте товары в корзину перед оформлением заказа
           <Group mt="md">
-            <Button variant="light" onClick={() => navigate('/menu')}>
+            <Button variant="light" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>
               Перейти в меню
             </Button>
           </Group>

@@ -92,7 +92,8 @@ export function ProductCityTemplate({ config }: ProductCityTemplateProps) {
               </Button>
               <Button
                 component="a"
-                href="/menu"
+                href="https://max.ru/id121603899498_bot"
+                target="_blank"
                 variant="light"
                 rightSection={<IconChevronRight size={16} />}
                 size="lg"

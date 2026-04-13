@@ -138,7 +138,7 @@ export function BlogArticleTemplate({ config }: BlogArticleTemplateProps) {
               <Button component="a" href="tel:+79021053434" leftSection={<IconPhone size={16} />} size="lg" variant="filled" color="dark">
                 +7(902)105-34-34
               </Button>
-              <Button component="a" href="/menu" variant="white" rightSection={<IconChevronRight size={16} />} size="lg">
+              <Button component="a" href="https://max.ru/id121603899498_bot" target="_blank" variant="white" rightSection={<IconChevronRight size={16} />} size="lg">
                 Перейти в меню
               </Button>
             </Group>

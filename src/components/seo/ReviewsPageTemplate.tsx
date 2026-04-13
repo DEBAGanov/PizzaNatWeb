@@ -146,7 +146,8 @@ export function ReviewsPageTemplate({ config }: ReviewsPageTemplateProps) {
               </Stack>
               <Button
                 component="a"
-                href="/menu"
+                href="https://max.ru/id121603899498_bot"
+                target="_blank"
                 size="lg"
                 color="orange"
                 rightSection={<IconExternalLink size={16} />}
