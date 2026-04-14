@@ -116,7 +116,7 @@ export const ProductSEOTemplate: React.FC<ProductSEOTemplateProps> = ({ product,
                       size="lg" 
                       color={color} 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/')}
+                      onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                     >
                       Заказать сейчас
                     </Button>

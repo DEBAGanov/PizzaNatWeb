@@ -80,7 +80,7 @@ export const CityDeliverySEOTemplate: React.FC<CityDeliverySEOTemplateProps> = (
                       size="lg"
                       color="orange"
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/')}
+                      onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                     >
                       Заказать сейчас
                     </Button>
@@ -124,7 +124,7 @@ export const CityDeliverySEOTemplate: React.FC<CityDeliverySEOTemplateProps> = (
                         <Text size="sm" c="dimmed">{product.description}</Text>
                         <Group justify="space-between" align="center">
                           <Text size="lg" fw={700} c="orange">{product.price} ₽</Text>
-                          <Button size="sm" color="orange">Заказать</Button>
+                          <Button size="sm" color="orange" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                         </Group>
                       </Stack>
                     </Card>

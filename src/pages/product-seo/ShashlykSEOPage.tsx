@@ -48,7 +48,7 @@ export function ShashlykSEOPage() {
                       size="lg" 
                       color="red" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/')}
+                      onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                     >
                       Заказать шашлык сейчас
                     </Button>
@@ -91,7 +91,7 @@ export function ShashlykSEOPage() {
                     <Text size="sm" c="dimmed">Сочный шашлык из отборной свинины, маринованный в специальном соусе</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="red">650 ₽</Text>
-                      <Button size="sm" color="red">Заказать</Button>
+                      <Button size="sm" color="red" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -109,7 +109,7 @@ export function ShashlykSEOPage() {
                     <Text size="sm" c="dimmed">Нежный шашлык из молодой говядины с ароматными специями</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="red">720 ₽</Text>
-                      <Button size="sm" color="red">Заказать</Button>
+                      <Button size="sm" color="red" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -127,7 +127,7 @@ export function ShashlykSEOPage() {
                     <Text size="sm" c="dimmed">Диетический шашлык из куриного филе с травами и специями</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="red">550 ₽</Text>
-                      <Button size="sm" color="red">Заказать</Button>
+                      <Button size="sm" color="red" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>

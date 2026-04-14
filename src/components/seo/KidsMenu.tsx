@@ -81,7 +81,7 @@ export const KidsMenu: React.FC<KidsMenuProps> = ({
   }
 
   const handleOrderClick = () => {
-    navigate('/')
+    window.open('https://max.ru/id121603899498_bot', '_blank')
   }
 
   if (productsLoading) {

@@ -154,7 +154,7 @@ export const SeasonalPageTemplate: React.FC<SeasonalPageTemplateProps> = ({ conf
                       variant="outline"
                       color="orange"
                       rightSection={<IconChevronRight size={20} />}
-                      onClick={() => navigate('/')}
+                      onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                     >
                       Смотреть меню
                     </Button>
@@ -206,7 +206,7 @@ export const SeasonalPageTemplate: React.FC<SeasonalPageTemplateProps> = ({ conf
                         <Text size="sm" c="dimmed">{item.description}</Text>
                         <Group justify="space-between" align="center">
                           <Text size="lg" fw={700} c="orange">{item.price} ₽</Text>
-                          <Button size="sm" color="orange">Заказать</Button>
+                          <Button size="sm" color="orange" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                         </Group>
                       </Stack>
                     </Card>

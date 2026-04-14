@@ -49,7 +49,7 @@ export function BurgerSEOPage() {
                       size="lg" 
                       color="yellow" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/')}
+                      onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                     >
                       Заказать бургеры сейчас
                     </Button>
@@ -92,7 +92,7 @@ export function BurgerSEOPage() {
                     <Text size="sm" c="dimmed">Сочная говяжья котлета, свежие овощи, сыр и фирменный соус</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="yellow.8">350 ₽</Text>
-                      <Button size="sm" color="yellow">Заказать</Button>
+                      <Button size="sm" color="yellow" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -110,7 +110,7 @@ export function BurgerSEOPage() {
                     <Text size="sm" c="dimmed">Две говяжьи котлеты, двойной сыр и фирменный соус</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="yellow.8">420 ₽</Text>
-                      <Button size="sm" color="yellow">Заказать</Button>
+                      <Button size="sm" color="yellow" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -128,7 +128,7 @@ export function BurgerSEOPage() {
                     <Text size="sm" c="dimmed">Сочная куриная котлета в панировке с овощами и соусом</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="yellow.8">320 ₽</Text>
-                      <Button size="sm" color="yellow">Заказать</Button>
+                      <Button size="sm" color="yellow" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>

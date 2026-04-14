@@ -48,7 +48,7 @@ export function NuggetsSEOPage() {
                       size="lg" 
                       color="orange" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/')}
+                      onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                     >
                       Заказать нагетсы сейчас
                     </Button>
@@ -91,7 +91,7 @@ export function NuggetsSEOPage() {
                     <Text size="sm" c="dimmed">Хрустящие куриные нагетсы в традиционной панировке</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">280 ₽</Text>
-                      <Button size="sm" color="orange">Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -109,7 +109,7 @@ export function NuggetsSEOPage() {
                     <Text size="sm" c="dimmed">Пикантные нагетсы с острыми специями в панировке</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">320 ₽</Text>
-                      <Button size="sm" color="orange">Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -127,7 +127,7 @@ export function NuggetsSEOPage() {
                     <Text size="sm" c="dimmed">Нагетсы с расплавленным сыром внутри хрустящей панировки</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">350 ₽</Text>
-                      <Button size="sm" color="orange">Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>

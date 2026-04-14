@@ -49,7 +49,7 @@ export function FoodSEOPage() {
                       size="lg" 
                       color="orange" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/')}
+                      onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                     >
                       Заказать еду сейчас
                     </Button>
@@ -95,7 +95,7 @@ export function FoodSEOPage() {
                     <Text size="sm" c="dimmed">Классическая итальянская пицца</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">380 ₽</Text>
-                      <Button size="sm" color="orange">Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -113,7 +113,7 @@ export function FoodSEOPage() {
                     <Text size="sm" c="dimmed">Ассорти из популярных суши и роллов</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="blue">980 ₽</Text>
-                      <Button size="sm" color="blue">Заказать</Button>
+                      <Button size="sm" color="blue" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -131,7 +131,7 @@ export function FoodSEOPage() {
                     <Text size="sm" c="dimmed">Сочный шашлык, приготовленный на углях</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="red">650 ₽</Text>
-                      <Button size="sm" color="red">Заказать</Button>
+                      <Button size="sm" color="red" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -149,7 +149,7 @@ export function FoodSEOPage() {
                     <Text size="sm" c="dimmed">Сочный бургер с картофелем фри</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="yellow.8">350 ₽</Text>
-                      <Button size="sm" color="yellow">Заказать</Button>
+                      <Button size="sm" color="yellow" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -324,7 +324,7 @@ export function FoodSEOPage() {
                 size="xl" 
                 color="orange"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/')}
+                onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
               >
                 Открыть меню
               </Button>

@@ -49,7 +49,7 @@ export function PizzaSEOPage() {
                       size="lg" 
                       color="orange" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/')}
+                      onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                     >
                       Заказать пиццу сейчас
                     </Button>
@@ -92,7 +92,7 @@ export function PizzaSEOPage() {
                     <Text size="sm" c="dimmed">Классическая итальянская пицца с томатным соусом, сыром "Моцарелла" и помидорами</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">380 ₽</Text>
-                      <Button size="sm" color="orange">Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -110,7 +110,7 @@ export function PizzaSEOPage() {
                     <Text size="sm" c="dimmed">Острая пицца с пепперони, томатным соусом и сыром "Моцарелла"</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">450 ₽</Text>
-                      <Button size="sm" color="orange">Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -128,7 +128,7 @@ export function PizzaSEOPage() {
                     <Text size="sm" c="dimmed">Экзотическая пицца с ананасами, ветчиной и сыром "Моцарелла"</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="orange">480 ₽</Text>
-                      <Button size="sm" color="orange">Заказать</Button>
+                      <Button size="sm" color="orange" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>

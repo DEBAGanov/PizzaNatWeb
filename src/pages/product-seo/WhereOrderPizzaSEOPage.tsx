@@ -58,7 +58,7 @@ export function WhereOrderPizzaSEOPage() {
                       size="xl" 
                       color="violet" 
                       leftSection={<IconShoppingCart size={24} />}
-                      onClick={() => navigate('/')}
+                      onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                       style={{ fontSize: '18px' }}
                     >
                       Заказать в лучшей
@@ -111,7 +111,7 @@ export function WhereOrderPizzaSEOPage() {
                       <Text size="sm" c="dimmed">Доставка</Text>
                       <Text fw={600} c="blue">30-60 мин</Text>
                     </Stack>
-                    <Button color="yellow" onClick={() => navigate('/')}>
+                    <Button color="yellow" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>
                       Заказать
                     </Button>
                   </Group>
@@ -393,7 +393,7 @@ export function WhereOrderPizzaSEOPage() {
                 size="xl" 
                 color="violet"
                 leftSection={<IconShoppingCart size={24} />}
-                onClick={() => navigate('/')}
+                onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                 style={{ fontSize: '18px' }}
               >
                 Заказать сейчас

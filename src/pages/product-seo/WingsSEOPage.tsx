@@ -48,7 +48,7 @@ export function WingsSEOPage() {
                       size="lg" 
                       color="grape" 
                       leftSection={<IconShoppingCart size={20} />}
-                      onClick={() => navigate('/')}
+                      onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}
                     >
                       Заказать крылышки сейчас
                     </Button>
@@ -91,7 +91,7 @@ export function WingsSEOPage() {
                     <Text size="sm" c="dimmed">Сочные крылышки в фирменном соусе барбекю с дымным ароматом</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="grape">420 ₽</Text>
-                      <Button size="sm" color="grape">Заказать</Button>
+                      <Button size="sm" color="grape" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -109,7 +109,7 @@ export function WingsSEOPage() {
                     <Text size="sm" c="dimmed">Очень острые крылышки в классическом соусе Буффало</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="grape">450 ₽</Text>
-                      <Button size="sm" color="grape">Заказать</Button>
+                      <Button size="sm" color="grape" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
@@ -127,7 +127,7 @@ export function WingsSEOPage() {
                     <Text size="sm" c="dimmed">Сладкие крылышки в медово-горчичном соусе с кунжутом</Text>
                     <Group justify="space-between" align="center">
                       <Text size="lg" fw={700} c="grape">480 ₽</Text>
-                      <Button size="sm" color="grape">Заказать</Button>
+                      <Button size="sm" color="grape" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>Заказать</Button>
                     </Group>
                   </Stack>
                 </Card>
