@@ -1,10 +1,14 @@
 /**
  * @file: mobile.css
  * @description: Мобильные стили для адаптивности компонентов
+ * Стиль ориентирован на чистый минимализм как у Додо Пиццы
  * @created: 2025-01-24
  */
 
-/* Базовые Flexbox утилиты для мобильной адаптивности */
+/* ==========================================================================
+   БАЗОВЫЕ Flexbox УТИЛИТЫ
+   ========================================================================== */
+
 .mobile-flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -23,29 +27,31 @@
   justify-content: space-between;
 }
 
-/* Адаптивные медиа-запросы для различных размеров экранов */
+/* ==========================================================================
+   НИЖНЯЯ НАВИГАЦИЯ
+   ========================================================================== */
 
 /* Очень маленькие экраны (до 320px) */
 @media (max-width: 320px) {
   .mobile-bottom-nav {
     padding: 4px 2px !important;
   }
-  
+
   .mobile-bottom-nav-item {
     padding: 4px 2px !important;
     min-width: 60px;
   }
-  
+
   .mobile-bottom-nav-text {
-    font-size: 9px !important;
-    line-height: 1.1 !important;
+    font-size: 10px !important;
+    line-height: 1.2 !important;
   }
-  
+
   .mobile-bottom-nav-icon {
-    width: 16px !important;
-    height: 16px !important;
+    width: 18px !important;
+    height: 18px !important;
   }
-  
+
   .mobile-flex-item {
     flex: 1 1 100%;
     max-width: 100%;
@@ -58,39 +64,39 @@
   .mobile-bottom-nav {
     padding: 6px 4px !important;
   }
-  
+
   .mobile-bottom-nav-item {
     padding: 6px 3px !important;
     min-width: 70px;
   }
-  
+
   .mobile-bottom-nav-text {
-    font-size: 10px !important;
+    font-size: 11px !important;
     line-height: 1.2 !important;
   }
-  
+
   .mobile-bottom-nav-icon {
-    width: 18px !important;
-    height: 18px !important;
+    width: 20px !important;
+    height: 20px !important;
   }
-  
+
   .mobile-delivery-blocks {
     gap: 8px;
   }
-  
+
   .mobile-delivery-block {
-    padding: 8px !important;
-    min-height: 120px;
+    padding: 10px !important;
+    min-height: 100px;
   }
-  
+
   .mobile-delivery-block-title {
     font-size: 14px !important;
-    line-height: 1.2 !important;
-  }
-  
-  .mobile-delivery-block-text {
-    font-size: 11px !important;
     line-height: 1.3 !important;
+  }
+
+  .mobile-delivery-block-text {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
     -webkit-line-clamp: 2;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -104,7 +110,7 @@
   .mobile-flex-item {
     flex: 1 1 calc(50% - 8px);
   }
-  
+
   .mobile-delivery-blocks {
     gap: 12px;
   }
@@ -116,51 +122,302 @@
     flex: 1 1 calc(25% - 12px);
     max-width: 250px;
   }
-  
+
   .mobile-delivery-blocks {
     gap: 16px;
   }
 }
 
-/* Улучшенная типографика для мобильных устройств */
+/* ==========================================================================
+   МОБИЛЬНАЯ ТИПОГРАФИКА (стиль Додо Пиццы)
+   ========================================================================== */
+
 @media (max-width: 480px) {
-  /* Компактные заголовки */
   .mobile-title-large {
-    font-size: 1.5rem !important;
+    font-size: 1.4rem !important;
     line-height: 1.3 !important;
     margin-bottom: 8px !important;
   }
-  
+
   .mobile-title-medium {
-    font-size: 1.2rem !important;
+    font-size: 1.15rem !important;
     line-height: 1.3 !important;
     margin-bottom: 6px !important;
   }
-  
+
   .mobile-title-small {
     font-size: 1rem !important;
-    line-height: 1.3 !important;
+    line-height: 1.4 !important;
     margin-bottom: 4px !important;
   }
-  
-  /* Компактный текст */
+
   .mobile-text-body {
-    font-size: 13px !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .mobile-text-small {
+    font-size: 12px !important;
     line-height: 1.4 !important;
   }
-  
-  .mobile-text-small {
+
+  .mobile-text-tiny {
     font-size: 11px !important;
     line-height: 1.3 !important;
   }
-  
-  .mobile-text-tiny {
-    font-size: 10px !important;
-    line-height: 1.2 !important;
+}
+
+/* ==========================================================================
+   SEO СТРАНИЦЫ — АДАПТИВНЫЕ СТИЛИ
+   (KidsPageTemplate, ProductSEOTemplate, CityDeliverySEOTemplate)
+   Стиль: чистый, компактный, как Додо Пицца
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* --- Container: уменьшаем вертикальные отступы --- */
+  .mantine-Container-root {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* --- Card: компактные отступы --- */
+  .mantine-Card-root {
+    padding: 14px !important;
+  }
+
+  /* Hero Card — чуть больше отступ */
+  .mantine-Card-root[aria-label] .mantine-Card-root,
+  .mantine-Stack-root > .mantine-Card-root:first-child {
+    padding: 16px !important;
+  }
+
+  /* --- Paper: компактные отступы --- */
+  .mantine-Paper-root {
+    padding: 14px !important;
+  }
+
+  /* --- Stack gap: уменьшаем на мобильных --- */
+  .mantine-Stack-root {
+    gap: 12px !important;
+  }
+
+  /* --- Уменьшаем py="xl" на Container --- */
+  .mantine-Container-root > .mantine-Stack-root {
+    gap: 16px !important;
+  }
+
+  /* --- Button: адаптивный размер --- */
+  .mantine-Button-root[data-size="lg"] {
+    height: 40px !important;
+    padding: 0 16px !important;
+    font-size: 14px !important;
+  }
+
+  .mantine-Button-root[data-size="xl"] {
+    height: 44px !important;
+    padding: 0 20px !important;
+    font-size: 15px !important;
+  }
+
+  /* --- Badge: компактный на мобильных --- */
+  .mantine-Badge-root[data-size="lg"] {
+    font-size: 12px !important;
+    padding: 2px 10px !important;
+    height: 24px !important;
+  }
+
+  .mantine-Badge-root[data-size="xl"] {
+    font-size: 13px !important;
+    padding: 3px 12px !important;
+    height: 28px !important;
+  }
+
+  /* --- ThemeIcon: компактный --- */
+  .mantine-ThemeIcon-root[data-size="xl"] {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+  }
+
+  /* --- IconTabler: уменьшаем иконки на мобильных --- */
+  .mantine-ThemeIcon-root svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  /* --- Group: уменьшаем gap --- */
+  .mantine-Group-root[data-gap="lg"],
+  .mantine-Group-root[data-gap="xl"] {
+    gap: 10px !important;
+  }
+
+  /* --- SimpleGrid gap --- */
+  .mantine-SimpleGrid-root {
+    --sg-gap: 10px !important;
   }
 }
 
-/* Optimized touch targets для мобильных устройств */
+@media (max-width: 480px) {
+  /* --- Container: ещё меньше горизонтальных отступов --- */
+  .mantine-Container-root {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  /* --- Card: ещё компактнее на маленьких экранах --- */
+  .mantine-Card-root {
+    padding: 12px !important;
+  }
+
+  /* --- Paper --- */
+  .mantine-Paper-root {
+    padding: 12px !important;
+  }
+
+  /* --- Заголовки H1 на мобильных: ~22px (как Додо) --- */
+  .mantine-Title-root[data-order="1"] {
+    font-size: 22px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* H2: ~18px */
+  .mantine-Title-root[data-order="2"] {
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* H3: ~16px */
+  .mantine-Title-root[data-order="3"] {
+    font-size: 16px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* H4: ~15px */
+  .mantine-Title-root[data-order="4"] {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+  }
+
+  /* --- Title size props --- */
+  .mantine-Title-root {
+    /* Переписываем Mantine size="h1" */
+    font-size: revert !important;
+  }
+
+  /* --- Text size="xl": 16px вместо 20px --- */
+  .mantine-Text-root[data-size="xl"] {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* --- Text size="lg": 15px --- */
+  .mantine-Text-root[data-size="lg"] {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* --- Text size="md": 14px --- */
+  .mantine-Text-root[data-size="md"] {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* --- Group кнопок в Hero: перенос на новую строку --- */
+  .mantine-Group-root[data-justify="center"] {
+    flex-wrap: wrap !important;
+  }
+
+  /* --- Button: ещё компактнее на маленьких экранах --- */
+  .mantine-Button-root[data-size="lg"] {
+    height: 38px !important;
+    padding: 0 14px !important;
+    font-size: 13px !important;
+  }
+
+  .mantine-Button-root[data-size="xl"] {
+    height: 42px !important;
+    padding: 0 18px !important;
+    font-size: 14px !important;
+  }
+
+  /* --- Кнопки переносятся, не обрезаются --- */
+  .mantine-Button-root {
+    white-space: normal !important;
+    word-break: break-word !important;
+    min-height: 36px !important;
+  }
+
+  /* --- List: компактнее --- */
+  .mantine-List-root {
+    font-size: 13px !important;
+  }
+
+  .mantine-List-root[data-size="lg"] {
+    font-size: 14px !important;
+  }
+
+  /* --- Divider: меньше отступов --- */
+  .mantine-Divider-root {
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* --- Contact Card: кнопки и текст не ломаются --- */
+  .mantine-Group-root .mantine-Text-root[data-size="lg"] {
+    font-size: 13px !important;
+  }
+
+  /* --- FAQ Paper: меньше отступов --- */
+  .mantine-Stack-root > .mantine-Paper-root {
+    padding: 10px 12px !important;
+  }
+
+  /* --- Image Gallery: компактнее --- */
+  .mantine-Image-root {
+    height: auto !important;
+  }
+
+  /* --- CTA Section: текст не вылазит --- */
+  .mantine-Paper-root .mantine-Title-root[data-order="2"] {
+    font-size: 17px !important;
+  }
+}
+
+/* ==========================================================================
+   КОНКРЕТНЫЕ ИСПРАВЛЕНИЯ ДЛЯ SEO ШАБЛОНОВ
+   ========================================================================== */
+
+/* Hero секция: Badge Group — перенос если не влезает */
+@media (max-width: 480px) {
+  /* Hero Badge group - wrap */
+  .mantine-Card-root .mantine-Group-root .mantine-Badge-root {
+    font-size: 11px !important;
+    padding: 2px 8px !important;
+  }
+
+  /* Группа кнопок в Hero - вертикальная на маленьких экранах */
+  .mantine-Stack-root > .mantine-Group-root:last-child {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  /* Contact Card: иконки+текст в колонку */
+  .mantine-SimpleGrid-root .mantine-Group-root {
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+  }
+
+  /* Related keywords grid: компактнее */
+  .mantine-Paper-root .mantine-Text-root[data-fw="600"] {
+    font-size: 13px !important;
+  }
+}
+
+/* ==========================================================================
+   TOUCH TARGETS
+   ========================================================================== */
+
 @media (max-width: 768px) {
   .mobile-touch-target {
     min-height: 44px;
@@ -169,21 +426,24 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   .mobile-button {
-    padding: 12px 16px !important;
+    padding: 10px 14px !important;
     font-size: 14px !important;
-    min-height: 44px;
+    min-height: 42px;
   }
-  
+
   .mobile-button-small {
     padding: 8px 12px !important;
-    font-size: 12px !important;
+    font-size: 13px !important;
     min-height: 36px;
   }
 }
 
-/* Flexbox утилиты для различных сценариев */
+/* ==========================================================================
+   FLEXBOX УТИЛИТЫ
+   ========================================================================== */
+
 .flex-center {
   display: flex;
   align-items: center;
@@ -224,7 +484,10 @@
   flex-shrink: 0;
 }
 
-/* Адаптивные отступы */
+/* ==========================================================================
+   АДАПТИВНЫЕ ОТСТУПЫ
+   ========================================================================== */
+
 .mobile-padding-xs {
   padding: 4px;
 }
@@ -249,7 +512,10 @@
   margin: 12px;
 }
 
-/* Скрытие элементов на мобильных устройствах */
+/* ==========================================================================
+   СКРЫТИЕ ЭЛЕМЕНТОВ
+   ========================================================================== */
+
 @media (max-width: 480px) {
   .hide-mobile {
     display: none !important;
@@ -262,29 +528,38 @@
   }
 }
 
-/* Оптимизация для экранов с высокой плотностью пикселей */
+/* ==========================================================================
+   RETINA
+   ========================================================================== */
+
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .mobile-icon {
     image-rendering: -webkit-optimize-contrast;
   }
 }
 
-/* Улучшения для экранов в альбомной ориентации на мобильных */
+/* ==========================================================================
+   ЛАНДШАФТ
+   ========================================================================== */
+
 @media (max-width: 768px) and (orientation: landscape) {
   .mobile-bottom-nav {
     padding: 4px 6px !important;
   }
-  
+
   .mobile-bottom-nav-item {
     padding: 4px 6px !important;
   }
-  
+
   .mobile-bottom-nav-text {
-    font-size: 9px !important;
+    font-size: 10px !important;
   }
 }
 
-/* Accessibility improvements for mobile */
+/* ==========================================================================
+   ACCESSIBILITY
+   ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
   .mobile-animation {
     animation: none !important;
@@ -292,12 +567,11 @@
   }
 }
 
-/* High contrast mode support */
 @media (prefers-contrast: high) {
   .mobile-bottom-nav {
     border-top: 2px solid !important;
   }
-  
+
   .mobile-delivery-block {
     border: 2px solid !important;
   }
