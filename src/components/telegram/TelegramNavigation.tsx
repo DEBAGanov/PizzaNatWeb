@@ -120,15 +120,15 @@ export const TelegramBottomNav: React.FC = () => {
     {
       icon: IconPizza,
       label: 'Меню',
-      path: '/menu',
+      path: user ? '/menu' : 'https://max.ru/id121603899498_bot',
       active: location.pathname === '/menu'
     },
     {
       icon: IconShoppingCart,
       label: 'Корзина',
-      path: '/cart',
+      path: user ? '/cart' : 'https://max.ru/id121603899498_bot',
       active: location.pathname === '/cart',
-      badge: getCartItemsCount()
+      badge: user ? getCartItemsCount() : undefined
     },
     {
       icon: IconUser,
