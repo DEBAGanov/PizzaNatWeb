@@ -163,7 +163,7 @@ export function OrdersPage() {
         setOrders(Array.isArray(ordersData) ? ordersData : ordersData.data || [])
       } else if (response.status === 401) {
         setError('Необходима авторизация')
-        navigate('/auth')
+        window.location.href = 'https://max.ru/id121603899498_bot'
       } else {
         throw new Error('Ошибка загрузки заказов')
       }
@@ -178,7 +178,7 @@ export function OrdersPage() {
     if (user) {
       loadOrders()
     } else {
-      navigate('/auth')
+      window.location.href = 'https://max.ru/id121603899498_bot'
     }
   }, [user, navigate])
 
@@ -210,7 +210,7 @@ export function OrdersPage() {
         >
           Войдите в аккаунт для просмотра истории заказов
           <Group mt="md">
-            <Button variant="light" onClick={() => navigate('/auth')}>
+            <Button variant="light" onClick={() => window.open('https://max.ru/id121603899498_bot', '_blank')}>
               Войти
             </Button>
           </Group>

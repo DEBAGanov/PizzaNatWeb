@@ -91,8 +91,8 @@ apiClient.interceptors.response.use(
       const isSEO = isSEOPage()
       
       if (!isPublic && !isAuth && !isSEO) {
-        console.log('🔄 Перенаправление на страницу авторизации')
-        window.location.href = '/auth'
+        console.log('🔄 Перенаправление в MAX бот')
+        window.location.href = 'https://max.ru/id121603899498_bot'
       } else if (isPublic || isSEO) {
         console.log('🏠 Остаемся на публичной/SEO странице, ошибка авторизации игнорируется')
       }

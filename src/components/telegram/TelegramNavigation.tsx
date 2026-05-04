@@ -47,7 +47,7 @@ export const TelegramHeader: React.FC<{ title?: string; showBackButton?: boolean
     if (user) {
       navigate('/profile')
     } else {
-      navigate('/auth')
+      window.open('https://max.ru/id121603899498_bot', '_blank')
     }
   }
 
@@ -133,7 +133,7 @@ export const TelegramBottomNav: React.FC = () => {
     {
       icon: IconUser,
       label: 'Профиль',
-      path: user ? '/profile' : '/auth',
+      path: user ? '/profile' : 'https://max.ru/id121603899498_bot',
       active: location.pathname.startsWith('/profile'),
       disabled: false
     }
@@ -141,9 +141,13 @@ export const TelegramBottomNav: React.FC = () => {
 
   const handleNavigation = (path: string, disabled: boolean = false) => {
     if (disabled) return
-    
+
     hapticFeedback.impact('light')
-    navigate(path)
+    if (path.startsWith('http')) {
+      window.open(path, '_blank')
+    } else {
+      navigate(path)
+    }
   }
 
   return (

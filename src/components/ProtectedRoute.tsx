@@ -55,7 +55,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     // Строгая проверка для защищенных путей
     if (!hasValidTokens) {
       console.warn(`🔒 Заблокирован доступ к защищенному пути: ${location.pathname}`)
-      return <Navigate to="/auth" state={{ from: location }} replace />
+      window.location.href = 'https://max.ru/id121603899498_bot'
+      return null
     }
     
     // Проверка роли если требуется
@@ -80,7 +81,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   // Если требуется авторизация, но пользователь не авторизован (только для не-защищенных путей)
   if (requireAuth && !isProtectedPath && !user) {
     console.warn(`🔒 Неавторизованный доступ к: ${location.pathname}`)
-    return <Navigate to="/auth" state={{ from: location }} replace />
+    window.location.href = 'https://max.ru/id121603899498_bot'
+    return null
   }
 
   // Если не требуется авторизация, но пользователь авторизован
