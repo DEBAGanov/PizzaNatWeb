@@ -7,6 +7,7 @@ import { YandexReviewsWidget } from '../common/YandexReviewsWidget'
 import { RelatedProducts } from './RelatedProducts'
 import { ProductCardImage } from '../common/OptimizedImage'
 import { generateBreadcrumbSchema } from '../../utils/schemaOrg'
+import { getProductCityText } from '../../data/productCityData'
 
 interface ProductCityConfig {
   product: {
@@ -138,6 +139,14 @@ export function ProductCityTemplate({ config }: ProductCityTemplateProps) {
                 </Group>
               ))}
             </Stack>
+          </Card>
+
+          {/* Уникальный текст по категории (анти-near-duplicate) */}
+          <Card shadow="sm" padding="lg" radius="md" withBorder>
+            <Title order={2} size="h3" mb="md">
+              {product.name} в {cityGenitive} — как мы готовим и доставляем
+            </Title>
+            <Text>{getProductCityText(product.name, category, isZelenodolsk)}</Text>
           </Card>
 
           {/* Похожие категории */}
