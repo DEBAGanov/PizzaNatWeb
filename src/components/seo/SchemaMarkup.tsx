@@ -28,8 +28,9 @@ export function SchemaMarkup({
 }: SchemaMarkupProps) {
   
   useEffect(() => {
-    // Удаляем существующие schema теги
-    const existingSchemas = document.querySelectorAll('script[type="application/ld+json"]')
+    // Удаляем только схемы, ранее добавленные ЭТИМ компонентом (по data-атрибуту).
+    // НЕ трогаем статичный JSON-LD из index.html — именно его читают боты без JS.
+    const existingSchemas = document.querySelectorAll('script[type="application/ld+json"][data-dynamic-schema="true"]')
     existingSchemas.forEach(script => script.remove())
     
     const schemas: object[] = []
@@ -55,13 +56,14 @@ export function SchemaMarkup({
     schemas.forEach(schema => {
       const script = document.createElement('script')
       script.type = 'application/ld+json'
+      script.setAttribute('data-dynamic-schema', 'true')
       script.textContent = JSON.stringify(schema)
       document.head.appendChild(script)
     })
     
     return () => {
       // Cleanup при размонтировании
-      const allSchemas = document.querySelectorAll('script[type="application/ld+json"]')
+      const allSchemas = document.querySelectorAll('script[type="application/ld+json"][data-dynamic-schema="true"]')
       allSchemas.forEach(script => script.remove())
     }
   }, [pageType, customSchema, includeFAQ, faqData])

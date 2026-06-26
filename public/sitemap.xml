@@ -22,14 +22,8 @@
     <priority>0.9</priority>
   </url>
   
-  <!-- Авторизация -->
-  <url>
-    <loc>https://t.me/DIMBOpizzaBot/menu</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
+  <!-- Внешняя ссылка t.me удалена: sitemap должен содержать только URL этого домена -->
+
   <!-- ДИМБО детям - мастер-классы и дни рождения -->
   <url>
     <loc>https://dimbopizza.ru/dimbokids</loc>

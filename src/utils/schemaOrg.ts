@@ -140,8 +140,8 @@ export function generateRestaurantSchema(): RestaurantSchema {
     ],
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 56.1194,
-      longitude: 47.8681
+      latitude: 55.8680,
+      longitude: 48.3322
     },
     aggregateRating: {
       "@type": "AggregateRating",
@@ -210,8 +210,8 @@ export function generateLocalBusinessSchema(): LocalBusinessSchema {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 56.1194,
-      longitude: 47.8681
+      latitude: 55.8680,
+      longitude: 48.3322
     },
     openingHoursSpecification: [
       {

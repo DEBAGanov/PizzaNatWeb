@@ -25,7 +25,7 @@ export const BASE_SEO = {
   defaultOgImage: 'https://dimbopizza.ru/images/logo/dimbopizza1200x630.png',
   city: 'Волжск',
   region: 'Республика Марий Эл',
-  phone: '+7 (906) 138-28-68',
+  phone: '+7 (902) 105-34-34',
   email: 'info@dimbopizza.ru',
   // Конкурентные преимущества
   advantages: [
@@ -322,11 +322,11 @@ export const generateLocalBusinessSchema = () => {
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "56.1194", // Координаты Волжска
-      "longitude": "47.8681"
+      "latitude": "55.8680", // Координаты ул. Шестакова, д. 1Б, Волжск
+      "longitude": "48.3322"
     },
     "servesCuisine": "Итальянская, Пицца",
-    "priceRange": "300-1500 RUB",
+    "priceRange": "$$",
     "currenciesAccepted": "RUB",
     "paymentAccepted": "Cash, Card, SBP",
     "hasMenu": `${BASE_SEO.baseUrl}/menu`,
@@ -334,7 +334,7 @@ export const generateLocalBusinessSchema = () => {
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.8",
-      "reviewCount": "150"
+      "reviewCount": "127"
     },
     "openingHours": [
       "Mo-Su 10:00-20:00"
@@ -403,10 +403,12 @@ export const setPageMeta = (seoData: SeoData) => {
     descriptionMeta.setAttribute('content', seoData.description)
   }
   
-  // Keywords
+  // Keywords — дедуп + кап до 12, чтобы не вываливать все ~190 ключей на страницу
+  // (полный список через запятую = сигнал переоптимизации для Яндекса)
   const keywordsMeta = document.querySelector('meta[name="keywords"]')
   if (keywordsMeta) {
-    keywordsMeta.setAttribute('content', seoData.keywords.join(', '))
+    const kw = Array.isArray(seoData.keywords) ? seoData.keywords : []
+    keywordsMeta.setAttribute('content', [...new Set(kw)].slice(0, 12).join(', '))
   }
   
   // Open Graph
