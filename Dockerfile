@@ -24,8 +24,6 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Системный Chromium для пререндера (puppeteer его НЕ скачивает — берёт этот)
-RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont
 ENV PUPPETEER_SKIP_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
@@ -36,11 +34,20 @@ COPY package*.json ./
 # Копирование исходного кода
 COPY . .
 
-# Сборка SPA, затем НЕ-ФАТАЛЬНЫЙ пререндер SEO-маршрутов.
-# prerender.cjs всегда выходит с кодом 0, поэтому даже при OOM/ошибке Chromium
-# сборка отдаёт рабочий SPA (как было до пререндера).
+# Пререндер ВЫКЛЮЧЕН по умолчанию (PRERENDER=false): на ограниченном окружении
+# (1GB RAM, как у TimeWeb) установка chromium + puppeteer на 300+ маршрутов может
+# уронить или затянуть сборку. Без пререндера новые маршруты всё равно работают —
+# они рендерятся клиентским SPA-роутингом. Включить можно явно:
+#   docker build --build-arg PRERENDER=true .
+ARG PRERENDER=false
 RUN NODE_OPTIONS="--max-old-space-size=1024" npm run build && \
-    node scripts/prerender.cjs
+    if [ "$PRERENDER" = "true" ]; then \
+      echo "Prerender ON — установка chromium и пререндер" && \
+      apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont && \
+      node scripts/prerender.cjs; \
+    else \
+      echo "Prerender OFF (по умолчанию) — пропускаю"; \
+    fi
 
 # Development stage - для разработки с hot reload
 FROM node:20-alpine AS development
