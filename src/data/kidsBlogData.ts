@@ -74,7 +74,7 @@ export const KIDS_BLOG_PAGES: BlogArticleConfig[] = [
     relatedArticles: [
       { title: 'Как организовать детский день рождения', slug: 'kak-organizovat-detskiy-den-rozhdeniya' },
       { title: 'День рождения дома или в кафе', slug: 'den-rozhdeniya-doma-ili-v-kafe' },
-      { title: 'Куда сходить с детьми в Волжске', slug: 'kuda-shodit-s-detmi-v-volzhske' },
+      { title: 'Сколько детей приглашать на день рождения', slug: 'skolko-detey-priglashat-na-den-rozhdeniya' },
     ],
     category: CAT,
     categoryLabel: CAT_LABEL,
@@ -632,7 +632,7 @@ export const KIDS_BLOG_PAGES: BlogArticleConfig[] = [
     relatedArticles: [
       { title: 'Игры на детский праздник дома', slug: 'igry-na-detskiy-prazdnik-doma' },
       { title: 'Конкурсы на детский день рождения', slug: 'konkursy-na-detskiy-den-rozhdeniya' },
-      { title: 'Кулинарный мастер-класс для детей', slug: 'kulinarnyy-master-klass-dlya-detey' },
+      { title: 'Сценарий детского дня рождения', slug: 'stsenariy-detskogo-dnya-rozhdeniya' },
     ],
     category: CAT,
     categoryLabel: CAT_LABEL,
