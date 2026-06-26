@@ -45,7 +45,7 @@ import {
 } from '@tabler/icons-react'
 import { useNavigate } from 'react-router-dom'
 import { SEOPageWrapper } from '../SEOHead'
-import { getKeywordMeta, getRelatedKeywords, getKeywordFAQ, shouldShowKidsMenuImproved } from '../../utils/kidsKeywords'
+import { getKeywordMeta, getKeywordContent, getRelatedKeywords, getKeywordFAQ, shouldShowKidsMenuImproved } from '../../utils/kidsKeywords'
 import { KidsMenu } from './KidsMenu'
 import { YandexReviewsWidget } from '../common/YandexReviewsWidget'
 
@@ -91,6 +91,7 @@ function ImageGallery({ images, onImageClick }: ImageGalleryProps) {
 export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, city = 'Волжск' }) => {
   const navigate = useNavigate()
   const meta = getKeywordMeta(keyword, city)
+  const content = getKeywordContent(keyword, city)
   const relatedKeywords = getRelatedKeywords(keyword)
   const faqData = getKeywordFAQ(keyword)
   const showMenu = shouldShowKidsMenuImproved(keyword)
@@ -243,6 +244,15 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, cit
                   Оставить заявку в ВК
                 </Button>
               </Group>
+            </Stack>
+          </Card>
+
+          {/* Уникальный текстовый блок (анти-near-duplicate, различается по keyword/city) */}
+          <Card shadow="sm" radius="md" withBorder p="xl">
+            <Stack gap="sm">
+              <Title order={2} c="orange.7">{content.heading}</Title>
+              <Text size="md" c="dark.6">{content.intro}</Text>
+              <Text size="md" c="dark.6">{content.body}</Text>
             </Stack>
           </Card>
 
