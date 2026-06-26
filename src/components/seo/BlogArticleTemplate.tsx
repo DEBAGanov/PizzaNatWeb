@@ -1,5 +1,5 @@
 
-import { Container, Stack, Title, Text, Card, Badge, Group, Divider, Button, Accordion, Grid } from '@mantine/core'
+import { Container, Stack, Title, Text, Card, Badge, Group, Divider, Button, Accordion, Grid, TypographyStylesProvider } from '@mantine/core'
 import { IconPhone, IconChevronRight, IconCalendar, IconUser, IconBook, IconStar } from '@tabler/icons-react'
 import { SEOPageWrapper } from '../SEOHead'
 import { SchemaMarkup } from './SchemaMarkup'
@@ -21,6 +21,8 @@ export interface BlogArticleConfig {
   relatedArticles?: Array<{title: string; slug: string}>
   category: string
   categoryLabel: string
+  // 'kids' → CTA ведёт на коммерческие детские хабы (Волжск/Зеленодольск); по умолчанию 'food'
+  ctaType?: 'food' | 'kids'
 }
 
 interface BlogArticleTemplateProps {
@@ -91,13 +93,13 @@ export function BlogArticleTemplate({ config }: BlogArticleTemplateProps) {
             <Divider my="md" />
           </Card>
 
-          {/* Article body */}
+          {/* Article body — TypographyStylesProvider корректно стилизует h3/ul/p/strong */}
           <Card shadow="sm" padding="lg" radius="md" withBorder>
-            <Stack gap="md">
-              {config.content.map((paragraph, i) => (
-                <Text key={i} dangerouslySetInnerHTML={{ __html: paragraph }} />
+            <TypographyStylesProvider>
+              {config.content.map((html, i) => (
+                <div key={i} dangerouslySetInnerHTML={{ __html: html }} />
               ))}
-            </Stack>
+            </TypographyStylesProvider>
           </Card>
 
           {/* FAQ */}
@@ -132,18 +134,39 @@ export function BlogArticleTemplate({ config }: BlogArticleTemplateProps) {
           )}
 
           {/* CTA */}
-          <Card shadow="sm" padding="lg" radius="md" withBorder style={{ background: 'linear-gradient(135deg, #ff6b00 0%, #ff8533 100%)' }}>
-            <Title order={2} size="h3" c="white" mb="sm">Закажите пиццу пока читаете</Title>
-            <Text c="white" mb="md" opacity={0.9}>Свежая пицца, суши, шашлык с быстрой доставкой в Волжске</Text>
-            <Group>
-              <Button component="a" href="tel:+79021053434" leftSection={<IconPhone size={16} />} size="lg" variant="filled" color="dark">
-                +7(902)105-34-34
-              </Button>
-              <Button component="a" href="https://max.ru/id121603899498_bot" target="_blank" variant="white" rightSection={<IconChevronRight size={16} />} size="lg">
-                Перейти в меню
-              </Button>
-            </Group>
-          </Card>
+          {config.ctaType === 'kids' ? (
+            <Card shadow="sm" padding="lg" radius="md" withBorder style={{ background: 'linear-gradient(135deg, #ff6b00 0%, #ff8533 100%)' }}>
+              <Title order={2} size="h3" c="white" mb="sm">Отметить день рождения ребёнка в ДИМБО</Title>
+              <Text c="white" mb="md" opacity={0.9}>
+                Мастер-класс по пицце, игровая комната и праздничный стол под ключ.
+                Волжск — ул. Шестакова 1Б и ул. Ленина 69; Зеленодольск — ул. Татарстан 9.
+              </Text>
+              <Group>
+                <Button component="a" href="/detskiy-denь-rozhdeniya" variant="white" rightSection={<IconChevronRight size={16} />} size="lg">
+                  День рождения в Волжске
+                </Button>
+                <Button component="a" href="/detskiy-den-rozhdeniya-zelenodolsk" variant="white" rightSection={<IconChevronRight size={16} />} size="lg">
+                  В Зеленодольске
+                </Button>
+                <Button component="a" href="tel:+79061382868" leftSection={<IconPhone size={16} />} size="lg" variant="filled" color="dark">
+                  +7(906)138-28-68
+                </Button>
+              </Group>
+            </Card>
+          ) : (
+            <Card shadow="sm" padding="lg" radius="md" withBorder style={{ background: 'linear-gradient(135deg, #ff6b00 0%, #ff8533 100%)' }}>
+              <Title order={2} size="h3" c="white" mb="sm">Закажите пиццу пока читаете</Title>
+              <Text c="white" mb="md" opacity={0.9}>Свежая пицца, суши, шашлык с быстрой доставкой в Волжске</Text>
+              <Group>
+                <Button component="a" href="tel:+79021053434" leftSection={<IconPhone size={16} />} size="lg" variant="filled" color="dark">
+                  +7(902)105-34-34
+                </Button>
+                <Button component="a" href="https://max.ru/id121603899498_bot" target="_blank" variant="white" rightSection={<IconChevronRight size={16} />} size="lg">
+                  Перейти в меню
+                </Button>
+              </Group>
+            </Card>
+          )}
 
           <LocalInfo variant="compact" />
           <YandexReviewsWidget />

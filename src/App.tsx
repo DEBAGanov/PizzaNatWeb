@@ -167,6 +167,7 @@ const ZakazatNagetsyZelenodolskPage = lazy(() => import('./pages/zelenodolsk-del
 // Новые SEO-маршруты через useRoutes hook
 import { useSEORoutes } from './utils/routeGenerator'
 import { blogRoutes } from './routes/blogRoutes'
+import { kidsBlogRoutes } from './routes/kidsBlogRoutes'
 import { seasonalRoutes } from './routes/seasonalRoutes'
 import { productCityRoutes } from './routes/productCityRoutes'
 import { cateringRoutes } from './routes/cateringRoutes'
@@ -215,7 +216,7 @@ function WebApp() {
   const { loadCategories, loadCart } = useProducts()
 
   // SEO-маршруты через useRoutes (работает надёжнее чем spread внутри <Routes>)
-  const seoElement = useSEORoutes([blogRoutes, seasonalRoutes, productCityRoutes, cateringRoutes, reviewRoutes, masterclassRoutes])
+  const seoElement = useSEORoutes([blogRoutes, kidsBlogRoutes, seasonalRoutes, productCityRoutes, cateringRoutes, reviewRoutes, masterclassRoutes])
 
   // Загружаем категории только один раз
   useEffect(() => {
