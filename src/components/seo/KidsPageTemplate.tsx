@@ -90,7 +90,7 @@ function ImageGallery({ images, onImageClick }: ImageGalleryProps) {
 
 export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, city = 'Волжск' }) => {
   const navigate = useNavigate()
-  const meta = getKeywordMeta(keyword)
+  const meta = getKeywordMeta(keyword, city)
   const relatedKeywords = getRelatedKeywords(keyword)
   const faqData = getKeywordFAQ(keyword)
   const showMenu = shouldShowKidsMenuImproved(keyword)
@@ -444,6 +444,8 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, cit
                         <Text size="sm">г. Волжск ул. Шестакова 1Б</Text>
                         <Text size="sm">г. Волжск ул. Ленина 69</Text>
                       </>
+                    ) : city === 'Зеленодольск' ? (
+                      <Text size="sm">г. Зеленодольск, ул. Татарстан 9</Text>
                     ) : (
                       <Text size="sm">г. {city} - доставка из Волжска</Text>
                     )}

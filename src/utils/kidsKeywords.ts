@@ -181,23 +181,24 @@ export function getKeywordGroup(keyword: string): keyof typeof KEYWORD_GROUPS | 
   return null
 }
 
-// Функция для получения мета-данных по ключевику
-export function getKeywordMeta(keyword: string) {
+// Функция для получения мета-данных по ключевику.
+// city прокидывается из шаблона, чтобы зеленодольские страницы не отдавали "Волжск".
+export function getKeywordMeta(keyword: string, city: string = 'Волжск') {
   const group = getKeywordGroup(keyword)
   if (!group) {
     // Возвращаем дефолтные мета-данные
     return {
-      title: `${keyword.charAt(0).toUpperCase() + keyword.slice(1)} - ДИМБО Волжск`,
-      description: `${keyword} в ДИМБО Волжск. Мастер-классы, игровая комната, развлечения для детей. Звоните: +7(906)138-28-68`,
+      title: `${keyword.charAt(0).toUpperCase() + keyword.slice(1)} - ДИМБО ${city}`,
+      description: `${keyword} в ДИМБО ${city}. Мастер-классы, игровая комната, развлечения для детей. Звоните: +7(906)138-28-68`,
       icon: '🎉',
       images: ['/images/kids/birthday-1.jpg', '/images/kids/masterclass-1.jpg', '/images/kids/birthday-2.jpg']
     }
   }
-  
+
   return {
     ...GROUP_META[group],
     title: GROUP_META[group].title.replace('ДИМБО', `ДИМБО - ${keyword}`),
-    description: `${keyword} в ДИМБО Волжск. ${GROUP_META[group].description.split('.').slice(1).join('.')}`
+    description: `${keyword} в ДИМБО ${city}. ${GROUP_META[group].description.split('.').slice(1).join('.')}`
   }
 }
 
