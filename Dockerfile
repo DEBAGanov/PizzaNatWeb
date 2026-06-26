@@ -4,6 +4,10 @@ FROM node:20-alpine AS dependencies
 # Установка рабочей директории
 WORKDIR /app
 
+# Не скачивать Chromium при установке puppeteer (используем системный в builder).
+# Именно скачивание Chromium на Alpine ломало npm ci раньше.
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+
 # Установка необходимых системных пакетов для сборки
 RUN apk add --no-cache git python3 make g++ && \
     npm config set maxsockets 1
@@ -20,6 +24,11 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Системный Chromium для пререндера (puppeteer его НЕ скачивает — берёт этот)
+RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont
+ENV PUPPETEER_SKIP_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
 # Копирование зависимостей из предыдущего stage
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY package*.json ./
@@ -27,8 +36,11 @@ COPY package*.json ./
 # Копирование исходного кода
 COPY . .
 
-# Сборка приложения с увеличенным лимитом памяти
-RUN NODE_OPTIONS="--max-old-space-size=1024" npm run build
+# Сборка SPA, затем НЕ-ФАТАЛЬНЫЙ пререндер SEO-маршрутов.
+# prerender.cjs всегда выходит с кодом 0, поэтому даже при OOM/ошибке Chromium
+# сборка отдаёт рабочий SPA (как было до пререндера).
+RUN NODE_OPTIONS="--max-old-space-size=1024" npm run build && \
+    node scripts/prerender.cjs
 
 # Development stage - для разработки с hot reload
 FROM node:20-alpine AS development
