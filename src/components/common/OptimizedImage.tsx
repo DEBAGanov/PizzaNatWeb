@@ -18,6 +18,8 @@ interface OptimizedImageProps {
   fallbackIcon?: React.ReactNode
   objectFit?: 'cover' | 'contain' | 'fill' | 'scale-down' | 'none'
   loading?: 'lazy' | 'eager'
+  /** Приоритет загрузки: 'high' для LCP-изображения, иначе 'low' */
+  fetchPriority?: 'high' | 'low' | 'auto'
 }
 
 export function OptimizedImage({
@@ -30,6 +32,7 @@ export function OptimizedImage({
   fallbackIcon = <IconPizza size={48} color="#ff8000" />,
   objectFit = 'cover',
   loading = 'lazy',
+  fetchPriority,
 }: OptimizedImageProps) {
   const containerStyles = {
     position: 'relative' as const,
@@ -67,6 +70,8 @@ export function OptimizedImage({
         src={src}
         alt={alt}
         loading={loading}
+        decoding="async"
+        fetchPriority={fetchPriority ?? (loading === 'eager' ? 'high' : 'low')}
         className="optimized-image"
         style={{
           width: '100%',

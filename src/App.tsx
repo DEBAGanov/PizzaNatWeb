@@ -16,18 +16,19 @@ import { YandexMetrikaProvider } from './components/analytics/YandexMetrika'
 import { VKPixelProvider } from './components/analytics/VKPixel'
 import { TelegramApp } from './components/telegram/TelegramApp'
 import { TelegramBottomNav } from './components/telegram/TelegramNavigation'
-import { AuthPage } from './pages/AuthPage'
-import { HomePage } from './pages/HomePage'
-import { MenuPage } from './pages/MenuPage'
-import { CategoryProductsPage } from './pages/CategoryProductsPage'
-import { ProductPage } from './pages/ProductPage'
-import { CartPage } from './pages/CartPage'
-import { CheckoutPage } from './pages/CheckoutPage'
-import ProfilePage from './pages/ProfilePage'
-import OrderSuccessPage from './pages/OrderSuccessPage'
-import { AuthTestPage } from './pages/AuthTestPage'
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
-import { DimboKidsPage } from './pages/DimboKidsPage'
+import { HomePage } from './pages/HomePage' // eager: LCP-страница лендинга, остаётся в главном бандле
+// Основные страницы — lazy loading для code splitting (вынесены из главного бандла)
+const AuthPage = lazy(() => import('./pages/AuthPage').then(m => ({ default: m.AuthPage })))
+const MenuPage = lazy(() => import('./pages/MenuPage').then(m => ({ default: m.MenuPage })))
+const CategoryProductsPage = lazy(() => import('./pages/CategoryProductsPage').then(m => ({ default: m.CategoryProductsPage })))
+const ProductPage = lazy(() => import('./pages/ProductPage').then(m => ({ default: m.ProductPage })))
+const CartPage = lazy(() => import('./pages/CartPage').then(m => ({ default: m.CartPage })))
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage').then(m => ({ default: m.CheckoutPage })))
+const ProfilePage = lazy(() => import('./pages/ProfilePage'))
+const OrderSuccessPage = lazy(() => import('./pages/OrderSuccessPage'))
+const AuthTestPage = lazy(() => import('./pages/AuthTestPage').then(m => ({ default: m.AuthTestPage })))
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'))
+const DimboKidsPage = lazy(() => import('./pages/DimboKidsPage').then(m => ({ default: m.DimboKidsPage })))
 // SEO-страницы — lazy loading для code splitting
 const PizzaSEOPage = lazy(() => import('./pages/product-seo/PizzaSEOPage').then(m => ({ default: m.PizzaSEOPage })))
 const ShashlykSEOPage = lazy(() => import('./pages/product-seo/ShashlykSEOPage').then(m => ({ default: m.ShashlykSEOPage })))

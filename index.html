@@ -73,13 +73,13 @@
     <!-- Alternate URLs для мобильных -->
     <link rel="alternate" media="only screen and (max-width: 640px)" href="https://dimbopizza.ru/" />
     
-    <!-- Preconnect для ускорения загрузки -->
+    <!-- Preconnect для ускорения загрузки (макс. 4, только реально используемые источники) -->
+    <link rel="preconnect" href="https://s3.twcstorage.ru" />
     <link rel="preconnect" href="https://api.dimbopizza.ru" />
     <link rel="preconnect" href="https://mc.yandex.ru" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
+
     <!-- DNS prefetch -->
+    <link rel="dns-prefetch" href="//s3.twcstorage.ru" />
     <link rel="dns-prefetch" href="//api.dimbopizza.ru" />
     <link rel="dns-prefetch" href="//mc.yandex.ru" />
     
