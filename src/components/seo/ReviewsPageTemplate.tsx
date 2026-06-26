@@ -67,7 +67,7 @@ export function ReviewsPageTemplate({ config }: ReviewsPageTemplateProps) {
             <Title order={1} size="h2" mb="md">{config.h1}</Title>
 
             <Group gap="xs" align="baseline" mb="sm">
-              <Text fw={900} size="48px" c="orange">{config.rating}</Text>
+              <Text fw={900} fz={{ base: '34px', sm: '48px' }} c="orange">{config.rating}</Text>
               <Text size="lg" c="dimmed">из 5</Text>
             </Group>
 

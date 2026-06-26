@@ -2,7 +2,10 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  text-align: center;
+  /* text-align: left по умолчанию — центрирование задаётся точечно через ta="center".
+     Раньше тут был text-align: center (наследие Vite-бойлерплейта), из-за чего
+     ВЕСЬ текст сайта центрировался, включая длинные абзацы и списки. */
+  text-align: left;
 }
 
 /* Reduce side padding on mobile for maximum content width */

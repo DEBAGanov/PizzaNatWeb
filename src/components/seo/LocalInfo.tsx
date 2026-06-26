@@ -66,12 +66,12 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
    * Компонент виджета отзывов Яндекс Карт
    */
   const YandexReviewsWidget = () => (
-    <Box 
+    <Box
       mt="md"
-      style={{ 
+      h={{ base: 480, sm: 800 }}
+      style={{
         width: '100%',
         maxWidth: '560px',
-        height: '800px',
         overflow: 'hidden',
         position: 'relative',
         margin: '0 auto'
@@ -138,7 +138,7 @@ export const LocalInfo: React.FC<LocalInfoProps> = ({
             <Text fw={500}>{localData.name} в {localData.city}</Text>
           </Group>
           
-          <Group gap="xl">
+          <Group gap={{ base: 'xs', sm: 'xl' }}>
             <Group gap="xs">
               <IconMapPin size={16} />
               <Text size="sm">{localData.address}</Text>

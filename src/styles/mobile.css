@@ -402,9 +402,11 @@
     gap: 8px !important;
   }
 
-  /* Contact Card: иконки+текст в колонку */
+  /* Contact Card: компактный gap.
+     Раньше тут стоял flex-wrap: nowrap !important — он ГЛОБАЛЬНО запрещал перенос
+     ВСЕХ Group внутри любых сеток (кнопки/бейджи наезжали на текст на узких экранах).
+     Перенос разрешён по умолчанию; иконка+текст и так не переносятся из-за короткой длины. */
   .mantine-SimpleGrid-root .mantine-Group-root {
-    flex-wrap: nowrap !important;
     gap: 8px !important;
   }
 
