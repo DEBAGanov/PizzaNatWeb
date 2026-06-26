@@ -248,13 +248,24 @@ export const generatePageSeo = (page: string, data?: Partial<SeoData>): SeoData 
         canonical: `${BASE_SEO.baseUrl}/dimbokids`
       })
       
-    default:
+    default: {
+      // Раньше default-ветка хардкодила дефолтную мету и canonical на главную,
+      // из-за чего все SEO-страницы дублировались и склеивались с главной.
+      // Теперь: используем переданные данные страницы, а canonical выводим из
+      // реального URL (self-canonical) — это выводит ~175 страниц из-под склейки
+      // с главной без правки каждой страницы и без смены слугов.
+      const selfCanonical =
+        data?.canonical ||
+        (typeof window !== 'undefined'
+          ? `${BASE_SEO.baseUrl}${window.location.pathname}`
+          : BASE_SEO.baseUrl)
       return addBaseOpenGraph({
-        title: BASE_SEO.defaultTitle,
-        description: BASE_SEO.defaultDescription,
-        keywords: baseKeywords,
-        canonical: BASE_SEO.baseUrl
+        title: data?.title,
+        description: data?.description,
+        keywords: data?.keywords,
+        canonical: selfCanonical
       })
+    }
   }
 }
 
