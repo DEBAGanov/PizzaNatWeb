@@ -17,6 +17,7 @@ const MEDIA_BASE = 'https://s3.twcstorage.ru/f9c8e17a-pizzanat-products/v1-zelen
 const PHONE_DISPLAY = '8-906-138-28-68'
 const PHONE_TEL = '+79061382868'
 const PHONE_DIGITS = '79061382868'
+const MAX_LINK = 'https://max.ru/u/f9LHodD0cOKxpjw07EONyTZbGCq46uFIkZ3n57GttGEis2FFLNig0E_6gxA'
 
 const WHATSAPP_TEXT = encodeURIComponent('Здравствуйте! Хочу узнать подробности и забронировать детский день рождения в Dimbo Зеленодольск.')
 const whatsappLink = (extra?: string) =>
@@ -142,8 +143,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
       sourcePage: 'v1/zelenodolsk',
       comment: 'Форма заявки лендинга'
     })
-    const text = `Заявка с лендинга Dimbo Зеленодольск.\nИмя: ${name || '—'}\nТелефон: ${phone}\nВозраст именинника: ${quizAge}`
-    window.open(whatsappLink(text), '_blank')
+    window.open(MAX_LINK, '_blank')
   }
 
   function handleQuizNext() {
@@ -158,7 +158,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
       sourcePage: 'v1/zelenodolsk',
       comment: `Квиз лендинга. Желаемая дата: ${quizDate || '—'}`
     })
-    window.open(whatsappLink(`Заявка на бронирование с лендинга Dimbo Зеленодольск. Имя: ${quizName || '—'}. Телефон: ${quizPhone}. Возраст именинника: ${quizAge}. Желаемая дата: ${quizDate || '—'}. Хочу забронировать праздник.`), '_blank')
+    window.open(MAX_LINK, '_blank')
   }
 
   function handleModalSubmit() {
@@ -173,7 +173,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
       sourcePage: 'v1/zelenodolsk',
       comment: 'Попап лендинга (exit intent)'
     })
-    window.open(whatsappLink(`Заявка с поп-апа лендинга Dimbo Зеленодольск. Имя: ${modalName || '—'}. Телефон: ${modalPhone}. Возраст именинника: ${modalAge}. Хочу бесплатную фотосессию на празднике.`), '_blank')
+    window.open(MAX_LINK, '_blank')
     setModalOpen(false)
   }
 
@@ -629,7 +629,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                 />
               </div>
               <button type="submit" className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>Отправить заявку</button>
-              <p className={styles.formNote}>Заявка откроется в WhatsApp с заполненными данными — просто отправьте сообщение.</p>
+              <p className={styles.formNote}>Заявка будет отправлена нам, а вы перейдёте в MAX для связи с администратором.</p>
             </form>
           </div>
         </div>
@@ -661,16 +661,18 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
 
       <div className={styles.stickyCta}>
         <a
-          href={whatsappLink()}
+          href={MAX_LINK}
           target="_blank"
           rel="noopener noreferrer"
           className={styles.btn}
           style={{ background: '#136832', color: '#fff' }}
-          onClick={() => trackGoal('v1_zelenodolsk_whatsapp_click')}
+          onClick={() => trackGoal('v1_zelenodolsk_max_click')}
         >
-          💬 Написать
+          💬 Написать в MAX
         </a>
-        <a href="#quiz" className={`${styles.btn} ${styles.btnYellow}`}>Заявка</a>
+        <a href={`tel:${PHONE_TEL}`} className={`${styles.btn} ${styles.btnYellow}`} onClick={() => trackGoal('v1_zelenodolsk_call_click')}>
+          📞 Позвонить
+        </a>
       </div>
 
       {modalOpen && (
