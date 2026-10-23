@@ -18,6 +18,7 @@ const PHONE_DISPLAY = '8-906-138-28-68'
 const PHONE_TEL = '+79061382868'
 const PHONE_DIGITS = '79061382868'
 const MAX_LINK = 'https://max.ru/u/f9LHodD0cOKxpjw07EONyTZbGCq46uFIkZ3n57GttGEis2FFLNig0E_6gxA'
+const YANDEX_MAPS_LINK = 'https://yandex.ru/maps/org/dimbo/154718836771/?ll=48.500814%2C55.849186&z=17'
 
 const WHATSAPP_TEXT = encodeURIComponent('Здравствуйте! Хочу узнать подробности и забронировать детский день рождения в Dimbo Зеленодольск.')
 const whatsappLink = (extra?: string) =>
@@ -525,13 +526,68 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               <span className={styles.eyebrowPill} style={{ background: '#EDE5FB' }}>ОТЗЫВЫ РОДИТЕЛЕЙ</span>
               <h2 className={styles.sectionTitle} style={{ textAlign: 'left', margin: '14px 0 0' }}>Что говорят мамы</h2>
             </div>
-            <div className={styles.reviewsScore}>
+            <a
+              href={YANDEX_MAPS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.reviewsScore}
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              onClick={() => trackGoal('v1_zelenodolsk_yandex_maps_click')}
+            >
               <div className={styles.reviewStars} style={{ color: '#FFC627', fontSize: 20 }}>★★★★★</div>
-              <div className={styles.reviewsScoreNum}>5.0</div>
-              <div style={{ fontSize: 13, color: '#635749', fontWeight: 700 }}>19 отзывов<br />Яндекс.Карты</div>
-            </div>
+              <div className={styles.reviewsScoreNum}>4.9</div>
+              <div style={{ fontSize: 13, color: '#635749', fontWeight: 700 }}>28 отзывов<br />Яндекс.Карты</div>
+            </a>
           </div>
           <div className={styles.reviewGrid}>
+            <div className={`${styles.card} ${styles.reviewCard}`}>
+              <div className={styles.reviewStars}>★★★★★</div>
+              <p className={styles.reviewText}>«Как же классно мы отметили день рождения дочки в игровой «Димбо»! Этот крутящийся жираф — любовь с первого взгляда, дети визжали от восторга и не хотели уходить. Места много, все чисто и безопасно.»</p>
+              <div className={styles.reviewWho}>
+                <div className={styles.reviewAvatar} style={{ background: '#FFC627', color: '#4A3F38' }}>NA</div>
+                <div><div className={styles.reviewName}>Nailya A.</div><div className={styles.reviewMeta}>Яндекс.Карты</div></div>
+              </div>
+            </div>
+            <div className={`${styles.card} ${styles.reviewCard}`}>
+              <div className={styles.reviewStars}>★★★★★</div>
+              <p className={styles.reviewText}>«Главное для меня как для мамы — это идеальная чистота и порядок, здесь с этим всё строго. Девушки-администраторы очень приветливые и внимательные к детям. Спасибо за отличный досуг, рекомендую всем родителям!»</p>
+              <div className={styles.reviewWho}>
+                <div className={styles.reviewAvatar} style={{ background: '#6B47C2' }}>KK</div>
+                <div><div className={styles.reviewName}>Kt.kill</div><div className={styles.reviewMeta}>Яндекс.Карты</div></div>
+              </div>
+            </div>
+            <div className={`${styles.card} ${styles.reviewCard}`}>
+              <div className={styles.reviewStars}>★★★★★</div>
+              <p className={styles.reviewText}>«На днях отмечали ДР в новом детском центре ДИМБО. Прыгали на батутах, катались на жирафе, играли на интерактивной стене. Дети были довольны на 200%, не хотели уходить! Супер место!!!»</p>
+              <div className={styles.reviewWho}>
+                <div className={styles.reviewAvatar} style={{ background: '#1A8574' }}>МВ</div>
+                <div><div className={styles.reviewName}>Мария Весенняя</div><div className={styles.reviewMeta}>Яндекс.Карты</div></div>
+              </div>
+            </div>
+            <div className={`${styles.card} ${styles.reviewCard}`}>
+              <div className={styles.reviewStars}>★★★★★</div>
+              <p className={styles.reviewText}>«Отмечали 3 года. 7 детей + взрослые — места много. Горка, батуты, карусель, сухой бассейн с шарами. Аниматор свой, всё отлично организовали. Чисто, уютно. Всем советую!»</p>
+              <div className={styles.reviewWho}>
+                <div className={styles.reviewAvatar} style={{ background: '#C73040' }}>ТХ</div>
+                <div><div className={styles.reviewName}>Тимур Х.</div><div className={styles.reviewMeta}>Яндекс.Карты</div></div>
+              </div>
+            </div>
+            <div className={`${styles.card} ${styles.reviewCard}`}>
+              <div className={styles.reviewStars}>★★★★★</div>
+              <p className={styles.reviewText}>«Новая игровая комната — супер! Просторно, ярко и безопасно, дети в полном восторге. Желаю вам роста и ещё больше счастливых улыбок!»</p>
+              <div className={styles.reviewWho}>
+                <div className={styles.reviewAvatar} style={{ background: '#136832' }}>МД</div>
+                <div><div className={styles.reviewName}>Марина Димитриева</div><div className={styles.reviewMeta}>Яндекс.Карты</div></div>
+              </div>
+            </div>
+            <div className={`${styles.card} ${styles.reviewCard}`}>
+              <div className={styles.reviewStars}>★★★★★</div>
+              <p className={styles.reviewText}>«Отличная игровая! Всё новое, чистое и безопасное. Дети в восторге, родители спокойны. Персонал супер! Рекомендую к посещению!»</p>
+              <div className={styles.reviewWho}>
+                <div className={styles.reviewAvatar} style={{ background: '#FFC627', color: '#4A3F38' }}>ДО</div>
+                <div><div className={styles.reviewName}>Диана Ожиганова</div><div className={styles.reviewMeta}>Яндекс.Карты</div></div>
+              </div>
+            </div>
             <div className={`${styles.card} ${styles.reviewCard}`}>
               <div className={styles.reviewStars}>★★★★★</div>
               <p className={styles.reviewText}>«Сын был в VR-шлеме минут 40, не хотел снимать! Жираф с шариками — отдельный восторг для младшей. Организовано супер чётко.»</p>
@@ -564,6 +620,18 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                 <div><div className={styles.reviewName}>Гулия М.</div><div className={styles.reviewMeta}>2ГИС</div></div>
               </div>
             </div>
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 24 }}>
+            <a
+              href={YANDEX_MAPS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.faqLabel}
+              style={{ color: '#6B47C2', fontWeight: 700, textDecoration: 'underline' }}
+              onClick={() => trackGoal('v1_zelenodolsk_yandex_maps_click')}
+            >
+              Смотреть все отзывы на Яндекс.Картах →
+            </a>
           </div>
         </div>
       </section>
@@ -600,12 +668,22 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.contactPill}
-                  style={{ background: '#136832' }}
+                  style={{ background: '#25D366' }}
                   onClick={() => trackGoal('v1_zelenodolsk_whatsapp_click')}
                 >
                   WhatsApp
                 </a>
-                <a href={`tel:${PHONE_TEL}`} className={styles.contactPill} style={{ background: '#4A3F38' }}>
+                <a
+                  href={MAX_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.contactPill}
+                  style={{ background: 'linear-gradient(135deg, #5A5AFF 0%, #4747E8 100%)' }}
+                  onClick={() => trackGoal('v1_zelenodolsk_max_click')}
+                >
+                  💬 MAX
+                </a>
+                <a href={`tel:${PHONE_TEL}`} className={styles.contactPill} style={{ background: '#fff', color: '#4A3F38', border: '1px solid rgba(0,0,0,.1)' }}>
                   📞 {PHONE_DISPLAY}
                 </a>
               </div>
@@ -632,6 +710,42 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               <p className={styles.formNote}>Заявка будет отправлена нам, а вы перейдёте в MAX для связи с администратором.</p>
             </form>
           </div>
+
+          <div className={styles.mapBlock}>
+            <a
+              href={YANDEX_MAPS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.mapFrame}
+              onClick={() => trackGoal('v1_zelenodolsk_yandex_maps_click')}
+            >
+              <iframe
+                src="https://yandex.ru/map-widget/v1/?ll=48.500814%2C55.849186&z=16&pt=48.500814,55.849186,pm2rdm"
+                width="100%"
+                height="100%"
+                style={{ border: 0, display: 'block', pointerEvents: 'none' }}
+                loading="lazy"
+                title="Dimbo на карте — г. Зеленодольск, ул. Татарстан, 9"
+              />
+            </a>
+            <div className={styles.mapInfo}>
+              <div className={styles.mapInfoTitle}>🦒 Dimbo, ул. Татарстан, 9</div>
+              <div className={styles.mapInfoRow}><span className={styles.mapInfoIcon}>★</span> 4,9 · 28 отзывов на Яндекс.Картах</div>
+              <div className={styles.mapInfoRow}><span className={styles.mapInfoIcon}>📍</span> ТЦ «Зум», 1 этаж</div>
+              <div className={styles.mapInfoRow}><span className={styles.mapInfoIcon}>🕐</span> Пн–Вс без выходных</div>
+              <div className={styles.mapInfoRow}><span className={styles.mapInfoIcon}>🚗</span> Рядом бесплатная парковка</div>
+              <a
+                href={YANDEX_MAPS_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}
+                style={{ marginTop: 16 }}
+                onClick={() => trackGoal('v1_zelenodolsk_yandex_maps_click')}
+              >
+                Проложить маршрут →
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -650,9 +764,10 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
             </div>
             <div className={styles.footerCol}>
               <div className={styles.footerColTitle}>Клуб</div>
-              <div>г. Зеленодольск, ул. Татарстан, 9</div>
+              <a href={YANDEX_MAPS_LINK} target="_blank" rel="noopener noreferrer">г. Зеленодольск, ул. Татарстан, 9</a>
               <div>{PHONE_DISPLAY}</div>
               <div>Пн–Вс без выходных</div>
+              <a href={YANDEX_MAPS_LINK} target="_blank" rel="noopener noreferrer">4.9 ★ на Яндекс.Картах</a>
             </div>
           </div>
           <div className={styles.footerBottom}>© 2026 Детский клуб Dimbo, Зеленодольск · Информация не является публичной офертой</div>
@@ -665,7 +780,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
           className={styles.btn}
-          style={{ background: '#136832', color: '#fff' }}
+          style={{ background: 'linear-gradient(135deg, #5A5AFF 0%, #4747E8 100%)', color: '#fff' }}
           onClick={() => trackGoal('v1_zelenodolsk_max_click')}
         >
           💬 Написать в MAX
@@ -681,7 +796,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
             <button className={styles.modalClose} onClick={() => setModalOpen(false)}>✕</button>
             <div className={styles.modalTimer}>⏱ Подарок ждёт 10 минут</div>
             <h3 style={{ fontSize: 22, marginBottom: 8 }}>Погодите! 🎁</h3>
-            <p style={{ color: '#635749', marginBottom: 20, fontSize: 15, fontWeight: 600 }}>Оставьте заявку сейчас — подарим фотосессию на празднике бесплатно.</p>
+            <p style={{ color: '#635749', marginBottom: 20, fontSize: 15, fontWeight: 600 }}>Оставьте заявку сейчас — подарим скидку 3% на праздник.</p>
             <div className={styles.quizOpts} style={{ marginBottom: 16 }}>
               {AGE_OPTIONS.map(opt => (
                 <button
