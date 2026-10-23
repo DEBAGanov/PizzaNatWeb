@@ -26,7 +26,8 @@ import {
   ActionIcon,
   Flex,
   Alert,
-  Anchor
+  Anchor,
+  TextInput
 } from '@mantine/core'
 import {
   IconCake,
@@ -48,6 +49,10 @@ import { SEOPageWrapper } from '../SEOHead'
 import { getKeywordMeta, getKeywordContent, getRelatedKeywords, getKeywordFAQ, shouldShowKidsMenuImproved } from '../../utils/kidsKeywords'
 import { KidsMenu } from './KidsMenu'
 import { YandexReviewsWidget } from '../common/YandexReviewsWidget'
+import { sendKidsBirthdayLead } from '../../services/kidsBirthdayLeadApi'
+import { useYandexMetrika } from '../analytics/YandexMetrika'
+
+const YANDEX_METRIKA_ID = import.meta.env.VITE_YANDEX_METRIKA_ID || '103585127'
 
 interface KidsPageTemplateProps {
   keyword: string
@@ -90,6 +95,7 @@ function ImageGallery({ images, onImageClick }: ImageGalleryProps) {
 
 export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, city = 'Волжск' }) => {
   const navigate = useNavigate()
+  const { reachGoal } = useYandexMetrika(YANDEX_METRIKA_ID)
   const meta = getKeywordMeta(keyword, city)
   const content = getKeywordContent(keyword, city)
   const relatedKeywords = getRelatedKeywords(keyword)
@@ -199,6 +205,34 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, cit
     window.open('https://vk.com/dimbo_volzhsk', '_blank')
   }
 
+  // Форма заявки "детский день рождения" — отдельный лид от заказа пиццы
+  const [leadName, setLeadName] = useState('')
+  const [leadPhone, setLeadPhone] = useState('')
+  const [leadStatus, setLeadStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!leadPhone.trim() || leadStatus === 'sending') return
+
+    setLeadStatus('sending')
+    const ok = await sendKidsBirthdayLead({
+      name: leadName,
+      phone: leadPhone,
+      city,
+      sourcePage: keyword.replace(/\s+/g, '-').toLowerCase(),
+      comment: `Заявка со страницы "${keyword}"`
+    })
+
+    if (ok) {
+      reachGoal('Lead_igrovaya')
+      setLeadStatus('sent')
+      setLeadName('')
+      setLeadPhone('')
+    } else {
+      setLeadStatus('error')
+    }
+  }
+
   const seoData = {
     title: meta.title,
     description: meta.description,
@@ -244,6 +278,44 @@ export const KidsPageTemplate: React.FC<KidsPageTemplateProps> = ({ keyword, cit
                   Оставить заявку в ВК
                 </Button>
               </Group>
+
+              {/* Компактная форма заявки — отдельный лид от заказа пиццы */}
+              <Box maw={420} mx="auto" w="100%">
+                {leadStatus === 'sent' ? (
+                  <Alert color="green" variant="light" ta="left">
+                    Спасибо! Заявка принята, мы свяжемся с вами в ближайшее время.
+                  </Alert>
+                ) : (
+                  <form onSubmit={handleLeadSubmit}>
+                    <Stack gap="xs">
+                      <Group gap="xs" wrap="nowrap">
+                        <TextInput
+                          placeholder="Ваше имя"
+                          value={leadName}
+                          onChange={(e) => setLeadName(e.currentTarget.value)}
+                          style={{ flex: 1 }}
+                        />
+                        <TextInput
+                          placeholder="Телефон"
+                          type="tel"
+                          required
+                          value={leadPhone}
+                          onChange={(e) => setLeadPhone(e.currentTarget.value)}
+                          style={{ flex: 1 }}
+                        />
+                      </Group>
+                      <Button type="submit" color="orange" loading={leadStatus === 'sending'} fullWidth>
+                        Оставить заявку на праздник
+                      </Button>
+                      {leadStatus === 'error' && (
+                        <Text size="sm" c="red" ta="center">
+                          Не удалось отправить, позвоните нам напрямую
+                        </Text>
+                      )}
+                    </Stack>
+                  </form>
+                )}
+              </Box>
             </Stack>
           </Card>
 

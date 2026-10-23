@@ -10,6 +10,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { SEOHead } from '../../components/SEOHead'
 import { generateServiceSchema, generateFAQSchema, insertSchemaMarkup } from '../../utils/schemaOrg'
+import { sendKidsBirthdayLead } from '../../services/kidsBirthdayLeadApi'
 import styles from './ZelenodolskBirthdayLanding.module.css'
 
 const MEDIA_BASE = 'https://s3.twcstorage.ru/f9c8e17a-pizzanat-products/v1-zelenodolsk/images'
@@ -27,6 +28,18 @@ function trackGoal(goal: string) {
   } catch {
     // Яндекс.Метрика может быть заблокирована — не прерываем сценарий заявки
   }
+}
+
+function formatPhoneInput(raw: string): string {
+  let digits = raw.replace(/\D/g, '')
+  if (digits.startsWith('8')) digits = `7${digits.slice(1)}`
+  if (!digits.startsWith('7')) digits = `7${digits}`
+  digits = digits.slice(0, 11)
+  return `+${digits}`
+}
+
+function isPhoneComplete(phone: string): boolean {
+  return phone.replace(/\D/g, '').length === 11
 }
 
 const AGE_OPTIONS = ['1–3 года', '4–6 лет', '7–10 лет', '10+ лет']
@@ -62,10 +75,16 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
   const [isWeekend, setIsWeekend] = useState(true)
   const [openFaq, setOpenFaq] = useState<number>(0)
   const [quizAge, setQuizAge] = useState<string>(AGE_OPTIONS[0])
+  const [quizStep, setQuizStep] = useState<'age' | 'date' | 'contacts'>('age')
+  const [quizDate, setQuizDate] = useState('')
+  const [quizName, setQuizName] = useState('')
+  const [quizPhone, setQuizPhone] = useState('+7')
   const [modalAge, setModalAge] = useState<string>(AGE_OPTIONS[0])
   const [modalOpen, setModalOpen] = useState(false)
+  const [modalName, setModalName] = useState('')
+  const [modalPhone, setModalPhone] = useState('+7')
   const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
+  const [phone, setPhone] = useState('+7')
   const shownRef = useRef(false)
 
   useEffect(() => {
@@ -112,20 +131,49 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
 
   function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!phone.trim()) return
+    if (!isPhoneComplete(phone)) return
     trackGoal('v1_zelenodolsk_form_submit')
+    trackGoal('Lead_igrovaya')
+    sendKidsBirthdayLead({
+      name,
+      phone,
+      city: 'Зеленодольск',
+      quizAge,
+      sourcePage: 'v1/zelenodolsk',
+      comment: 'Форма заявки лендинга'
+    })
     const text = `Заявка с лендинга Dimbo Зеленодольск.\nИмя: ${name || '—'}\nТелефон: ${phone}\nВозраст именинника: ${quizAge}`
     window.open(whatsappLink(text), '_blank')
   }
 
   function handleQuizNext() {
+    if (!isPhoneComplete(quizPhone)) return
     trackGoal('v1_zelenodolsk_quiz_complete')
-    window.open(whatsappLink(`Прошёл квиз на лендинге Dimbo Зеленодольск. Возраст именинника: ${quizAge}. Хочу расчёт стоимости.`), '_blank')
+    trackGoal('Lead_igrovaya')
+    sendKidsBirthdayLead({
+      name: quizName,
+      phone: quizPhone,
+      city: 'Зеленодольск',
+      quizAge,
+      sourcePage: 'v1/zelenodolsk',
+      comment: `Квиз лендинга. Желаемая дата: ${quizDate || '—'}`
+    })
+    window.open(whatsappLink(`Заявка на бронирование с лендинга Dimbo Зеленодольск. Имя: ${quizName || '—'}. Телефон: ${quizPhone}. Возраст именинника: ${quizAge}. Желаемая дата: ${quizDate || '—'}. Хочу забронировать праздник.`), '_blank')
   }
 
   function handleModalSubmit() {
+    if (!isPhoneComplete(modalPhone)) return
     trackGoal('v1_zelenodolsk_exit_modal')
-    window.open(whatsappLink(`Заявка с поп-апа лендинга Dimbo Зеленодольск. Возраст именинника: ${modalAge}. Хочу бесплатную фотосессию на празднике.`), '_blank')
+    trackGoal('Lead_igrovaya')
+    sendKidsBirthdayLead({
+      name: modalName,
+      phone: modalPhone,
+      city: 'Зеленодольск',
+      quizAge: modalAge,
+      sourcePage: 'v1/zelenodolsk',
+      comment: 'Попап лендинга (exit intent)'
+    })
+    window.open(whatsappLink(`Заявка с поп-апа лендинга Dimbo Зеленодольск. Имя: ${modalName || '—'}. Телефон: ${modalPhone}. Возраст именинника: ${modalAge}. Хочу бесплатную фотосессию на празднике.`), '_blank')
     setModalOpen(false)
   }
 
@@ -344,25 +392,76 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               </ul>
             </div>
             <div className={styles.quizRight}>
-              <div className={styles.quizStepLabel}>Вопрос 1 из 3</div>
-              <div className={styles.quizQ}>Сколько лет имениннику?</div>
-              <div className={styles.quizOpts}>
-                {AGE_OPTIONS.map(opt => (
-                  <button
-                    key={opt}
-                    type="button"
-                    className={`${styles.quizOpt} ${quizAge === opt ? styles.quizOptSelected : ''}`}
-                    onClick={() => setQuizAge(opt)}
-                  >
-                    {opt}
-                  </button>
-                ))}
-              </div>
-              <div style={{ marginTop: 20 }}>
-                <button type="button" onClick={handleQuizNext} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>
-                  Получить расчёт →
-                </button>
-              </div>
+              {quizStep === 'age' ? (
+                <>
+                  <div className={styles.quizStepLabel}>Вопрос 1 из 3</div>
+                  <div className={styles.quizQ}>Сколько лет имениннику?</div>
+                  <div className={styles.quizOpts}>
+                    {AGE_OPTIONS.map(opt => (
+                      <button
+                        key={opt}
+                        type="button"
+                        className={`${styles.quizOpt} ${quizAge === opt ? styles.quizOptSelected : ''}`}
+                        onClick={() => setQuizAge(opt)}
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <button type="button" onClick={() => setQuizStep('date')} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>
+                      Далее →
+                    </button>
+                  </div>
+                </>
+              ) : quizStep === 'date' ? (
+                <>
+                  <div className={styles.quizStepLabel}>Вопрос 2 из 3</div>
+                  <div className={styles.quizQ}>Когда планируете праздник?</div>
+                  <div className={styles.formField}>
+                    <label htmlFor="quiz-date">Желаемая дата</label>
+                    <input
+                      id="quiz-date"
+                      type="date"
+                      value={quizDate}
+                      min={new Date().toISOString().split('T')[0]}
+                      onChange={e => setQuizDate(e.target.value)}
+                    />
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <button type="button" onClick={() => setQuizStep('contacts')} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>
+                      Далее →
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.quizStepLabel}>Вопрос 3 из 3</div>
+                  <div className={styles.quizQ}>Забронировать дату</div>
+                  <div className={styles.formField}>
+                    <label htmlFor="quiz-name">Имя</label>
+                    <input id="quiz-name" type="text" placeholder="Как к вам обращаться" value={quizName} onChange={e => setQuizName(e.target.value)} />
+                  </div>
+                  <div className={styles.formField}>
+                    <label htmlFor="quiz-phone">Телефон</label>
+                    <input
+                      id="quiz-phone"
+                      type="tel"
+                      inputMode="numeric"
+                      placeholder="+7 (___) ___-__-__"
+                      value={quizPhone}
+                      maxLength={12}
+                      onChange={e => setQuizPhone(formatPhoneInput(e.target.value))}
+                      required
+                    />
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <button type="button" onClick={handleQuizNext} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>
+                      Отправить заявку →
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -518,7 +617,16 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               </div>
               <div className={styles.formField}>
                 <label htmlFor="landing-phone">Телефон</label>
-                <input id="landing-phone" type="tel" placeholder="+7 (___) ___-__-__" value={phone} onChange={e => setPhone(e.target.value)} required />
+                <input
+                  id="landing-phone"
+                  type="tel"
+                  inputMode="numeric"
+                  placeholder="+7 (___) ___-__-__"
+                  value={phone}
+                  maxLength={12}
+                  onChange={e => setPhone(formatPhoneInput(e.target.value))}
+                  required
+                />
               </div>
               <button type="submit" className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>Отправить заявку</button>
               <p className={styles.formNote}>Заявка откроется в WhatsApp с заполненными данными — просто отправьте сообщение.</p>
@@ -583,6 +691,23 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                   {opt}
                 </button>
               ))}
+            </div>
+            <div className={styles.formField}>
+              <label htmlFor="modal-name">Имя</label>
+              <input id="modal-name" type="text" placeholder="Как к вам обращаться" value={modalName} onChange={e => setModalName(e.target.value)} />
+            </div>
+            <div className={styles.formField}>
+              <label htmlFor="modal-phone">Телефон</label>
+              <input
+                id="modal-phone"
+                type="tel"
+                inputMode="numeric"
+                placeholder="+7 (___) ___-__-__"
+                value={modalPhone}
+                maxLength={12}
+                onChange={e => setModalPhone(formatPhoneInput(e.target.value))}
+                required
+              />
             </div>
             <button type="button" onClick={handleModalSubmit} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>
               Получить подарок
