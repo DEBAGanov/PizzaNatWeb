@@ -365,13 +365,11 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               <li><span className={styles.check}>✓</span> Отдельная комната именинника</li>
               <li><span className={styles.check}>✓</span> <strong>VR-шлем — в подарок 🎁</strong></li>
               <li><span className={styles.check}>✓</span> Фотозона</li>
-              <li><span className={styles.check}>✓</span> Серебряная или цветная ленточная дискотека (на выбор)</li>
+              <li><span className={styles.check}>✓</span> Серебряная или цветная ленточная дискотека (на выбор, доп. оплата)</li>
               <li><span className={styles.check}>✓</span> Sony PlayStation</li>
-              <li><span className={styles.check}>✓</span> Караоке</li>
-              <li><span className={styles.check}>✓</span> Танцы Just Dance</li>
               <li><span className={styles.check}>✓</span> Много игрушек для игр</li>
               <li><span className={styles.check}>✓</span> Музыкальное сопровождение</li>
-              <li><span className={styles.check}>✓</span> Микроволновка, термопот, питьевая вода, чай, кофе</li>
+              <li><span className={styles.check}>✓</span> Эл. чайник, питьевая вода</li>
               <li><span className={styles.check}>✓</span> Уборка, вынос мусора</li>
             </ul>
             <div className={styles.priceNote}>Тариф рассчитан на 12 детей. Каждый следующий ребёнок — +300 ₽</div>
