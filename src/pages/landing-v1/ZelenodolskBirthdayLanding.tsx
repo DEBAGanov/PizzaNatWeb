@@ -32,6 +32,17 @@ function trackGoal(goal: string) {
   }
 }
 
+function trackLandingButton(event: React.MouseEvent<HTMLDivElement>) {
+  const target = event.target
+  if (!(target instanceof Element)) return
+
+  const button = target.closest<HTMLElement>('[data-button]')
+  if (!button || !event.currentTarget.contains(button)) return
+
+  const buttonName = button.dataset.button
+  if (buttonName) trackGoal(`button_${buttonName}`)
+}
+
 function formatPhoneInput(raw: string): string {
   let digits = raw.replace(/\D/g, '')
   if (digits.startsWith('8')) digits = `7${digits.slice(1)}`
@@ -179,7 +190,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
   }
 
   return (
-    <div className={styles.page}>
+    <div className={styles.page} onClick={trackLandingButton}>
       <SEOHead
         page="v1-zelenodolsk"
         title="Детский день рождения в Dimbo Зеленодольск под ключ — VR-шлем, батуты, жираф-бассейн"
@@ -201,7 +212,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
             <div className={styles.logoText}>Dimbo<small>Зеленодольск</small></div>
           </div>
           <div className={styles.headerCta}>
-            <a href={`tel:${PHONE_TEL}`} className={styles.phoneLink}>📞 {PHONE_DISPLAY}</a>
+            <a href={`tel:${PHONE_TEL}`} className={styles.phoneLink} data-button="call">📞 {PHONE_DISPLAY}</a>
             <a
               href={whatsappLink()}
               target="_blank"
@@ -209,11 +220,12 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               className={styles.headerMsgBtn}
               aria-label="Написать в WhatsApp"
               title="Написать в WhatsApp"
+              data-button="whatsapp"
               onClick={() => trackGoal('v1_zelenodolsk_whatsapp_click')}
             >
               💬
             </a>
-            <a href="#quiz" className={`${styles.btn} ${styles.btnDark} ${styles.btnSm}`}>Записаться</a>
+            <a href="#quiz" className={`${styles.btn} ${styles.btnDark} ${styles.btnSm}`} data-button="signup">Записаться</a>
           </div>
         </div>
       </header>
@@ -225,7 +237,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
             <div className={styles.heroText}>
               <h1>Детский день рождения в Dimbo под ключ от 6 500 ₽</h1>
               <p className={styles.heroLead}>VR-шлем, жираф-бассейн с шариками, батуты и волшебная стена-кидалка. Вы отдыхаете — мы всё организуем.</p>
-              <div><a href="#quiz" className={`${styles.btn} ${styles.btnDark}`}>Связаться с нами</a></div>
+              <div><a href="#quiz" className={`${styles.btn} ${styles.btnDark}`} data-button="contact">Связаться с нами</a></div>
             </div>
             <div className={styles.heroImg}>
               <video
@@ -256,7 +268,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               </div>
               <div className={styles.stripPhotoBody}>
                 <h4>День рождения под ключ</h4>
-                <a href="#pricing">Смотреть пакет →</a>
+                <a href="#pricing" data-button="package">Смотреть пакет →</a>
               </div>
             </div>
             <div className={`${styles.stripCard} ${styles.stripList}`}>
@@ -343,6 +355,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               <button
                 type="button"
                 className={`${styles.toggleOpt} ${!isWeekend ? styles.toggleOptActive : ''}`}
+                data-button="weekdays"
                 onClick={() => setIsWeekend(false)}
               >
                 Будни
@@ -350,6 +363,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               <button
                 type="button"
                 className={`${styles.toggleOpt} ${isWeekend ? styles.toggleOptActive : ''}`}
+                data-button="weekend"
                 onClick={() => setIsWeekend(true)}
               >
                 Выходные
@@ -373,7 +387,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               <li><span className={styles.check}>✓</span> Уборка, вынос мусора</li>
             </ul>
             <div className={styles.priceNote}>Тариф рассчитан на 12 детей. Каждый следующий ребёнок — +300 ₽</div>
-            <a href="#quiz" className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>Забронировать дату</a>
+            <a href="#quiz" className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="booking">Забронировать дату</a>
           </div>
         </div>
       </section>
@@ -396,11 +410,12 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                   <div className={styles.quizStepLabel}>Вопрос 1 из 3</div>
                   <div className={styles.quizQ}>Сколько лет имениннику?</div>
                   <div className={styles.quizOpts}>
-                    {AGE_OPTIONS.map(opt => (
+                    {AGE_OPTIONS.map((opt, index) => (
                       <button
                         key={opt}
                         type="button"
                         className={`${styles.quizOpt} ${quizAge === opt ? styles.quizOptSelected : ''}`}
+                        data-button={`quiz_age_${index + 1}`}
                         onClick={() => setQuizAge(opt)}
                       >
                         {opt}
@@ -408,7 +423,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                     ))}
                   </div>
                   <div style={{ marginTop: 20 }}>
-                    <button type="button" onClick={() => setQuizStep('date')} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>
+                    <button type="button" onClick={() => setQuizStep('date')} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="quiz_next_age">
                       Далее →
                     </button>
                   </div>
@@ -428,7 +443,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                     />
                   </div>
                   <div style={{ marginTop: 20 }}>
-                    <button type="button" onClick={() => setQuizStep('contacts')} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>
+                    <button type="button" onClick={() => setQuizStep('contacts')} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="quiz_next_date">
                       Далее →
                     </button>
                   </div>
@@ -455,7 +470,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                     />
                   </div>
                   <div style={{ marginTop: 20 }}>
-                    <button type="button" onClick={handleQuizNext} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>
+                    <button type="button" onClick={handleQuizNext} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="quiz_submit">
                       Отправить заявку →
                     </button>
                   </div>
@@ -530,6 +545,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               rel="noopener noreferrer"
               className={styles.reviewsScore}
               style={{ textDecoration: 'none', color: 'inherit' }}
+              data-button="yandex_maps"
               onClick={() => trackGoal('v1_zelenodolsk_yandex_maps_click')}
             >
               <div className={styles.reviewStars} style={{ color: '#FFC627', fontSize: 20 }}>★★★★★</div>
@@ -626,6 +642,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               rel="noopener noreferrer"
               className={styles.faqLabel}
               style={{ color: '#6B47C2', fontWeight: 700, textDecoration: 'underline' }}
+              data-button="yandex_maps"
               onClick={() => trackGoal('v1_zelenodolsk_yandex_maps_click')}
             >
               Смотреть все отзывы на Яндекс.Картах →
@@ -641,7 +658,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
           <div style={{ maxWidth: 780, margin: '0 auto' }}>
             {FAQ_ITEMS.map((item, i) => (
               <div key={item.q} className={`${styles.faqItem} ${openFaq === i ? styles.faqItemOpen : ''}`}>
-                <button className={styles.faqQ} onClick={() => setOpenFaq(openFaq === i ? -1 : i)}>
+                <button className={styles.faqQ} data-button={`faq_${i + 1}`} onClick={() => setOpenFaq(openFaq === i ? -1 : i)}>
                   <span className={styles.faqNum}>{i + 1}</span>
                   <span className={styles.faqLabel}>{item.q}</span>
                   <span className={styles.faqIcon}>+</span>
@@ -667,6 +684,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                   rel="noopener noreferrer"
                   className={styles.contactPill}
                   style={{ background: '#25D366' }}
+                  data-button="whatsapp"
                   onClick={() => trackGoal('v1_zelenodolsk_whatsapp_click')}
                 >
                   WhatsApp
@@ -677,11 +695,12 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                   rel="noopener noreferrer"
                   className={styles.contactPill}
                   style={{ background: 'linear-gradient(135deg, #5A5AFF 0%, #4747E8 100%)' }}
+                  data-button="max"
                   onClick={() => trackGoal('v1_zelenodolsk_max_click')}
                 >
                   💬 MAX
                 </a>
-                <a href={`tel:${PHONE_TEL}`} className={styles.contactPill} style={{ background: '#fff', color: '#4A3F38', border: '1px solid rgba(0,0,0,.1)' }}>
+                <a href={`tel:${PHONE_TEL}`} className={styles.contactPill} style={{ background: '#fff', color: '#4A3F38', border: '1px solid rgba(0,0,0,.1)' }} data-button="call">
                   📞 {PHONE_DISPLAY}
                 </a>
               </div>
@@ -704,7 +723,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                   required
                 />
               </div>
-              <button type="submit" className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>Отправить заявку</button>
+              <button type="submit" className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="form_submit">Отправить заявку</button>
               <p className={styles.formNote}>Заявка будет отправлена нам, а вы перейдёте в MAX для связи с администратором.</p>
             </form>
           </div>
@@ -715,6 +734,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.mapFrame}
+              data-button="yandex_maps"
               onClick={() => trackGoal('v1_zelenodolsk_yandex_maps_click')}
             >
               <iframe
@@ -738,6 +758,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                 rel="noopener noreferrer"
                 className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}
                 style={{ marginTop: 16 }}
+                data-button="route"
                 onClick={() => trackGoal('v1_zelenodolsk_yandex_maps_click')}
               >
                 Проложить маршрут →
@@ -753,19 +774,19 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
             <div>
               <h4>Dimbo</h4>
               <p>Детский день рождения в Зеленодольске под ключ — VR-шлем, батуты, жираф-бассейн и игровая зона.</p>
-              <a href="#quiz" className={`${styles.btn} ${styles.btnDark}`}>Забронировать дату</a>
+              <a href="#quiz" className={`${styles.btn} ${styles.btnDark}`} data-button="booking">Забронировать дату</a>
             </div>
             <div className={styles.footerCol}>
               <div className={styles.footerColTitle}>Разделы</div>
-              <a href="#pricing">Цены</a>
-              <a href="#faq">FAQ</a>
+              <a href="#pricing" data-button="pricing">Цены</a>
+              <a href="#faq" data-button="faq">FAQ</a>
             </div>
             <div className={styles.footerCol}>
               <div className={styles.footerColTitle}>Клуб</div>
-              <a href={YANDEX_MAPS_LINK} target="_blank" rel="noopener noreferrer">г. Зеленодольск, ул. Татарстан, 9</a>
+              <a href={YANDEX_MAPS_LINK} target="_blank" rel="noopener noreferrer" data-button="address">г. Зеленодольск, ул. Татарстан, 9</a>
               <div>{PHONE_DISPLAY}</div>
               <div>Пн–Вс без выходных</div>
-              <a href={YANDEX_MAPS_LINK} target="_blank" rel="noopener noreferrer">4.9 ★ на Яндекс.Картах</a>
+              <a href={YANDEX_MAPS_LINK} target="_blank" rel="noopener noreferrer" data-button="yandex_maps">4.9 ★ на Яндекс.Картах</a>
             </div>
           </div>
           <div className={styles.footerBottom}>© 2026 Детский клуб Dimbo, Зеленодольск · Информация не является публичной офертой</div>
@@ -779,11 +800,12 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
           rel="noopener noreferrer"
           className={styles.btn}
           style={{ background: 'linear-gradient(135deg, #5A5AFF 0%, #4747E8 100%)', color: '#fff' }}
+          data-button="max"
           onClick={() => trackGoal('v1_zelenodolsk_max_click')}
         >
           💬 Написать в MAX
         </a>
-        <a href={`tel:${PHONE_TEL}`} className={`${styles.btn} ${styles.btnYellow}`} onClick={() => trackGoal('v1_zelenodolsk_call_click')}>
+        <a href={`tel:${PHONE_TEL}`} className={`${styles.btn} ${styles.btnYellow}`} data-button="call" onClick={() => trackGoal('v1_zelenodolsk_call_click')}>
           📞 Позвонить
         </a>
       </div>
@@ -791,16 +813,17 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
       {modalOpen && (
         <div className={`${styles.modalOverlay} ${styles.modalOverlayActive}`} onClick={e => { if (e.target === e.currentTarget) setModalOpen(false) }}>
           <div className={styles.modalBox}>
-            <button className={styles.modalClose} onClick={() => setModalOpen(false)}>✕</button>
+            <button className={styles.modalClose} data-button="modal_close" onClick={() => setModalOpen(false)}>✕</button>
             <div className={styles.modalTimer}>⏱ Подарок ждёт 10 минут</div>
             <h3 style={{ fontSize: 22, marginBottom: 8 }}>Погодите! 🎁</h3>
             <p style={{ color: '#635749', marginBottom: 20, fontSize: 15, fontWeight: 600 }}>Оставьте заявку сейчас — подарим скидку 3% на праздник.</p>
             <div className={styles.quizOpts} style={{ marginBottom: 16 }}>
-              {AGE_OPTIONS.map(opt => (
+              {AGE_OPTIONS.map((opt, index) => (
                 <button
                   key={opt}
                   type="button"
                   className={`${styles.quizOpt} ${modalAge === opt ? styles.quizOptSelected : ''}`}
+                  data-button={`modal_age_${index + 1}`}
                   onClick={() => setModalAge(opt)}
                 >
                   {opt}
@@ -824,7 +847,7 @@ export const ZelenodolskBirthdayLanding: React.FC = () => {
                 required
               />
             </div>
-            <button type="button" onClick={handleModalSubmit} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}>
+            <button type="button" onClick={handleModalSubmit} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="gift">
               Получить подарок
             </button>
           </div>

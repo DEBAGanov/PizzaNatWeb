@@ -143,6 +143,64 @@ trackPurchase(order.id.toString(), ecommerceProducts, {
 
 ---
 
+## 🎯 Цели кнопок лендинга `/v1/zelenodolsk`
+
+**Где:** `src/pages/landing-v1/ZelenodolskBirthdayLanding.tsx`
+
+**Счётчик:** `103585127`
+
+**Когда:** При клике на любую кнопку или ссылку лендинга
+
+Для всех интерактивных элементов задан атрибут `data-button`. Общий обработчик `trackLandingButton` получает его значение и отправляет JavaScript-цель:
+
+```typescript
+window.ym?.(103585127, 'reachGoal', `button_${buttonName}`)
+```
+
+Например, для кнопки MAX с `data-button="max"` отправляется цель `button_max`.
+
+### Список целей
+
+| Цель | Элемент или действие |
+|---|---|
+| `button_call` | Телефон в шапке, блоке контактов и фиксированной панели |
+| `button_whatsapp` | Ссылки WhatsApp в шапке и блоке контактов |
+| `button_max` | Ссылки MAX в блоке контактов и фиксированной панели |
+| `button_signup` | «Записаться» в шапке |
+| `button_contact` | «Связаться с нами» в первом экране |
+| `button_package` | «Смотреть пакет» |
+| `button_weekdays` | Переключатель цены «Будни» |
+| `button_weekend` | Переключатель цены «Выходные» |
+| `button_booking` | «Забронировать дату» в тарифе и подвале |
+| `button_quiz_age_1` | Возраст «1–3 года» в квизе |
+| `button_quiz_age_2` | Возраст «4–6 лет» в квизе |
+| `button_quiz_age_3` | Возраст «7–10 лет» в квизе |
+| `button_quiz_age_4` | Возраст «10+ лет» в квизе |
+| `button_quiz_next_age` | Переход от вопроса о возрасте к дате |
+| `button_quiz_next_date` | Переход от даты к контактам |
+| `button_quiz_submit` | «Отправить заявку» в квизе |
+| `button_yandex_maps` | Ссылки на отзывы, карту и рейтинг Яндекс Карт |
+| `button_faq_1`–`button_faq_6` | Открытие соответствующего вопроса FAQ |
+| `button_form_submit` | «Отправить заявку» в основной форме |
+| `button_route` | «Проложить маршрут» |
+| `button_pricing` | Ссылка «Цены» в подвале |
+| `button_faq` | Ссылка «FAQ» в подвале |
+| `button_address` | Адрес клуба в подвале |
+| `button_modal_close` | Закрытие всплывающего окна |
+| `button_modal_age_1`–`button_modal_age_4` | Выбор возраста во всплывающем окне |
+| `button_gift` | «Получить подарок» во всплывающем окне |
+
+Новые цели отправляются в дополнение к уже существующим целям лендинга: `v1_zelenodolsk_form_submit`, `v1_zelenodolsk_quiz_complete`, `v1_zelenodolsk_exit_modal`, `v1_zelenodolsk_whatsapp_click`, `v1_zelenodolsk_max_click`, `v1_zelenodolsk_call_click`, `v1_zelenodolsk_yandex_maps_click` и `Lead_igrovaya`.
+
+### Проверка целей кнопок
+
+1. Откройте production-версию `/v1/zelenodolsk` с включённой Метрикой.
+2. Нажмите нужную кнопку.
+3. В Яндекс Метрика Debugger или консоли проверьте вызов `reachGoal` с именем `button_*`.
+4. Для просмотра статистики создайте в интерфейсе Метрики JavaScript-события с соответствующими идентификаторами целей.
+
+---
+
 ## 🔧 Техническая реализация
 
 ### Основной хук `useYandexMetrika`
