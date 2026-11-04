@@ -1,0 +1,854 @@
+/**
+ * @file: VolzhskBirthdayLanding.tsx
+ * @description: Самостоятельный лендинг "Детский день рождения в Dimbo" (Волжск, ул. Шестакова 1Б).
+ *   Собственный дизайн (не Mantine), переносной шаблон — при повторном использовании под другой
+ *   город/площадку копировать с заменой контента/медиа-префикса S3, а не переиспользовать напрямую.
+ * @dependencies: SEOHead, schemaOrg, временные медиа s3.twcstorage.ru/f9c8e17a-pizzanat-products/v1-zelenodolsk
+ * @created: 2026-11-04
+ */
+
+import React, { useEffect, useRef, useState } from 'react'
+import { SEOHead } from '../../components/SEOHead'
+import { generateServiceSchema, generateFAQSchema, insertSchemaMarkup } from '../../utils/schemaOrg'
+import { sendKidsBirthdayLead } from '../../services/kidsBirthdayLeadApi'
+import styles from './VolzhskBirthdayLanding.module.css'
+
+const MEDIA_BASE = 'https://s3.twcstorage.ru/f9c8e17a-pizzanat-products/v1-zelenodolsk/images'
+const PHONE_DISPLAY = '8-906-138-28-68'
+const PHONE_TEL = '+79061382868'
+const PHONE_DIGITS = '79061382868'
+const MAX_LINK = 'https://max.ru/id121603899498_bot'
+const YANDEX_MAPS_LINK = 'https://yandex.ru/maps/org/dimbo/188302222909/?ll=48.332228%2C55.868031&z=17'
+const YANDEX_REVIEWS_LINK = 'https://yandex.ru/maps/org/dimbo/188302222909/reviews/'
+
+const WHATSAPP_TEXT = encodeURIComponent('Здравствуйте! Хочу узнать подробности и забронировать детский день рождения в Dimbo Волжск.')
+const whatsappLink = (extra?: string) =>
+  `https://wa.me/${PHONE_DIGITS}?text=${extra ? encodeURIComponent(extra) : WHATSAPP_TEXT}`
+
+function trackGoal(goal: string) {
+  try {
+    window.ym?.(103585127, 'reachGoal', goal)
+  } catch {
+    // Яндекс.Метрика может быть заблокирована — не прерываем сценарий заявки
+  }
+}
+
+function trackLandingButton(event: React.MouseEvent<HTMLDivElement>) {
+  const target = event.target
+  if (!(target instanceof Element)) return
+
+  const button = target.closest<HTMLElement>('[data-button]')
+  if (!button || !event.currentTarget.contains(button)) return
+
+  const buttonName = button.dataset.button
+  if (buttonName) trackGoal(`button_${buttonName}`)
+}
+
+function formatPhoneInput(raw: string): string {
+  let digits = raw.replace(/\D/g, '')
+  if (digits.startsWith('8')) digits = `7${digits.slice(1)}`
+  if (!digits.startsWith('7')) digits = `7${digits}`
+  digits = digits.slice(0, 11)
+  return `+${digits}`
+}
+
+function isPhoneComplete(phone: string): boolean {
+  return phone.replace(/\D/g, '').length === 11
+}
+
+const AGE_OPTIONS = ['1–3 года', '4–6 лет', '7–10 лет', '10+ лет']
+
+const FAQ_ITEMS = [
+  {
+    q: 'Можно привести своего аниматора?',
+    a: 'Да, конечно. Можно привести своего аниматора или заказать нашего — уточните на этапе брони.'
+  },
+  {
+    q: 'Можно принести свою еду и торт?',
+    a: 'Да, можно принести свой торт и угощения — в комнате именинника есть всё для сервировки стола.'
+  },
+  {
+    q: 'Сколько взрослых может прийти?',
+    a: 'Родители и гости-взрослые приходят бесплатно и могут находиться в зале всё время праздника.'
+  },
+  {
+    q: 'Что если гостей будет больше 12 детей?',
+    a: 'Не проблема — каждый ребёнок сверх 12 человек оплачивается отдельно, 300 ₽.'
+  },
+  {
+    q: 'С какого возраста можно в VR-шлем и на батуты?',
+    a: 'Подбираем активности под возраст ребёнка индивидуально — администратор поможет определиться при бронировании.'
+  },
+  {
+    q: 'Нужна ли предоплата?',
+    a: 'Да, бронирование даты подтверждается небольшой предоплатой — расскажем детали при оформлении заявки.'
+  }
+]
+
+const REVIEWS = [
+  {
+    name: 'Дарья Родионова',
+    initials: 'ДР',
+    color: '#C73040',
+    text: '«Отмечали день рождения на 17 детей, всё прошло замечательно! Вкусно, весело, много активностей, ещё немаловажно — чисто! Видно, что всё сделано с любовью и с душой. На все вопросы и просьбы был моментальный ответ. Обязательно ещё придём!»'
+  },
+  {
+    name: 'Людмила Земляницкая',
+    initials: 'ЛЗ',
+    color: '#1A8574',
+    text: '«Отличное кафе Димбо! Чисто, уютно, отличная кухня. В игровой комнате каждый ребёнок найдёт развлечение по душе. Детям очень нравятся батуты, караоке, приставки. Также есть красивые фотозоны. Всё было супер!»'
+  },
+  {
+    name: 'Tem',
+    initials: 'T',
+    color: '#6B47C2',
+    text: '«Очень хорошее место, чтобы отметить детский день рождения. Много игр, развлечений, 4 батута, множество детских игрушек. Отличное кафе, вкусные картошка фри и пицца. Несомненно, 5 звёзд!»'
+  },
+  {
+    name: 'Алиса С.',
+    initials: 'АС',
+    color: '#FFC627',
+    text: '«Хорошее уютное место. Еда вкусная, сытная. Готовят всё быстро. Персонал приветливый, вежливый. Всегда чисто, аккуратно. Были на праздновании дня рождения дочки, всем очень понравилось. Для развлечения детей всё есть. Всем советую.»'
+  },
+  {
+    name: 'Людмила Анатольевна',
+    initials: 'ЛА',
+    color: '#136832',
+    text: '«Очень нравится игровой центр «Димбо», в нём есть всё: кафе и игровая для детей. Всё продумано до мелочей. Есть батуты, игровые приставки, VR-очки. Также можно потанцевать и попеть в караоке. Очень вежливый персонал. Советую!»'
+  },
+  {
+    name: 'Ольга Денисова',
+    initials: 'ОД',
+    color: '#C73040',
+    text: '«Отмечали день рождения девочки. Дети были разного возраста, от 2 до 10 лет. Впечатлений море! Каждому было интересно. У нас была забронирована комната для праздника: был чайник, микроволновка. Еду можно всю с собой, что тоже очень удобно!»'
+  },
+  {
+    name: 'Диана Григорьева',
+    initials: 'ДГ',
+    color: '#1A8574',
+    text: '«Отличное место для проведения детского праздника. Огромное пространство даёт возможность выплеснуть энергию детям и получить массу удовольствий. Детям особенно понравился батут.»'
+  },
+  {
+    name: 'Миля В.',
+    initials: 'МВ',
+    color: '#6B47C2',
+    text: '«Отмечаем не первый день рождения в этом кафе! Очень добродушный персонал, вкусная еда, всё в одном месте для праздника — различная пицца, картошка фри и игровой зал! Дети довольны — мамы счастливы!»'
+  },
+  {
+    name: 'Настюшка Ф.',
+    initials: 'НФ',
+    color: '#136832',
+    text: '«Празднуем дни рождения детей только в Димбо. Каждый год всё лучше и лучше. Дети играют на батутах, взрослые поют в караоке. Заказываем еду в кафе, администратор приносит наверх. Пицца шикарная!»'
+  },
+  {
+    name: 'Елена Васильева',
+    initials: 'ЕВ',
+    color: '#C73040',
+    text: '«Замечательное кафе, очаровательная хозяйка, вкуснейшая еда! Очень отрадно, что в нашем городе появилось место, где можно весело провести семейный детский праздник или просто отдохнуть родителям и детям. Очень нужное место!»'
+  }
+]
+
+export const VolzhskBirthdayLanding: React.FC = () => {
+  const [isWeekend, setIsWeekend] = useState(true)
+  const [openFaq, setOpenFaq] = useState<number>(0)
+  const [quizAge, setQuizAge] = useState<string>(AGE_OPTIONS[0])
+  const [quizStep, setQuizStep] = useState<'age' | 'date' | 'contacts'>('age')
+  const [quizDate, setQuizDate] = useState('')
+  const [quizName, setQuizName] = useState('')
+  const [quizPhone, setQuizPhone] = useState('+7')
+  const [modalAge, setModalAge] = useState<string>(AGE_OPTIONS[0])
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalName, setModalName] = useState('')
+  const [modalPhone, setModalPhone] = useState('+7')
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('+7')
+  const shownRef = useRef(false)
+
+  useEffect(() => {
+    const linkId = 'v1-volzhsk-manrope-font'
+    if (!document.getElementById(linkId)) {
+      const link = document.createElement('link')
+      link.id = linkId
+      link.rel = 'stylesheet'
+      link.href = 'https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap'
+      document.head.appendChild(link)
+    }
+  }, [])
+
+  useEffect(() => {
+    const schema = generateServiceSchema({
+      serviceType: 'Организация детских праздников',
+      name: 'Детский день рождения в Dimbo Волжск',
+      description:
+        'Детский день рождения под ключ в игровом клубе Dimbo (Волжск, ул. Шестакова, 1Б): VR-шлем, жираф-бассейн с шариками, батуты, интерактивная стена-кидалка, отдельная комната именинника.',
+      areaServed: ['Волжск']
+    })
+    const faqSchema = generateFAQSchema(FAQ_ITEMS.map(f => ({ question: f.q, answer: f.a })))
+    insertSchemaMarkup({ '@context': 'https://schema.org', '@graph': [schema, faqSchema] })
+  }, [])
+
+  useEffect(() => {
+    if (shownRef.current) return
+    const onMouseLeave = (e: MouseEvent) => {
+      if (e.clientY < 10) showExitModal()
+    }
+    const timer = setTimeout(showExitModal, 60000)
+    document.addEventListener('mouseleave', onMouseLeave)
+    return () => {
+      document.removeEventListener('mouseleave', onMouseLeave)
+      clearTimeout(timer)
+    }
+  }, [])
+
+  function showExitModal() {
+    if (shownRef.current) return
+    shownRef.current = true
+    setModalOpen(true)
+  }
+
+  function handleFormSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!isPhoneComplete(phone)) return
+    trackGoal('v1_volzhsk_form_submit')
+    trackGoal('Lead_igrovaya')
+    sendKidsBirthdayLead({
+      name,
+      phone,
+      city: 'Волжск',
+      quizAge,
+      sourcePage: 'v1/volzhsk',
+      comment: 'Форма заявки лендинга'
+    })
+    window.open(MAX_LINK, '_blank')
+  }
+
+  function handleQuizNext() {
+    if (!isPhoneComplete(quizPhone)) return
+    trackGoal('v1_volzhsk_quiz_complete')
+    trackGoal('Lead_igrovaya')
+    sendKidsBirthdayLead({
+      name: quizName,
+      phone: quizPhone,
+      city: 'Волжск',
+      quizAge,
+      sourcePage: 'v1/volzhsk',
+      comment: `Квиз лендинга. Желаемая дата: ${quizDate || '—'}`
+    })
+    window.open(MAX_LINK, '_blank')
+  }
+
+  function handleModalSubmit() {
+    if (!isPhoneComplete(modalPhone)) return
+    trackGoal('v1_volzhsk_exit_modal')
+    trackGoal('Lead_igrovaya')
+    sendKidsBirthdayLead({
+      name: modalName,
+      phone: modalPhone,
+      city: 'Волжск',
+      quizAge: modalAge,
+      sourcePage: 'v1/volzhsk',
+      comment: 'Попап лендинга (exit intent)'
+    })
+    window.open(MAX_LINK, '_blank')
+    setModalOpen(false)
+  }
+
+  return (
+    <div className={styles.page} onClick={trackLandingButton}>
+      <SEOHead
+        page="v1-volzhsk"
+        title="Детский день рождения в Dimbo Волжск под ключ — VR-шлем, батуты, жираф-бассейн"
+        description="Детский день рождения в Волжске под ключ от 6 500 ₽: VR-шлем в подарок, жираф-бассейн с шариками, батуты, стена-кидалка. Игровой клуб Dimbo, ул. Шестакова, 1Б. Бронируйте дату онлайн."
+        keywords={[
+          'детский день рождения зеленодольск',
+          'детский день рождения под ключ',
+          'детский клуб зеленодольск',
+          'где отметить день рождения ребенка зеленодольск',
+          'vr квест для детей'
+        ]}
+        canonical="https://dimbopizza.ru/v1/volzhsk"
+      />
+
+      <header className={styles.header}>
+        <div className={styles.headerInner}>
+          <div className={styles.logoGroup}>
+            <div className={styles.logoBadge}>🦒</div>
+            <div className={styles.logoText}>Dimbo<small>Волжск</small></div>
+          </div>
+          <div className={styles.headerCta}>
+            <a href={`tel:${PHONE_TEL}`} className={styles.phoneLink} data-button="call">📞 {PHONE_DISPLAY}</a>
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.headerMsgBtn}
+              aria-label="Написать в WhatsApp"
+              title="Написать в WhatsApp"
+              data-button="whatsapp"
+              onClick={() => trackGoal('v1_volzhsk_whatsapp_click')}
+            >
+              💬
+            </a>
+            <a href="#quiz" className={`${styles.btn} ${styles.btnDark} ${styles.btnSm}`} data-button="signup">Записаться</a>
+          </div>
+        </div>
+      </header>
+
+      {/* HERO */}
+      <section className={`${styles.fullBleed} ${styles.heroBlock}`}>
+        <div className={styles.wrap} style={{ maxWidth: 1120 }}>
+          <div className={styles.heroGrid}>
+            <div className={styles.heroText}>
+              <h1>Детский день рождения в Dimbo под ключ от 6 500 ₽</h1>
+              <p className={styles.heroLead}>VR-шлем, жираф-бассейн с шариками, батуты и волшебная стена-кидалка. Вы отдыхаете — мы всё организуем.</p>
+              <div><a href="#quiz" className={`${styles.btn} ${styles.btnDark}`} data-button="contact">Связаться с нами</a></div>
+            </div>
+            <div className={styles.heroImg}>
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                poster={`${MEDIA_BASE}/video/hero-reel-poster.jpg`}
+                aria-label="Дети играют в клубе Dimbo: жираф-бассейн, батуты, стена-кидалка, аэрохоккей"
+              >
+                <source src={`${MEDIA_BASE}/video/hero-reel.mp4`} type="video/mp4" />
+              </video>
+              <div className={styles.vrChip}>🥽 VR — в подарок</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3-card strip */}
+      <div className={styles.wrap}>
+        <div className={styles.stripWrap}>
+          <div className={styles.stripGrid}>
+            <div className={`${styles.stripCard} ${styles.stripPhoto}`}>
+              <div className={styles.stripPhotoPh}>
+                <img src={`${MEDIA_BASE}/real-giraffe-2.jpg`} alt="Дети на жирафе-бассейне с шариками" />
+                <div className={styles.stripPhotoTag}>от 6 500 ₽</div>
+              </div>
+              <div className={styles.stripPhotoBody}>
+                <h4>День рождения под ключ</h4>
+                <a href="#pricing" data-button="package">Смотреть пакет →</a>
+              </div>
+            </div>
+            <div className={`${styles.stripCard} ${styles.stripList}`}>
+              <h4>О программе праздника</h4>
+              <ul>
+                <li><span className={styles.dot}></span>Игровая зона на 3 часа</li>
+                <li><span className={styles.dot}></span>VR-шлем и стена-кидалка</li>
+                <li><span className={styles.dot}></span>Комната именинника</li>
+                <li><span className={styles.dot}></span>Администратор и уборка</li>
+              </ul>
+            </div>
+            <div className={`${styles.stripCard} ${styles.stripRating}`}>
+              <div className={styles.stripRatingStars}>★★★★★</div>
+              <div className={styles.stripRatingNum}>5.0</div>
+              <p>«Отмечали день рождения на 17 детей — вкусно, весело, много активностей и чисто!»</p>
+              <div className={styles.stripRatingWho}>Дарья Р. · Яндекс.Карты</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* WHAT'S INCLUDED */}
+      <section className={styles.section}>
+        <div className={styles.wrap}>
+          <h2 className={styles.sectionTitle}>Что входит в каждый праздник</h2>
+          <div className={styles.includeGrid}>
+            <div className={styles.includeCard}>
+              <div className={styles.includeNum}>1</div>
+              <h4>Игровая зона на 3 часа</h4>
+              <p>Жираф-бассейн, батуты и мягкие зоны в полном распоряжении</p>
+            </div>
+            <div className={`${styles.includeCard} ${styles.includeCardAlt1}`}>
+              <div className={styles.includeNum}>2</div>
+              <h4>VR-шлем в подарок</h4>
+              <p>Погружение в игру без доплат — в каждом тарифе</p>
+            </div>
+            <div className={`${styles.includeCard} ${styles.includeCardAlt2}`}>
+              <div className={styles.includeNum}>3</div>
+              <h4>Стена-кидалка</h4>
+              <p>Интерактивный проектор с играми для всей компании</p>
+            </div>
+            <div className={`${styles.includeCard} ${styles.includeCardAlt3}`}>
+              <div className={styles.includeNum}>4</div>
+              <h4>Комната именинника</h4>
+              <p>Отдельное место для торта и подарков</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* VR BANNER */}
+      <section className={styles.section} style={{ paddingTop: 0 }}>
+        <div className={styles.wrap}>
+          <div className={styles.vrBanner}>
+            <div className={styles.vrBannerText}>
+              <span className={styles.vrBannerTag}>ГЛАВНЫЙ ХИТ ПРАЗДНИКА</span>
+              <h3>Погружение в виртуальную игру — на 100% настоящее приключение</h3>
+              <p>Ребёнок надевает VR-шлем — и оказывается внутри сказки: летает, исследует, сражается. Разговоров хватит на неделю вперёд.</p>
+            </div>
+            <div className={styles.vrBannerImg}>
+              <img src={`${MEDIA_BASE}/vr.jpg`} alt="Ребёнок в VR-шлеме радуется" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* RIBBON */}
+      <div className={styles.ribbonDivider}>
+        <div className={styles.ribbonTrack}>
+          <span>ДЕТИ В ВОСТОРГЕ · РОДИТЕЛИ ОТДЫХАЮТ ·</span>
+          <span>ДЕТИ В ВОСТОРГЕ · РОДИТЕЛИ ОТДЫХАЮТ ·</span>
+          <span>ДЕТИ В ВОСТОРГЕ · РОДИТЕЛИ ОТДЫХАЮТ ·</span>
+        </div>
+      </div>
+
+      {/* PRICE */}
+      <section className={`${styles.fullBleed} ${styles.priceBlock}`} id="pricing">
+        <div className={styles.wrap} style={{ maxWidth: 1120 }}>
+          <div className={styles.priceHead}>
+            <span className={styles.eyebrowPill}>ЧЕСТНАЯ ЦЕНА</span>
+            <h2>Один праздник. Всё включено</h2>
+            <p>Тариф «День рождения» — без скрытых доплат и сюрпризов</p>
+            <div className={styles.toggleRow}>
+              <button
+                type="button"
+                className={`${styles.toggleOpt} ${!isWeekend ? styles.toggleOptActive : ''}`}
+                data-button="weekdays"
+                onClick={() => setIsWeekend(false)}
+              >
+                Будни
+              </button>
+              <button
+                type="button"
+                className={`${styles.toggleOpt} ${isWeekend ? styles.toggleOptActive : ''}`}
+                data-button="weekend"
+                onClick={() => setIsWeekend(true)}
+              >
+                Выходные
+              </button>
+            </div>
+          </div>
+          <div className={styles.priceCardSingle}>
+            <span className={styles.eyebrowPill} style={{ background: '#FFF3F4', color: '#C73040' }}>🦒 ДЕНЬ РОЖДЕНИЯ</span>
+            <div className={styles.priceNum}>{isWeekend ? '7 500 ₽' : '6 500 ₽'}<span> / праздник</span></div>
+            <ul className={styles.priceList}>
+              <li><span className={styles.check}>✓</span> Закрытая игровая зона на 3 часа</li>
+              <li><span className={styles.check}>✓</span> Интерактивная стена-кидалка</li>
+              <li><span className={styles.check}>✓</span> Отдельная комната именинника</li>
+              <li><span className={styles.check}>✓</span> <strong>VR-шлем — в подарок 🎁</strong></li>
+              <li><span className={styles.check}>✓</span> Фотозона</li>
+              <li><span className={styles.check}>✓</span> Серебряная или цветная ленточная дискотека (на выбор, доп. оплата)</li>
+              <li><span className={styles.check}>✓</span> Sony PlayStation</li>
+              <li><span className={styles.check}>✓</span> Много игрушек для игр</li>
+              <li><span className={styles.check}>✓</span> Музыкальное сопровождение</li>
+              <li><span className={styles.check}>✓</span> Эл. чайник, питьевая вода</li>
+              <li><span className={styles.check}>✓</span> Уборка, вынос мусора</li>
+            </ul>
+            <div className={styles.priceNote}>Тариф рассчитан на 12 детей. Каждый следующий ребёнок — +300 ₽</div>
+            <a href="#quiz" className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="booking">Забронировать дату</a>
+          </div>
+        </div>
+      </section>
+
+      {/* QUIZ */}
+      <section className={styles.section} id="quiz" style={{ paddingTop: 0 }}>
+        <div className={styles.wrap}>
+          <div className={styles.quizSplit}>
+            <div className={styles.quizLeft}>
+              <h3>Ответьте на 3 вопроса и получите <span className={styles.hl}>подбор праздника</span></h3>
+              <ul>
+                <li><span className={`${styles.dot} ${styles.dotCoral}`}></span>Рекомендация программы под возраст</li>
+                <li><span className={`${styles.dot} ${styles.dotCoral}`}></span>Свободные даты на удобную неделю</li>
+                <li><span className={`${styles.dot} ${styles.dotCoral}`}></span>Расчёт стоимости в мессенджер</li>
+              </ul>
+            </div>
+            <div className={styles.quizRight}>
+              {quizStep === 'age' ? (
+                <>
+                  <div className={styles.quizStepLabel}>Вопрос 1 из 3</div>
+                  <div className={styles.quizQ}>Сколько лет имениннику?</div>
+                  <div className={styles.quizOpts}>
+                    {AGE_OPTIONS.map((opt, index) => (
+                      <button
+                        key={opt}
+                        type="button"
+                        className={`${styles.quizOpt} ${quizAge === opt ? styles.quizOptSelected : ''}`}
+                        data-button={`quiz_age_${index + 1}`}
+                        onClick={() => setQuizAge(opt)}
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <button type="button" onClick={() => setQuizStep('date')} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="quiz_next_age">
+                      Далее →
+                    </button>
+                  </div>
+                </>
+              ) : quizStep === 'date' ? (
+                <>
+                  <div className={styles.quizStepLabel}>Вопрос 2 из 3</div>
+                  <div className={styles.quizQ}>Когда планируете праздник?</div>
+                  <div className={styles.formField}>
+                    <label htmlFor="quiz-date">Желаемая дата</label>
+                    <input
+                      id="quiz-date"
+                      type="date"
+                      value={quizDate}
+                      min={new Date().toISOString().split('T')[0]}
+                      onChange={e => setQuizDate(e.target.value)}
+                    />
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <button type="button" onClick={() => setQuizStep('contacts')} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="quiz_next_date">
+                      Далее →
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.quizStepLabel}>Вопрос 3 из 3</div>
+                  <div className={styles.quizQ}>Забронировать дату</div>
+                  <div className={styles.formField}>
+                    <label htmlFor="quiz-name">Имя</label>
+                    <input id="quiz-name" type="text" placeholder="Как к вам обращаться" value={quizName} onChange={e => setQuizName(e.target.value)} />
+                  </div>
+                  <div className={styles.formField}>
+                    <label htmlFor="quiz-phone">Телефон</label>
+                    <input
+                      id="quiz-phone"
+                      type="tel"
+                      inputMode="numeric"
+                      placeholder="+7 (___) ___-__-__"
+                      value={quizPhone}
+                      maxLength={12}
+                      onChange={e => setQuizPhone(formatPhoneInput(e.target.value))}
+                      required
+                    />
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <button type="button" onClick={handleQuizNext} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="quiz_submit">
+                      Отправить заявку →
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* GALLERY */}
+      <section className={styles.section}>
+        <div className={styles.wrap}>
+          <h2 className={styles.sectionTitle}>Фото с настоящих праздников</h2>
+          <div className={styles.galleryGrid}>
+            <img src={`${MEDIA_BASE}/real-giraffe-1.jpg`} alt="Дети играют с жирафом-бассейном" />
+            <img src={`${MEDIA_BASE}/real-trampoline-1.jpg`} alt="Прыжки на батуте" />
+            <img src={`${MEDIA_BASE}/real-wall-1.jpg`} alt="Интерактивная стена-кидалка с игрой" />
+            <img src={`${MEDIA_BASE}/real-animator.jpg`} alt="Аниматор поздравляет именинника с тортом" />
+            <img src={`${MEDIA_BASE}/real-giraffe-3.jpg`} alt="Дети на жирафе-бассейне" />
+            <img src={`${MEDIA_BASE}/real-trampoline-3.jpg`} alt="Дети прыгают на батутах втроём" />
+            <img src={`${MEDIA_BASE}/real-wall-2.jpg`} alt="Дети играют у интерактивной стены" />
+            <img src={`${MEDIA_BASE}/real-hockey.jpg`} alt="Аэрохоккей в игровой зоне" />
+          </div>
+        </div>
+      </section>
+
+      {/* VIDEO */}
+      <section className={styles.section} style={{ paddingTop: 0 }}>
+        <div className={styles.wrap}>
+          <h2 className={styles.sectionTitle}>Посмотрите, как это выглядит вживую</h2>
+          <div className={styles.videoGrid}>
+            <div className={styles.videoCard}>
+              <video controls preload="none" poster={`${MEDIA_BASE}/video/giraffe-poster.jpg`} playsInline>
+                <source src={`${MEDIA_BASE}/video/giraffe.mp4`} type="video/mp4" />
+              </video>
+              <div className={styles.videoLabel}>🦒 Жираф-бассейн</div>
+            </div>
+            <div className={styles.videoCard}>
+              <video controls preload="none" poster={`${MEDIA_BASE}/video/trampoline-poster.jpg`} playsInline>
+                <source src={`${MEDIA_BASE}/video/trampoline.mp4`} type="video/mp4" />
+              </video>
+              <div className={styles.videoLabel}>🤸 Батуты</div>
+            </div>
+            <div className={styles.videoCard}>
+              <video controls preload="none" poster={`${MEDIA_BASE}/video/wall-poster.jpg`} playsInline>
+                <source src={`${MEDIA_BASE}/video/wall.mp4`} type="video/mp4" />
+              </video>
+              <div className={styles.videoLabel}>🧱 Стена-кидалка</div>
+            </div>
+            <div className={styles.videoCard}>
+              <video controls preload="none" poster={`${MEDIA_BASE}/video/hockey-poster.jpg`} playsInline>
+                <source src={`${MEDIA_BASE}/video/hockey.mp4`} type="video/mp4" />
+              </video>
+              <div className={styles.videoLabel}>🏒 Аэрохоккей</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEWS */}
+      <section className={styles.section}>
+        <div className={styles.wrap}>
+          <div className={styles.reviewsHead}>
+            <div>
+              <span className={styles.eyebrowPill} style={{ background: '#EDE5FB' }}>ОТЗЫВЫ РОДИТЕЛЕЙ</span>
+              <h2 className={styles.sectionTitle} style={{ textAlign: 'left', margin: '14px 0 0' }}>Что говорят мамы</h2>
+            </div>
+            <a
+              href={YANDEX_REVIEWS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.reviewsScore}
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              data-button="yandex_maps"
+              onClick={() => trackGoal('v1_volzhsk_yandex_maps_click')}
+            >
+              <div className={styles.reviewStars} style={{ color: '#FFC627', fontSize: 20 }}>★★★★★</div>
+              <div className={styles.reviewsScoreNum}>5.0</div>
+              <div style={{ fontSize: 13, color: '#635749', fontWeight: 700 }}>87 отзывов<br />Яндекс.Карты</div>
+            </a>
+          </div>
+          <div className={styles.reviewGrid}>
+            {REVIEWS.map(review => (
+              <div key={review.name} className={`${styles.card} ${styles.reviewCard}`}>
+                <div className={styles.reviewStars}>★★★★★</div>
+                <p className={styles.reviewText}>{review.text}</p>
+                <div className={styles.reviewWho}>
+                  <div className={styles.reviewAvatar} style={{ background: review.color, color: review.color === '#FFC627' ? '#4A3F38' : '#fff' }}>{review.initials}</div>
+                  <div><div className={styles.reviewName}>{review.name}</div><div className={styles.reviewMeta}>Яндекс.Карты</div></div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 24 }}>
+            <a
+              href={YANDEX_REVIEWS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.faqLabel}
+              style={{ color: '#6B47C2', fontWeight: 700, textDecoration: 'underline' }}
+              data-button="yandex_maps"
+              onClick={() => trackGoal('v1_volzhsk_yandex_maps_click')}
+            >
+              Смотреть все отзывы на Яндекс.Картах →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className={styles.section} id="faq">
+        <div className={styles.wrap}>
+          <h2 className={styles.sectionTitle}>Вопросы, которые чаще всего задают мамы</h2>
+          <div style={{ maxWidth: 780, margin: '0 auto' }}>
+            {FAQ_ITEMS.map((item, i) => (
+              <div key={item.q} className={`${styles.faqItem} ${openFaq === i ? styles.faqItemOpen : ''}`}>
+                <button className={styles.faqQ} data-button={`faq_${i + 1}`} onClick={() => setOpenFaq(openFaq === i ? -1 : i)}>
+                  <span className={styles.faqNum}>{i + 1}</span>
+                  <span className={styles.faqLabel}>{item.q}</span>
+                  <span className={styles.faqIcon}>+</span>
+                </button>
+                <div className={styles.faqA}><p>{item.a}</p></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FORM */}
+      <section className={styles.section}>
+        <div className={styles.wrap}>
+          <div className={styles.formBlock}>
+            <div>
+              <h2>Оставьте заявку</h2>
+              <p className={styles.formLead}>Напишите в мессенджер или оставьте контакты. Подтвердим дату за 2 минуты.</p>
+              <div className={styles.contactRow}>
+                <a
+                  href={whatsappLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.contactPill}
+                  style={{ background: '#25D366' }}
+                  data-button="whatsapp"
+                  onClick={() => trackGoal('v1_volzhsk_whatsapp_click')}
+                >
+                  WhatsApp
+                </a>
+                <a
+                  href={MAX_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.contactPill}
+                  style={{ background: 'linear-gradient(135deg, #5A5AFF 0%, #4747E8 100%)' }}
+                  data-button="max"
+                  onClick={() => trackGoal('v1_volzhsk_max_click')}
+                >
+                  💬 MAX
+                </a>
+                <a href={`tel:${PHONE_TEL}`} className={styles.contactPill} style={{ background: '#fff', color: '#4A3F38', border: '1px solid rgba(0,0,0,.1)' }} data-button="call">
+                  📞 {PHONE_DISPLAY}
+                </a>
+              </div>
+            </div>
+            <form className={styles.formCard} onSubmit={handleFormSubmit}>
+              <div className={styles.formField}>
+                <label htmlFor="landing-name">Имя</label>
+                <input id="landing-name" type="text" placeholder="Как к вам обращаться" value={name} onChange={e => setName(e.target.value)} />
+              </div>
+              <div className={styles.formField}>
+                <label htmlFor="landing-phone">Телефон</label>
+                <input
+                  id="landing-phone"
+                  type="tel"
+                  inputMode="numeric"
+                  placeholder="+7 (___) ___-__-__"
+                  value={phone}
+                  maxLength={12}
+                  onChange={e => setPhone(formatPhoneInput(e.target.value))}
+                  required
+                />
+              </div>
+              <button type="submit" className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="form_submit">Отправить заявку</button>
+              <p className={styles.formNote}>Заявка будет отправлена нам, а вы перейдёте в MAX для связи с администратором.</p>
+            </form>
+          </div>
+
+          <div className={styles.mapBlock}>
+            <a
+              href={YANDEX_MAPS_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.mapFrame}
+              data-button="yandex_maps"
+              onClick={() => trackGoal('v1_volzhsk_yandex_maps_click')}
+            >
+              <iframe
+                src="https://yandex.ru/map-widget/v1/?ll=48.332228%2C55.868031&z=16&pt=48.332228,55.868031,pm2rdm"
+                width="100%"
+                height="100%"
+                style={{ border: 0, display: 'block', pointerEvents: 'none' }}
+                loading="lazy"
+                title="Dimbo на карте — г. Волжск, ул. Шестакова, 1Б"
+              />
+            </a>
+            <div className={styles.mapInfo}>
+              <div className={styles.mapInfoTitle}>🦒 Dimbo, ул. Шестакова, 1Б</div>
+              <div className={styles.mapInfoRow}><span className={styles.mapInfoIcon}>★</span> 5,0 · 87 отзывов на Яндекс.Картах</div>
+              <div className={styles.mapInfoRow}><span className={styles.mapInfoIcon}>📍</span> Рядом школа № 7</div>
+              <div className={styles.mapInfoRow}><span className={styles.mapInfoIcon}>🕐</span> Пн–Пт 11:00–20:00, Сб–Вс 10:00–20:00</div>
+              <div className={styles.mapInfoRow}><span className={styles.mapInfoIcon}>🚗</span> Есть парковка</div>
+              <a
+                href={YANDEX_MAPS_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`}
+                style={{ marginTop: 16 }}
+                data-button="route"
+                onClick={() => trackGoal('v1_volzhsk_yandex_maps_click')}
+              >
+                Проложить маршрут →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className={styles.footer}>
+        <div className={styles.wrap}>
+          <div className={styles.footerGrid}>
+            <div>
+              <h4>Dimbo</h4>
+              <p>Детский день рождения в Волжске под ключ — VR-шлем, батуты, жираф-бассейн и игровая зона.</p>
+              <a href="#quiz" className={`${styles.btn} ${styles.btnDark}`} data-button="booking">Забронировать дату</a>
+            </div>
+            <div className={styles.footerCol}>
+              <div className={styles.footerColTitle}>Разделы</div>
+              <a href="#pricing" data-button="pricing">Цены</a>
+              <a href="#faq" data-button="faq">FAQ</a>
+            </div>
+            <div className={styles.footerCol}>
+              <div className={styles.footerColTitle}>Клуб</div>
+              <a href={YANDEX_MAPS_LINK} target="_blank" rel="noopener noreferrer" data-button="address">г. Волжск, ул. Шестакова, 1Б</a>
+              <div>{PHONE_DISPLAY}</div>
+              <div>Пн–Пт 11:00–20:00, Сб–Вс 10:00–20:00</div>
+              <a href={YANDEX_REVIEWS_LINK} target="_blank" rel="noopener noreferrer" data-button="yandex_maps">5.0 ★ на Яндекс.Картах</a>
+            </div>
+          </div>
+          <div className={styles.footerBottom}>© 2026 Детский клуб Dimbo, Волжск · Информация не является публичной офертой</div>
+        </div>
+      </footer>
+
+      <div className={styles.stickyCta}>
+        <a
+          href={MAX_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.btn}
+          style={{ background: 'linear-gradient(135deg, #5A5AFF 0%, #4747E8 100%)', color: '#fff' }}
+          data-button="max"
+          onClick={() => trackGoal('v1_volzhsk_max_click')}
+        >
+          💬 Написать в MAX
+        </a>
+        <a href={`tel:${PHONE_TEL}`} className={`${styles.btn} ${styles.btnYellow}`} data-button="call" onClick={() => trackGoal('v1_volzhsk_call_click')}>
+          📞 Позвонить
+        </a>
+      </div>
+
+      {modalOpen && (
+        <div className={`${styles.modalOverlay} ${styles.modalOverlayActive}`} onClick={e => { if (e.target === e.currentTarget) setModalOpen(false) }}>
+          <div className={styles.modalBox}>
+            <button className={styles.modalClose} data-button="modal_close" onClick={() => setModalOpen(false)}>✕</button>
+            <div className={styles.modalTimer}>⏱ Подарок ждёт 10 минут</div>
+            <h3 style={{ fontSize: 22, marginBottom: 8 }}>Погодите! 🎁</h3>
+            <p style={{ color: '#635749', marginBottom: 20, fontSize: 15, fontWeight: 600 }}>Оставьте заявку сейчас — подарим скидку 3% на праздник.</p>
+            <div className={styles.quizOpts} style={{ marginBottom: 16 }}>
+              {AGE_OPTIONS.map((opt, index) => (
+                <button
+                  key={opt}
+                  type="button"
+                  className={`${styles.quizOpt} ${modalAge === opt ? styles.quizOptSelected : ''}`}
+                  data-button={`modal_age_${index + 1}`}
+                  onClick={() => setModalAge(opt)}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+            <div className={styles.formField}>
+              <label htmlFor="modal-name">Имя</label>
+              <input id="modal-name" type="text" placeholder="Как к вам обращаться" value={modalName} onChange={e => setModalName(e.target.value)} />
+            </div>
+            <div className={styles.formField}>
+              <label htmlFor="modal-phone">Телефон</label>
+              <input
+                id="modal-phone"
+                type="tel"
+                inputMode="numeric"
+                placeholder="+7 (___) ___-__-__"
+                value={modalPhone}
+                maxLength={12}
+                onChange={e => setModalPhone(formatPhoneInput(e.target.value))}
+                required
+              />
+            </div>
+            <button type="button" onClick={handleModalSubmit} className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="gift">
+              Получить подарок
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default VolzhskBirthdayLanding

@@ -22,6 +22,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Лендинг детского дня рождения Волжск (шаблон v1) -->
+  <url>
+    <loc>https://dimbopizza.ru/v1/volzhsk</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Меню - высокий приоритет -->
   <url>
     <loc>https://dimbopizza.ru/menu</loc>

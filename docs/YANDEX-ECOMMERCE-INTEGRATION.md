@@ -143,9 +143,9 @@ trackPurchase(order.id.toString(), ecommerceProducts, {
 
 ---
 
-## 🎯 Цели кнопок лендинга `/v1/zelenodolsk`
+## 🎯 Цели кнопок лендингов `/v1/zelenodolsk` и `/v1/volzhsk`
 
-**Где:** `src/pages/landing-v1/ZelenodolskBirthdayLanding.tsx`
+**Где:** `src/pages/landing-v1/ZelenodolskBirthdayLanding.tsx` и `src/pages/landing-v1/VolzhskBirthdayLanding.tsx`
 
 **Счётчик:** `103585127`
 
@@ -190,11 +190,11 @@ window.ym?.(103585127, 'reachGoal', `button_${buttonName}`)
 | `button_modal_age_1`–`button_modal_age_4` | Выбор возраста во всплывающем окне |
 | `button_gift` | «Получить подарок» во всплывающем окне |
 
-Новые цели отправляются в дополнение к уже существующим целям лендинга: `v1_zelenodolsk_form_submit`, `v1_zelenodolsk_quiz_complete`, `v1_zelenodolsk_exit_modal`, `v1_zelenodolsk_whatsapp_click`, `v1_zelenodolsk_max_click`, `v1_zelenodolsk_call_click`, `v1_zelenodolsk_yandex_maps_click` и `Lead_igrovaya`.
+Цели `button_*` одинаковы на обоих лендингах. Они отправляются в дополнение к целям форм и переходов с префиксом `v1_zelenodolsk_*` или `v1_volzhsk_*` соответственно, а также к общей цели `Lead_igrovaya`.
 
 ### Проверка целей кнопок
 
-1. Откройте production-версию `/v1/zelenodolsk` с включённой Метрикой.
+1. Откройте production-версию `/v1/zelenodolsk` или `/v1/volzhsk` с включённой Метрикой.
 2. Нажмите нужную кнопку.
 3. В Яндекс Метрика Debugger или консоли проверьте вызов `reachGoal` с именем `button_*`.
 4. Для просмотра статистики создайте в интерфейсе Метрики JavaScript-события с соответствующими идентификаторами целей.
