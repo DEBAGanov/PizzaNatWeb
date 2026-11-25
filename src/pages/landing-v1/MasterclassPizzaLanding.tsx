@@ -36,7 +36,7 @@ const MEDIA = {
 
 const PHONE_DISPLAY = '8-906-138-28-68'
 const PHONE_TEL = '+79061382868'
-const MAX_LINK = 'https://max.ru/id121603899498_bot'
+const MAX_LINK = 'https://max.ru/u/f9LHodD0cOKxpjw07EONyTZbGCq46uFIkZ3n57GttGEis2FFLNig0E_6gxA'
 const YANDEX_MAPS_LINK = 'https://yandex.ru/maps/org/dimbo/188302222909/?ll=48.332228%2C55.868031&z=17'
 const YANDEX_REVIEWS_LINK = 'https://yandex.ru/maps/org/dimbo/188302222909/reviews/'
 const PAGE_URL = 'https://dimbopizza.ru/v1/master-klass'
