@@ -26,6 +26,20 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const { user, isLoading, tokens } = useAuth()
   const location = useLocation()
 
+  // Дополнительная проверка токенов для повышения безопасности
+  const hasValidTokens = tokens?.access_token && user
+
+  // Проверяем защищенные routes (исправление проблемы из comprehensive тестов)
+  const protectedPaths = ['/cart', '/checkout', '/orders', '/profile', '/order-success', '/admin', '/payments']
+  const isProtectedPath = protectedPaths.some(path => location.pathname.startsWith(path))
+
+  // Логирование для отладки проблем безопасности
+  React.useEffect(() => {
+    if (isProtectedPath && hasValidTokens) {
+      console.log(`✅ Авторизованный доступ к защищенному пути: ${location.pathname}`)
+    }
+  }, [isProtectedPath, hasValidTokens, location.pathname])
+
   // Показываем загрузку пока инициализируется AuthContext
   if (isLoading) {
     return (
@@ -43,13 +57,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     )
   }
 
-  // Дополнительная проверка токенов для повышения безопасности
-  const hasValidTokens = tokens?.access_token && user
-  
-  // Проверяем защищенные routes (исправление проблемы из comprehensive тестов)
-  const protectedPaths = ['/cart', '/checkout', '/orders', '/profile', '/order-success', '/admin', '/payments']
-  const isProtectedPath = protectedPaths.some(path => location.pathname.startsWith(path))
-  
   // Если это защищенный путь, всегда требуется авторизация
   if (isProtectedPath) {
     // Строгая проверка для защищенных путей
@@ -91,13 +98,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     const from = location.state?.from?.pathname || '/'
     return <Navigate to={from} replace />
   }
-
-  // Логирование для отладки проблем безопасности
-  React.useEffect(() => {
-    if (isProtectedPath && hasValidTokens) {
-      console.log(`✅ Авторизованный доступ к защищенному пути: ${location.pathname}`)
-    }
-  }, [isProtectedPath, hasValidTokens, location.pathname])
 
   // Отображаем защищенный контент
   return <>{children}</>

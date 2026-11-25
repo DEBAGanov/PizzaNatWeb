@@ -9,6 +9,7 @@ const PRERENDER_ROUTES = [
   '/auth',
   '/privacy',
   '/dimbokids',
+  '/v1/master-klass',
   '/dostavka-pizzy',
   '/zakazat-pizzu',
   '/dostavka-shashlyka',

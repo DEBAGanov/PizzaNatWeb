@@ -197,6 +197,7 @@ Allow: /maslenitsa-dostavka-edy
 Allow: /dostavka-edy-na-dom
 
 # Masterclass pages
+Allow: /v1/master-klass
 Allow: /master-klass-po-prigotovleniyu-pitstsy
 Allow: /master-klass-po-prigotovleniyu-burgerov
 

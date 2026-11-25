@@ -167,6 +167,7 @@ const ZakazatNagetsyZelenodolskPage = lazy(() => import('./pages/zelenodolsk-del
 // Standalone-лендинги (шаблон v1, своя верстка без Mantine)
 const ZelenodolskBirthdayLanding = lazy(() => import('./pages/landing-v1').then(m => ({ default: m.ZelenodolskBirthdayLanding })))
 const VolzhskBirthdayLanding = lazy(() => import('./pages/landing-v1').then(m => ({ default: m.VolzhskBirthdayLanding })))
+const MasterclassPizzaLanding = lazy(() => import('./pages/landing-v1').then(m => ({ default: m.MasterclassPizzaLanding })))
 
 // Новые SEO-маршруты через useRoutes hook
 import { useSEORoutes } from './utils/routeGenerator'
@@ -274,6 +275,14 @@ function WebApp() {
         element={
           <ProtectedRoute requireAuth={false}>
             <VolzhskBirthdayLanding />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/v1/master-klass"
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <MasterclassPizzaLanding />
           </ProtectedRoute>
         }
       />

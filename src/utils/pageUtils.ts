@@ -12,7 +12,8 @@
 export const isSEOPage = (): boolean => {
   const path = window.location.pathname
   // SEO страницы где нужно восстанавливать токены
-  return path.startsWith('/dostavka-') || 
+  return path.startsWith('/v1/') ||
+         path.startsWith('/dostavka-') ||
          path.startsWith('/zakazat-') || 
          path.startsWith('/kids-') ||
          path.startsWith('/zelenodolsk-kids-') ||

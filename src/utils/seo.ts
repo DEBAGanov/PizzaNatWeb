@@ -263,7 +263,10 @@ export const generatePageSeo = (page: string, data?: Partial<SeoData>): SeoData 
         title: data?.title,
         description: data?.description,
         keywords: data?.keywords,
-        canonical: selfCanonical
+        ogTitle: data?.title,
+        ogDescription: data?.description,
+        canonical: selfCanonical,
+        structuredData: data?.structuredData
       })
     }
   }
@@ -433,10 +436,30 @@ export const setPageMeta = (seoData: SeoData) => {
     }
   }
   
+  const ogImageAltMeta = document.querySelector('meta[property="og:image:alt"]')
+  if (ogImageAltMeta && seoData.title) {
+    ogImageAltMeta.setAttribute('content', seoData.title)
+  }
+
+  const twitterTitleMeta = document.querySelector('meta[name="twitter:title"]')
+  if (twitterTitleMeta && seoData.title) {
+    twitterTitleMeta.setAttribute('content', seoData.title)
+  }
+
+  const twitterDescriptionMeta = document.querySelector('meta[name="twitter:description"]')
+  if (twitterDescriptionMeta && seoData.description) {
+    twitterDescriptionMeta.setAttribute('content', seoData.description)
+  }
+
+  const twitterImageMeta = document.querySelector('meta[name="twitter:image"]')
+  if (twitterImageMeta && seoData.ogImage) {
+    twitterImageMeta.setAttribute('content', seoData.ogImage)
+  }
+
   // Обновляем og:url для текущей страницы
   const ogUrlMeta = document.querySelector('meta[property="og:url"]')
   if (ogUrlMeta) {
-    ogUrlMeta.setAttribute('content', window.location.href)
+    ogUrlMeta.setAttribute('content', seoData.canonical || window.location.href)
   }
   
   // Canonical
