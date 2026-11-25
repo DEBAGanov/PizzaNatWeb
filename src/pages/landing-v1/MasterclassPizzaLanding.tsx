@@ -225,15 +225,14 @@ export const MasterclassPizzaLanding: React.FC = () => {
       name,
       phone,
       city: 'Волжск',
-      quizAge: 'Группа от 10 человек',
       sourcePage: 'v1/master-klass',
+      leadType: 'MASTERCLASS_PIZZA',
       comment: 'Мастер-класс по пицце для группы от 10 человек. Дату и состав группы уточнит администратор.'
     })
     if (sent) {
       trackGoal('v1_masterklass_form_submit')
       trackGoal('Lead_masterklass')
       setStatus('success')
-      window.location.assign(MAX_LINK)
     } else {
       setStatus('error')
     }
