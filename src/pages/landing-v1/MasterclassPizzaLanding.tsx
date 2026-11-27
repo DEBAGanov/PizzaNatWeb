@@ -8,10 +8,12 @@ import {
   IconChefHat,
   IconChevronDown,
   IconClock,
-  IconFlame,
+  IconCookie,
+  IconDeviceGamepad2,
   IconLoader2,
   IconMapPin,
   IconMessageCircle,
+  IconPackage,
   IconPhone,
   IconPizza,
   IconSchool,
@@ -41,7 +43,7 @@ const YANDEX_MAPS_LINK = 'https://yandex.ru/maps/org/dimbo/188302222909/?ll=48.3
 const YANDEX_REVIEWS_LINK = 'https://yandex.ru/maps/org/dimbo/188302222909/reviews/'
 const PAGE_URL = 'https://dimbopizza.ru/v1/master-klass'
 const PAGE_TITLE = 'Мастер-класс по пицце в Волжске для детей и взрослых | ДИМБО'
-const PAGE_DESCRIPTION = 'Мастер-класс по приготовлению пиццы в Волжске для групп от 10 человек. 50 минут с наставником ДИМБО: дети от 5 лет и взрослые готовят свою пиццу. Оставьте заявку.'
+const PAGE_DESCRIPTION = 'Мастер-класс по пицце в Волжске для групп от 10 человек: 50 минут готовки и час в игровой. Коробки, сертификат пиццамейкера и дегустация.'
 const MASTERCLASS_VIDEO_URL = ''
 
 const FAQ_ITEMS = [
@@ -50,16 +52,24 @@ const FAQ_ITEMS = [
     a: 'Оставьте заявку в форме на этой странице, напишите в MAX или позвоните по номеру 8-906-138-28-68. Администратор уточнит формат, свободные даты, стоимость и подтвердит запись.'
   },
   {
+    q: 'Сколько времени занимает вся программа?',
+    a: 'Всё мероприятие длится примерно 1 час 40–50 минут: 50 минут участники готовят пиццу с наставником, затем ещё около часа проводят в игровой комнате, пока пицца выпекается. В финале вручаем сертификаты и все вместе пробуют приготовленную пиццу.'
+  },
+  {
     q: 'Как проходит мастер-класс и безопасно ли это для детей?',
-    a: 'Участники готовят вместе с наставником: раскатывают тесто, добавляют соус и выкладывают начинку. Дети работают только на безопасных этапах. Пиццу выпекает персонал Dimbo — дети не контактируют с горячей печью.'
+    a: 'Участники готовят вместе с наставником: раскатывают тесто, добавляют соус и выкладывают начинку. Дети работают только на безопасных этапах. Пиццу выпекает персонал Dimbo — дети не контактируют с горячей печью, а в это время играют в игровой комнате.'
   },
   {
     q: 'Что будет с приготовленной пиццей?',
-    a: 'Каждый участник получает именно ту пиццу, которую приготовил сам. Её можно съесть в пиццерии или забрать с собой.'
+    a: 'Каждый участник получает именно ту пиццу, которую приготовил сам. Коробки под пиццу участники раскрашивают и подписывают, а после вручения сертификатов все вместе пробуют готовую пиццу.'
   },
   {
     q: 'Что входит в мастер-класс?',
-    a: '50 минут занятия с наставником, продукты и необходимый инвентарь, работа с тестом и начинкой, выпекание, собственная пицца и диплом пиццамейкера. Актуальную стоимость администратор сообщит при записи.'
+    a: '50 минут занятия с наставником, продукты и инвентарь, выпекание пиццы персоналом, около часа в игровой комнате, раскрашивание коробки, сертификат пиццамейкера и общая дегустация. Актуальную стоимость администратор сообщит при записи.'
+  },
+  {
+    q: 'Чем можно заняться в игровой комнате?',
+    a: 'Дети могут попрыгать на батутах, поиграть в PlayStation или Xbox, попробовать VR-шлем, настольный футбол и другие игры. Взрослым тоже доступны PlayStation и Xbox. Игровое время длится около часа, пока персонал выпекает пиццу.'
   },
   {
     q: 'Что нужно взять с собой?',
@@ -284,10 +294,10 @@ export const MasterclassPizzaLanding: React.FC = () => {
             <div className={styles.heroGrid}>
               <div className={styles.heroText}>
                 <h1 id="masterclass-title">Мастер-класс по приготовлению пиццы в Волжске</h1>
-                <p className={styles.heroLead}>Кулинарное занятие для компаний от 10 человек. За 50 минут каждый гость приготовит собственную пиццу вместе с наставником Dimbo.</p>
+                <p className={styles.heroLead}>50 минут готовим пиццу с наставником Dimbo и ещё около часа играем в игровой комнате. В финале — сертификат пиццамейкера и общая дегустация.</p>
                 <ul className={styles.heroFacts} aria-label="Кратко о мастер-классе">
                   <li><IconUsersGroup size={19} aria-hidden="true" />Группа от 10 человек</li>
-                  <li><IconClock size={19} aria-hidden="true" />50 минут</li>
+                  <li><IconClock size={19} aria-hidden="true" />Вся программа 1 ч 40–50 мин</li>
                   <li><IconUsers size={19} aria-hidden="true" />Дети от 5 лет и взрослые</li>
                   <li><IconPizza size={19} aria-hidden="true" />Своя пицца</li>
                 </ul>
@@ -320,10 +330,10 @@ export const MasterclassPizzaLanding: React.FC = () => {
               <article className={`${styles.stripCard} ${styles.stripList}`}>
                 <h2>О программе</h2>
                 <ul>
-                  <li><span className={styles.dot}></span>Работаем с тестом и начинкой</li>
-                  <li><span className={styles.dot}></span>Готовим под руководством наставника</li>
-                  <li><span className={styles.dot}></span>Пиццу выпекает персонал</li>
-                  <li><span className={styles.dot}></span>Забираем диплом пиццамейкера</li>
+                  <li><span className={styles.dot}></span>50 минут готовим с наставником</li>
+                  <li><span className={styles.dot}></span>Раскрашиваем и подписываем коробки</li>
+                  <li><span className={styles.dot}></span>Около часа играем, пока печётся пицца</li>
+                  <li><span className={styles.dot}></span>Получаем сертификат и едим вместе</li>
                 </ul>
               </article>
               <article className={`${styles.stripCard} ${styles.stripRating}`}>
@@ -354,16 +364,36 @@ export const MasterclassPizzaLanding: React.FC = () => {
               </article>
               <article className={`${styles.includeCard} ${styles.includeCardAlt2}`}>
                 <div className={styles.includeNum}>3</div>
-                <IconFlame className={styles.includeIcon} size={28} aria-hidden="true" />
-                <h3>Отправляем в печь</h3>
-                <p>Выпеканием занимается персонал, а участники наблюдают за результатом.</p>
+                <IconPackage className={styles.includeIcon} size={28} aria-hidden="true" />
+                <h3>Украшаем коробки</h3>
+                <p>Пиццу отправляет в печь персонал, а участники раскрашивают и подписывают свои коробки.</p>
               </article>
               <article className={`${styles.includeCard} ${styles.includeCardAlt3}`}>
                 <div className={styles.includeNum}>4</div>
                 <IconCertificate className={styles.includeIcon} size={28} aria-hidden="true" />
-                <h3>Пробуем и празднуем</h3>
-                <p>Едим свою пиццу или забираем домой и получаем диплом пиццамейкера.</p>
+                <h3>Играем и едим вместе</h3>
+                <p>Проводим около часа в игровой, получаем сертификаты пиццамейкера и пробуем свою пиццу.</p>
               </article>
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.sectionCompact} aria-labelledby="playroom-title">
+          <div className={styles.wrap}>
+            <div className={styles.playroomBanner}>
+              <div className={styles.playroomText}>
+                <span className={styles.playroomKicker}><IconDeviceGamepad2 size={20} aria-hidden="true" />Пока пицца в печи</span>
+                <h2 id="playroom-title">Ещё около часа играем в игровой комнате</h2>
+                <p>Детям не придётся ждать за столом: можно активно провести время, пока персонал Dimbo выпекает пиццу.</p>
+                <p className={styles.playroomAdults}><strong>Взрослым тоже есть чем заняться:</strong> PlayStation и Xbox доступны не только детям.</p>
+                <a href="/v1/volzhsk" className={`${styles.btn} ${styles.btnDark}`} data-button="playroom">Подробнее об игровой комнате<IconArrowRight size={19} aria-hidden="true" /></a>
+              </div>
+              <ul className={styles.playroomList}>
+                <li><IconCheck size={20} aria-hidden="true" />Батуты и другие детские игрушки</li>
+                <li><IconCheck size={20} aria-hidden="true" />PlayStation и Xbox</li>
+                <li><IconCheck size={20} aria-hidden="true" />VR-шлем</li>
+                <li><IconCheck size={20} aria-hidden="true" />Настольный футбол</li>
+              </ul>
             </div>
           </div>
         </section>
@@ -409,6 +439,19 @@ export const MasterclassPizzaLanding: React.FC = () => {
           </div>
         </section>
 
+        <section className={styles.sectionCompact} aria-labelledby="gingerbread-title">
+          <div className={styles.wrap}>
+            <div className={styles.upcomingBanner}>
+              <span className={styles.upcomingIcon}><IconCookie size={32} aria-hidden="true" /></span>
+              <div>
+                <span className={styles.upcomingLabel}>Скоро в Dimbo</span>
+                <h2 id="gingerbread-title">Мастер-класс по выпеканию и украшению пряников</h2>
+                <p>Готовим ещё одну творческую программу для детей и взрослых. Скоро расскажем о ней подробнее на отдельной странице.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div className={styles.ribbonDivider} aria-hidden="true">
           <div className={styles.ribbonTrack}>
             <span>ТЕСТО · СОУС · НАЧИНКА · ПЕЧЬ · СВОЯ ПИЦЦА ·&nbsp;</span>
@@ -428,14 +471,14 @@ export const MasterclassPizzaLanding: React.FC = () => {
               <span className={styles.priceLabel}><IconChefHat size={20} aria-hidden="true" />МАСТЕР-КЛАСС ПО ПИЦЦЕ</span>
               <div className={styles.priceNum}>По заявке</div>
               <ul className={styles.priceList}>
-                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>50 минут с наставником</li>
-                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>Продукты и кулинарный инвентарь</li>
-                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>Работа с тестом, соусом и начинкой</li>
-                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>Выпекание пиццы персоналом</li>
-                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>Собственная пицца — на месте или с собой</li>
-                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>Диплом пиццамейкера</li>
+                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>50 минут приготовления пиццы с наставником</li>
+                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>Около часа в игровой комнате</li>
+                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>Продукты, инвентарь и выпекание персоналом</li>
+                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>Раскрашивание и подпись коробки под пиццу</li>
+                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>Общая дегустация приготовленной пиццы</li>
+                <li><span className={styles.check}><IconCheck size={14} aria-hidden="true" /></span>Торжественное вручение сертификата пиццамейкера</li>
               </ul>
-              <div className={styles.priceNote}>Основной формат — группа от 10 человек. Перед подтверждением записи вы узнаете полную стоимость и условия оплаты.</div>
+              <div className={styles.priceNote}>Вся программа занимает примерно 1 час 40–50 минут. Основной формат — группа от 10 человек. Перед подтверждением записи вы узнаете полную стоимость и условия оплаты.</div>
               <a href="#booking" className={`${styles.btn} ${styles.btnDark} ${styles.btnBlock}`} data-button="booking">Узнать стоимость и даты</a>
             </div>
           </div>
@@ -463,7 +506,7 @@ export const MasterclassPizzaLanding: React.FC = () => {
                     <span className={styles.successIcon}><IconCheck size={30} aria-hidden="true" /></span>
                     <h3>Заявка отправлена</h3>
                     <p>Спасибо, {name || 'мы получили ваши контакты'}! Администратор свяжется с вами, чтобы подтвердить дату и стоимость.</p>
-                    <p>Если MAX не открылся автоматически, перейдите по кнопке:</p>
+                    <p>Можно также написать нам в MAX:</p>
                     <div className={styles.successActions}>
                       <a href={MAX_LINK} className={`${styles.btn} ${styles.btnMax}`} data-button="max">Открыть MAX</a>
                     </div>
@@ -637,7 +680,7 @@ export const MasterclassPizzaLanding: React.FC = () => {
           <div className={styles.footerGrid}>
             <div>
               <h2>Dimbo</h2>
-              <p>Мастер-классы по приготовлению пиццы в Волжске для групп от 10 человек. Дети от 5 лет и взрослые. 50 минут — и своя пицца готова.</p>
+              <p>Мастер-классы по приготовлению пиццы в Волжске для групп от 10 человек. 50 минут готовки, около часа в игровой комнате, сертификат пиццамейкера и общая дегустация.</p>
               <a href="#booking" className={`${styles.btn} ${styles.btnDark}`} data-button="booking">Записаться на мастер-класс</a>
             </div>
             <div className={styles.footerCol}>

@@ -113,6 +113,21 @@
 .experienceImg { aspect-ratio: 4 / 3; overflow: hidden; }
 .experienceImg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 65%; }
 
+.playroomBanner { display: grid; grid-template-columns: 1fr; gap: 26px; padding: 30px 24px; border-radius: 28px; background: var(--teal); color: #0f4a40; }
+.playroomText h2 { font-size: 27px; margin: 14px 0; }
+.playroomText > p { color: #245f54; font-size: 15px; font-weight: 600; }
+.playroomKicker { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.playroomAdults { margin: 16px 0 24px; }
+.playroomList { list-style: none; margin: 0; padding: 22px; display: flex; flex-direction: column; justify-content: center; gap: 16px; border-radius: 20px; background: rgba(255, 255, 255, .7); }
+.playroomList li { display: flex; align-items: flex-start; gap: 10px; color: #174f45; font-size: 14.5px; font-weight: 800; }
+.playroomList svg { flex: 0 0 auto; margin-top: 2px; }
+
+.upcomingBanner { display: flex; align-items: flex-start; gap: 18px; padding: 26px 24px; border: 2px solid var(--yellow); border-radius: 24px; background: #fff; }
+.upcomingIcon { width: 58px; height: 58px; border-radius: 50%; background: var(--yellow); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.upcomingLabel { display: block; color: var(--coral-dark); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.upcomingBanner h2 { font-size: 23px; margin-bottom: 10px; }
+.upcomingBanner p { color: var(--ink-soft); font-size: 14px; font-weight: 600; }
+
 .formatGrid { display: grid; grid-template-columns: 1fr; gap: 16px; }
 .formatCard { background: #fff; border-radius: 20px; padding: 26px; display: flex; flex-direction: column; align-items: flex-start; }
 .formatCardAccent { background: #ede5fb; }
@@ -270,6 +285,9 @@
   .experienceText { padding: 44px; }
   .experienceText h2 { font-size: 32px; }
   .experienceImg { aspect-ratio: auto; min-height: 360px; }
+  .playroomBanner { grid-template-columns: 1.15fr .85fr; align-items: center; padding: 40px; }
+  .playroomText h2 { font-size: 32px; }
+  .upcomingBanner { align-items: center; padding: 30px 34px; }
   .contactBlock { grid-template-columns: 1fr 1.15fr; }
   .contactRow { justify-content: flex-end; }
 }
