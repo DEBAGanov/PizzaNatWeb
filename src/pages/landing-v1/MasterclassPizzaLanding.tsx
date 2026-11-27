@@ -276,6 +276,7 @@ export const MasterclassPizzaLanding: React.FC = () => {
       trackGoal('v1_masterklass_form_submit')
       trackGoal('Lead_masterklass')
       setStatus('success')
+      window.location.assign(MAX_LINK)
     } else {
       setStatus('error')
     }
