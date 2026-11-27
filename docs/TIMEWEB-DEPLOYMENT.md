@@ -23,7 +23,6 @@
 
 ```yaml
 # docker-compose.yml (адаптированный)
-version: "3.8"
 services:
   dimbopizza-web:
     build: .
