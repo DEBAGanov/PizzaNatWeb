@@ -36,6 +36,39 @@ const MEDIA = {
   og: 'https://dimbopizza.ru/images/masterclass-landing/og-masterclass.jpg'
 }
 
+const PLAYROOM_PHOTOS = [
+  {
+    src: '/images/masterclass-landing/playroom-trampoline.webp',
+    alt: 'Батуты и игровой лабиринт в детской игровой комнате Dimbo Волжск',
+    caption: 'Батуты и игровой лабиринт'
+  },
+  {
+    src: '/images/masterclass-landing/certificate-celebration.webp',
+    alt: 'Дети с сертификатами и раскрашенными коробками после мастер-класса по пицце Dimbo',
+    caption: 'Весёлое вручение сертификатов'
+  },
+  {
+    src: '/images/masterclass-landing/playroom-football.webp',
+    alt: 'Настольный футбол для детей и взрослых в Dimbo Волжск',
+    caption: 'Настольный футбол'
+  },
+  {
+    src: '/images/masterclass-landing/pizza-tasting.webp',
+    alt: 'Дети вместе пробуют приготовленную своими руками пиццу после мастер-класса Dimbo',
+    caption: 'Вкуснейшая пицца'
+  },
+  {
+    src: '/images/masterclass-landing/playroom-toys.webp',
+    alt: 'Детская кухня, машинки и развивающие игрушки в игровой комнате Dimbo',
+    caption: 'Игрушки для разных возрастов'
+  },
+  {
+    src: '/images/masterclass-landing/playroom-air-hockey.webp',
+    alt: 'Дети играют в аэрохоккей в развлекательном центре Dimbo Волжск',
+    caption: 'Аэрохоккей'
+  }
+]
+
 const PHONE_DISPLAY = '8-906-138-28-68'
 const PHONE_TEL = '+79061382868'
 const MAX_LINK = 'https://max.ru/u/f9LHodD0cOKxpjw07EONyTZbGCq46uFIkZ3n57GttGEis2FFLNig0E_6gxA'
@@ -394,6 +427,14 @@ export const MasterclassPizzaLanding: React.FC = () => {
                 <li><IconCheck size={20} aria-hidden="true" />VR-шлем</li>
                 <li><IconCheck size={20} aria-hidden="true" />Настольный футбол</li>
               </ul>
+            </div>
+            <div className={styles.playroomGallery} aria-label="Фотографии мастер-класса и игровой комнаты Dimbo">
+              {PLAYROOM_PHOTOS.map(photo => (
+                <figure key={photo.src}>
+                  <img src={photo.src} alt={photo.alt} width="900" height="1200" loading="lazy" decoding="async" />
+                  <figcaption>{photo.caption}</figcaption>
+                </figure>
+              ))}
             </div>
           </div>
         </section>

@@ -44,4 +44,4 @@
 
 ## Asset provenance
 
-Производные в `public/images/masterclass-landing/` созданы из пользовательских фотографий `public/images/kids/masterclass-1.jpg` — `masterclass-4.jpg`. Локальная конвертация cwebp/ffmpeg без AI-генерации. Provenance хранится в sidecar JSON рядом с каждым WebP и в JPEG COM для OG-обложки.
+Производные в `public/images/masterclass-landing/` созданы из пользовательских фотографий `public/images/kids/masterclass-1.jpg` — `masterclass-4.jpg`, `masterclass-6.jpg`, `masterclass-7.jpg` и фотографий игровой `birthday-1.jpg`, `birthday-3.jpg`, `birthday-7.jpg`, `birthday-9.jpg`. Локальная конвертация cwebp/Pillow без AI-генерации. Provenance хранится в sidecar JSON рядом с каждым WebP и в JPEG COM для OG-обложки.
